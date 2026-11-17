@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.eslintcache
+.npm/
+.env
+.env.*
+.dev.vars*
+*.log
