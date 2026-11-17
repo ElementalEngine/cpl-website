@@ -1,0 +1,7 @@
+* @ProjectCisco
+
+# Page content: no owner, so editors can merge once checks pass.
+/src/content/
+
+/src/content/site.yaml @ProjectCisco
+/src/content/privacy.md @ProjectCisco
