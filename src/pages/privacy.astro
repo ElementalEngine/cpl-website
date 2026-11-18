@@ -1,7 +1,13 @@
 ---
+import { render } from 'astro:content';
 import Page from '../layouts/Page.astro';
+import { getPrivacy } from '../lib/content';
+
+const entry = await getPrivacy();
+const { description, updatedOn } = entry.data;
+const { Content } = await render(entry);
 ---
 
-<Page title="Privacy" description="How the CPL website and bots handle your data.">
-  <p>The privacy notice will appear here soon.</p>
+<Page title="Privacy" description={description} updatedOn={updatedOn}>
+  <Content />
 </Page>

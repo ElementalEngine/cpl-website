@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { test } from 'node:test';
+import { PREVIEW_ORIGIN } from '../scripts/lib/seo';
 
 const PREVIEW_HOST = 'https://cpl.elementalengine.net/*';
 
@@ -68,10 +69,9 @@ test('noindex applies to the preview host only', () => {
   assert.equal(all['x-robots-tag'], undefined);
 });
 
-test('robots.txt keeps crawlers out of the preview', () => {
-  const robots = readFileSync('public/robots.txt', 'utf8');
-  assert.match(robots, /^User-agent: \*$/m);
-  assert.match(robots, /^Disallow: \/$/m);
+test('the preview host in _headers is the one the build treats as preview', () => {
+  assert.equal(`${PREVIEW_ORIGIN}/*`, PREVIEW_HOST);
+  assert.ok(!existsSync('public/robots.txt'), 'robots.txt is written by the build');
 });
 
 test('Cloudflare serves the friendly 404 and no workers.dev URL', () => {

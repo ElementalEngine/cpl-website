@@ -1,0 +1,49 @@
+---
+// A grid of panels, each one link: icon, name, one line, where it goes.
+import { linkDestination, linkKind } from '../lib/links';
+import LinkIcon from './LinkIcon.astro';
+
+interface Props {
+  items: { name: string; url: string; summary: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul role="list" class="grid gap-4 md:grid-cols-2">
+  {
+    items.map((item) => (
+      <li>
+        <a
+          href={item.url}
+          class="group flex h-full gap-4 rounded-lg border border-border bg-surface p-4 transition-colors duration-150 hover:border-accent"
+        >
+          <LinkIcon kind={linkKind(item.url)} />
+          <span class="flex flex-col gap-2">
+            <span class="font-semibold text-text group-hover:underline group-hover:underline-offset-4">
+              {item.name}
+            </span>
+            <span class="text-text-2">{item.summary}</span>
+            <span class="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-accent">
+              {linkDestination(item.url)}
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M7 17 17 7M9 7h8v8" />
+              </svg>
+            </span>
+          </span>
+        </a>
+      </li>
+    ))
+  }
+</ul>

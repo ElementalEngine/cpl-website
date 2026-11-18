@@ -1,0 +1,40 @@
+# Resources page: mods and tools. Every link must start with https://.
+
+description: The mods CPL games use and the tools CPL players use, with links.
+
+# Shown above the mods list.
+modsNote: These are the only 4 mods you need. Don't subscribe to BBS or any other version.
+
+mods:
+  - name: Better Balanced Game (BBG)
+    summary: Balance changes for civs, leaders and game rules.
+    url: https://steamcommunity.com/sharedfiles/filedetails/?id=2865001760
+  - name: Better Balanced Map (BBM)
+    summary: Fairer map generation for multiplayer games.
+    url: https://steamcommunity.com/sharedfiles/filedetails/?id=3179425402
+  - name: Multiplayer Helper (MPH)
+    summary: Quality-of-life fixes for multiplayer games.
+    url: https://steamcommunity.com/sharedfiles/filedetails/?id=3307282026
+  - name: Better Balanced Game Expanded (BBG Expanded)
+    summary: Extra content that goes with BBG.
+    url: https://steamcommunity.com/sharedfiles/filedetails/?id=3533091092
+
+# Shown after the mods. The invite must be a permanent Discord invite.
+bbgDiscord:
+  name: BBG Discord server
+  summary: Patch notes, bug reports and balance questions for the BBG mods.
+  invite: https://discord.gg/PVATxMgdyJ
+
+tools:
+  - name: CivReplay
+    summary: Upload your games to civgg to get replays and stats.
+    url: https://civgg-five.vercel.app/upload
+  - name: CivDraft
+    summary: Run a leader draft with bans before a game.
+    url: https://civgg-five.vercel.app/draft
+  - name: civgg
+    summary: Deep stats from uploaded games, players and leaders.
+    url: https://civgg-five.vercel.app/
+  - name: Play Your Damn Turn (PYDT)
+    summary: Play turn by turn, at your own pace, by passing save files.
+    url: https://www.playyourdamnturn.com/

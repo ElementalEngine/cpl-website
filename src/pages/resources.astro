@@ -1,7 +1,23 @@
 ---
+import LinkCards from '../components/LinkCards.astro';
+import Notice from '../components/Notice.astro';
+import Section from '../components/Section.astro';
 import Page from '../layouts/Page.astro';
+import { getResources } from '../lib/content';
+
+const { description, modsNote, mods, bbgDiscord, tools } = await getResources();
+
+const modItems = [...mods, ...(bbgDiscord ? [{ ...bbgDiscord, url: bbgDiscord.invite }] : [])];
 ---
 
-<Page title="Resources" description="Mods and tools for CPL games.">
-  <p>The mods and tools CPL uses will appear here soon.</p>
+<Page title="Resources" description={description}>
+  <Fragment slot="sections">
+    <Section title="Mods">
+      {modsNote && <Notice>{modsNote}</Notice>}
+      <LinkCards items={modItems} />
+    </Section>
+    <Section title="Tools">
+      <LinkCards items={tools} />
+    </Section>
+  </Fragment>
 </Page>

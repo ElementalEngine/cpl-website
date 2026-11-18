@@ -5,7 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 import type { AstroIntegration } from 'astro';
 import { defineConfig, fontProviders } from 'astro/config';
 import { addHashesToHeaders, collectInlineHashes } from './scripts/lib/csp';
-import { listHtmlFiles } from './scripts/lib/site-pages';
+import { redirectsFile } from './scripts/lib/redirects';
+import { isLive, isNoindex, robotsTxt, sitemapXml } from './scripts/lib/seo';
+import { listHtmlFiles, urlPathFor } from './scripts/lib/site-pages';
+import { shortLinks } from './src/lib/nav';
+
+// engines and no sitemap is written. Change it to the live domain at go-live.
+const SITE = 'https://cpl.elementalengine.net';
 
 /** Adds a CSP hash for each inline script and style in the built pages to `dist/_headers`. */
 function cspHashes(): AstroIntegration {
@@ -30,8 +36,38 @@ function cspHashes(): AstroIntegration {
   };
 }
 
+/** Writes `robots.txt`, `sitemap.xml` (live only) and `_redirects` from the built pages. */
+function siteFiles(site: string): AstroIntegration {
+  return {
+    name: 'site-files',
+    hooks: {
+      'astro:build:done': async ({ dir, logger }) => {
+        const root = fileURLToPath(dir);
+        const files = await listHtmlFiles(root);
+        const pages = await Promise.all(
+          files.map(async (file) => ({
+            path: urlPathFor(file),
+            html: await readFile(join(root, file), 'utf8'),
+          }))
+        );
+        const built = pages.map((page) => page.path);
+
+        await writeFile(join(root, 'robots.txt'), robotsTxt(site));
+        await writeFile(join(root, '_redirects'), redirectsFile(shortLinks(), built));
+        if (isLive(site)) {
+          const listed = pages.filter((page) => !isNoindex(page.html)).map((page) => page.path);
+          await writeFile(join(root, 'sitemap.xml'), sitemapXml(site, listed));
+          logger.info(`Live: robots.txt allows search engines; sitemap lists ${listed.length} page(s)`);
+        } else {
+          logger.info('Preview: robots.txt blocks search engines; no sitemap');
+        }
+      },
+    },
+  };
+}
+
 export default defineConfig({
-  site: 'https://cpl.elementalengine.net',
+  site: SITE,
   trailingSlash: 'always',
   build: {
     format: 'directory',
@@ -56,7 +92,7 @@ export default defineConfig({
       },
     },
   ],
-  integrations: [cspHashes()],
+  integrations: [cspHashes(), siteFiles(SITE)],
   vite: {
     // Never inline scripts or assets: each becomes a file the CSP allows as 'self'.
     build: { assetsInlineLimit: 0 },

@@ -1,31 +1,29 @@
 ---
+import type { InferGetStaticPropsType } from 'astro';
+import { render } from 'astro:content';
 import Tabs from '../../components/Tabs.astro';
 import Page from '../../layouts/Page.astro';
-import type { NavLink } from '../../lib/nav';
+import { getRuleSets } from '../../lib/content';
+import { ruleTabs } from '../../lib/nav';
 
-export function getStaticPaths() {
-  const sets = [
-    { set: 'game', label: 'Game' },
-    { set: 'pl', label: 'PL' },
-    { set: 'discord', label: 'Discord' },
-  ];
-  const tabs = sets.map(({ set, label }) => ({ label, href: `/rules/${set}/` }));
-  return sets.map(({ set, label }) => ({ params: { set }, props: { label, tabs } }));
+export async function getStaticPaths() {
+  const sets = await getRuleSets();
+  return sets.map(({ id, entry }) => ({ params: { set: id }, props: { entry } }));
 }
 
-interface Props {
-  label: string;
-  tabs: NavLink[];
-}
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-const { label, tabs } = Astro.props;
+const { entry } = Astro.props;
+const { title, description, updatedOn } = entry.data;
+const { Content } = await render(entry);
 ---
 
 <Page
-  title="Rules"
-  documentTitle={`${label} rules · Rules · CPL`}
-  description={`CPL ${label} rules.`}
+  title={title}
+  documentTitle={`${title} · Rules · CPL`}
+  description={description}
+  updatedOn={updatedOn}
 >
-  <Tabs slot="tabs" label="Rule sets" items={tabs} />
-  <p>The {label} rules will appear here soon.</p>
+  <Tabs slot="tabs" label="Rule sets" items={ruleTabs()} />
+  <Content />
 </Page>

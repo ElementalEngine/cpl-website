@@ -45,6 +45,9 @@ Skipped locally if the browser isn't found. Always runs in CI.
 
 Deployed by GitHub Actions from `main`. See `OPERATIONS.md`.
 
+The build also writes `robots.txt`, `sitemap.xml` and `_redirects`. Whether search engines may index the site
+follows one setting, `SITE` in `astro.config.ts`: the preview host is always blocked.
+
 ## Licence
 
 - **Code:** Apache License 2.0 (`LICENSE`).

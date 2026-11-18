@@ -36,6 +36,9 @@ document.addEventListener('click', (event) => {
   } else if (event.target.closest('[data-theme-reset]')) {
     delete root.dataset.theme;
     remember(null);
+    for (const status of document.querySelectorAll('[data-theme-status]')) {
+      status.textContent = 'Done. The site now follows your device setting.';
+    }
   } else {
     return;
   }

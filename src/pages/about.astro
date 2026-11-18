@@ -1,7 +1,54 @@
 ---
+import { render } from 'astro:content';
+import LinkList from '../components/LinkList.astro';
+import Section from '../components/Section.astro';
 import Page from '../layouts/Page.astro';
+import { getAbout } from '../lib/content';
+import { linkDestination } from '../lib/links';
+
+const entry = await getAbout();
+const { description, partnersIntro, partners, streamers } = entry.data;
+const { Content } = await render(entry);
+const link = 'link inline-flex min-h-11 items-center';
 ---
 
-<Page title="About" description="About the Civilization Players League.">
-  <p>About CPL, our partners and streamers will appear here soon.</p>
+<Page title="About CPL" documentTitle="About · CPL" description={description}>
+  <Content />
+  <Fragment slot="sections">
+    <Section title="Partner communities">
+      <p class="text-text-2">{partnersIntro}</p>
+      <ul class="space-y-4">
+        {
+          partners.map((partner) => (
+            <li>
+              <p class="font-semibold">{partner.name}</p>
+              <p class="text-text-2">{partner.summary}</p>
+              <p class="flex flex-wrap gap-x-6">
+                <a class={link} href={partner.invite}>
+                  {partner.name} on Discord
+                </a>
+                {partner.website && (
+                  <a class={link} href={partner.website}>
+                    {partner.name} website
+                  </a>
+                )}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+    {
+      streamers.length > 0 && (
+        <Section title="Streamers">
+          <LinkList
+            items={streamers.map((streamer) => ({
+              ...streamer,
+              destination: linkDestination(streamer.url),
+            }))}
+          />
+        </Section>
+      )
+    }
+  </Fragment>
 </Page>
