@@ -63,6 +63,10 @@ Games are played on…
 - **Change `updatedOn` every time you change the rules.** Use today's date as `YYYY-MM-DD`. The page shows it as
   "Last updated". A date in the future fails the check.
 - Use `##` for sections and `###` for sub-sections. Don't use `#`: the page title is already the top heading.
+- The search box on the rules pages finds rules by their `##` and `###` sections, so give each rule its own
+  heading with words people would search for (for example `### Unit stacking`).
+- Rules that differ between games go under headings that start with the game: `## Civ 6: banned exploits`,
+  `## Civ 7: banned exploits`.
 - The rules on this site are the master copy. If a rule changes, change it here first, then in Discord.
 - The tabs are fixed: General, In-game, Exploits, Cloud, PL, Discord. A new file in `rules/` fails the check.
 

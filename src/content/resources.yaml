@@ -36,9 +36,6 @@ tools:
   - name: CivDraft
     summary: Run a leader draft with bans before a game. Sign in with Steam to start one.
     url: https://civgg-five.vercel.app/draft
-  - name: civgg
-    summary: Deep stats from uploaded games, players and leaders.
-    url: https://civgg-five.vercel.app/
   - name: Play Your Damn Turn (PYDT)
     summary: Play turn by turn, at your own pace, by passing save files.
     url: https://www.playyourdamnturn.com/
