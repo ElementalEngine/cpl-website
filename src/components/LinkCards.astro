@@ -1,48 +1,58 @@
 ---
-// A grid of panels, each one link: icon, name, one line, where it goes.
-import { linkDestination, linkKind } from '../lib/links';
-import LinkIcon from './LinkIcon.astro';
+// A grid of panels. The whole panel opens its main link; extra links (a website,
+// a download, a Discord) sit beside it in the footer and can be clicked on their own.
+import { linkBrand, linkDestination, linkLabel } from '../lib/links';
+import BrandIcon from './BrandIcon.astro';
+import Arrow from './PanelArrow.astro';
+import PanelIcon from './PanelIcon.astro';
+
+interface Extra {
+  label: string;
+  url: string;
+  /** Read by screen readers instead of the label, e.g. "CivFR website". */
+  name: string;
+}
 
 interface Props {
-  items: { name: string; url: string; summary: string }[];
+  items: { name: string; url: string; summary?: string; extras?: Extra[] }[];
 }
 
 const { items } = Astro.props;
+const footerLink = 'inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-accent';
 ---
 
 <ul role="list" class="grid gap-4 md:grid-cols-2">
   {
     items.map((item) => (
-      <li>
-        <a
-          href={item.url}
-          class="group flex h-full gap-4 rounded-lg border border-border bg-surface p-4 transition-colors duration-150 hover:border-accent"
-        >
-          <LinkIcon kind={linkKind(item.url)} />
-          <span class="flex flex-col gap-2">
-            <span class="font-semibold text-text group-hover:underline group-hover:underline-offset-4">
+      <li
+        data-reveal
+        class="panel relative flex h-full flex-col rounded-lg border border-border bg-surface"
+      >
+        <div class="flex flex-1 gap-4 p-4">
+          <PanelIcon url={item.url} />
+          <div class="min-w-0 space-y-1">
+            <a href={item.url} class="panel-link font-semibold text-text">
               {item.name}
-            </span>
-            <span class="text-text-2">{item.summary}</span>
-            <span class="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-accent">
-              {linkDestination(item.url)}
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 24 24"
-                width="16"
-                height="16"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M7 17 17 7M9 7h8v8" />
-              </svg>
-            </span>
+              <span class="sr-only"> ({linkDestination(item.url)})</span>
+            </a>
+            {item.summary && <p class="text-text-2">{item.summary}</p>}
+          </div>
+        </div>
+        <p class="flex flex-wrap items-center gap-x-5 border-t border-border px-4">
+          <span aria-hidden="true" class={footerLink}>
+            <BrandIcon name={linkBrand(item.url)} />
+            {linkLabel(item.url)}
+            <Arrow />
           </span>
-        </a>
+          {item.extras?.map((extra) => (
+            <a href={extra.url} class:list={['panel-extra relative z-10', footerLink]}>
+              <BrandIcon name={linkBrand(extra.url)} />
+              <span aria-hidden="true">{extra.label}</span>
+              <span class="sr-only">{extra.name}</span>
+              <Arrow />
+            </a>
+          ))}
+        </p>
       </li>
     ))
   }

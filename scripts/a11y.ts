@@ -47,6 +47,8 @@ const BROWSERS: Record<string, BrowserChoice> = {
         extraPrefsFirefox: {
           'layout.css.prefers-color-scheme.content-override':
             scheme === 'dark' ? 0 : 1,
+          // Reduced motion: every block is shown at load, so axe checks it all.
+          'ui.prefersReducedMotion': 1,
         },
       }),
     perPageScheme: false,
@@ -124,6 +126,7 @@ try {
         if (choice.perPageScheme) {
           await page.emulateMediaFeatures([
             { name: 'prefers-color-scheme', value: scheme },
+            { name: 'prefers-reduced-motion', value: 'reduce' },
           ]);
         }
         await page.goto(base + urlPathFor(file), { waitUntil: 'load' });

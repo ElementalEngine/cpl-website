@@ -30,6 +30,14 @@ const link = z.strictObject({
   url: httpsUrl,
 });
 
+/** A mod or tool, with up to 3 extra links at the bottom of its panel (a download, a Discord, a repo). */
+const panelLink = link.extend({
+  links: z
+    .array(z.strictObject({ label: line(30), url: httpsUrl }))
+    .max(3, 'must have 3 links or fewer')
+    .default([]),
+});
+
 /** `src/content/home.yaml` */
 export const homeSchema = z.strictObject({
   intro: description,
@@ -47,11 +55,10 @@ export const rulesSchema = z.strictObject({
 export const resourcesSchema = z.strictObject({
   description,
   modsNote: line(200).optional(),
-  mods: z.array(link).min(1, 'must list at least one mod'),
-  bbgDiscord: z
-    .strictObject({ name: line(80), summary: line(160), invite: discordInvite })
-    .optional(),
-  tools: z.array(link).min(1, 'must list at least one tool'),
+  mods: z.array(panelLink).min(1, 'must list at least one mod'),
+  tools: z
+    .array(panelLink)
+    .min(1, 'must list at least one tool'),
 });
 
 /** `src/content/about.md` front matter. */

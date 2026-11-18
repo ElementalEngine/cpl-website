@@ -20,12 +20,12 @@ const heading = 'text-xl font-semibold';
       <Button href={site.discordInvite} variant="primary">Join Discord</Button>
     </div>
 
-    <section class="space-y-4" aria-labelledby="join">
+    <section data-reveal class="space-y-4" aria-labelledby="join">
       <h2 id="join" class={heading}>How to join</h2>
       <ol role="list" class="grid gap-4 md:grid-cols-3">
         {
           joinSteps.map((step, i) => (
-            <li class="flex gap-3 rounded-lg bg-surface p-4">
+            <li data-reveal class="flex gap-3 rounded-lg bg-surface p-4">
               <span aria-hidden="true" class="text-xl font-bold text-accent">
                 {i + 1}
               </span>
@@ -38,7 +38,7 @@ const heading = 'text-xl font-semibold';
 
     {
       tournaments.length > 0 && (
-        <section class="space-y-4" aria-labelledby="on-now">
+        <section data-reveal class="space-y-4" aria-labelledby="on-now">
           <h2 id="on-now" class={heading}>On now</h2>
           <p class="text-text-2">Leagues and cups running now, with their standings.</p>
           <ul>
@@ -54,7 +54,7 @@ const heading = 'text-xl font-semibold';
       )
     }
 
-    <section class="max-w-reading space-y-4" aria-labelledby="ready">
+    <section data-reveal class="max-w-reading space-y-4" aria-labelledby="ready">
       <h2 id="ready" class={heading}>Ready to play?</h2>
       <p class="text-text-2">Everything happens on Discord: games, sign-ups and results.</p>
       <Button href={site.discordInvite} variant="primary">Join Discord</Button>

@@ -225,6 +225,108 @@
   .prose hr {
     border-top: 1px solid var(--color-border);
   }
+
+  /* Panels: the main link covers the whole panel; extra links sit above it. */
+  .panel {
+    transition:
+      translate 200ms ease,
+      box-shadow 200ms ease,
+      border-color 150ms ease;
+  }
+  .panel-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .panel-link:focus-visible {
+    outline: none;
+  }
+  .panel-link:focus-visible::after {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .panel:hover {
+    border-color: var(--color-accent);
+  }
+  .panel:hover .panel-link,
+  .panel-extra:hover {
+    text-decoration-line: underline;
+    text-underline-offset: 4px;
+  }
+  .panel-icon,
+  .panel-arrow {
+    transition: translate 200ms ease, scale 200ms ease;
+  }
+
+  /* Buttons: lift on hover, press on click. */
+  .btn {
+    transition:
+      translate 150ms ease,
+      scale 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  /* Header links (desktop): an underline slides in from the left on hover. */
+  @media (min-width: 64rem) {
+    .nav-link {
+      position: relative;
+    }
+    .nav-link:not([aria-current])::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0.75rem;
+      bottom: 0.5rem;
+      height: 2px;
+      border-radius: 1px;
+      background-color: var(--color-accent);
+      scale: 0 1;
+      transform-origin: left;
+      transition: scale 200ms ease;
+    }
+    .nav-link:not([aria-current]):hover::after {
+      scale: 1 1;
+    }
+  }
+}
+
+/* Movement only for visitors who haven't asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .panel:hover,
+  .panel:focus-within {
+    translate: 0 -3px;
+    box-shadow: 0 12px 24px -14px color-mix(in srgb, var(--color-accent) 70%, transparent);
+  }
+  .panel:hover .panel-icon {
+    scale: 1.08;
+  }
+  .panel:hover .panel-arrow {
+    translate: 2px -2px;
+  }
+  .btn:hover {
+    translate: 0 -2px;
+    box-shadow: 0 8px 18px -10px color-mix(in srgb, var(--color-accent) 80%, transparent);
+  }
+  .btn:active {
+    translate: 0 0;
+    scale: 0.97;
+    box-shadow: none;
+  }
+  /* Set by the reveal script on blocks below the fold; removed as they scroll in. */
+  .reveal {
+    opacity: 0;
+    translate: 0 16px;
+    transition:
+      opacity 500ms ease,
+      translate 500ms ease;
+  }
+  .reveal.revealed {
+    opacity: 1;
+    translate: 0 0;
+  }
+  li.reveal:nth-child(2n) {
+    transition-delay: 80ms;
+  }
 }
 
 /* Cross-page fade where supported; other browsers just change page. */

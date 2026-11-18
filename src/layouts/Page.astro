@@ -12,6 +12,8 @@ interface Props {
   description: string;
   updatedOn?: Date;
   noindex?: boolean;
+  /** Use the full page width (for panel grids); text stays at reading width. */
+  wide?: boolean;
 }
 
 const {
@@ -20,11 +22,12 @@ const {
   description,
   updatedOn,
   noindex,
+  wide = false,
 } = Astro.props;
 ---
 
 <Base title={documentTitle} description={description} noindex={noindex}>
-  <article class="mx-auto max-w-reading">
+  <article class:list={['mx-auto', wide ? 'max-w-page' : 'max-w-reading']}>
     <h1 class="mb-6 text-2xl font-bold md:text-3xl">{title}</h1>
     <slot name="tabs" />
     {updatedOn && <LastUpdated date={updatedOn} />}

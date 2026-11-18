@@ -11,13 +11,13 @@ const { kind } = Astro.props;
 
 <span
   aria-hidden="true"
-  class="inline-flex size-10 shrink-0 items-center justify-center rounded-lg bg-bg text-accent"
+  class="panel-icon inline-flex size-14 shrink-0 items-center justify-center rounded-lg bg-bg text-accent"
 >
   <svg
     focusable="false"
     viewBox="0 0 24 24"
-    width="22"
-    height="22"
+    width="28"
+    height="28"
     fill="none"
     stroke="currentColor"
     stroke-width="2"
@@ -45,6 +45,7 @@ const { kind } = Astro.props;
         </>
       )
     }
+    {kind === 'code' && <path d="m8 7-5 5 5 5M16 7l5 5-5 5" />}
     {
       kind === 'web' && (
         <>
