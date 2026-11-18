@@ -1,7 +1,6 @@
 ---
 title: General rules
-description: "The general rules for CPL games: subs, leaving, drops, remaps, scraps, irrelevancy, voting,
-conceding and punishments."
+description: "The general rules for CPL games: subs, leaving, drops, remaps, scraps, irrelevancy, voting, conceding and punishments."
 updatedOn: 2026-11-18
 ---
 
