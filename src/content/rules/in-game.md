@@ -33,17 +33,32 @@ the vote.
 - **No gold or strategic resource trading**
 - **No military alliances**
 
-### Diplomatic victory in Always War games
+### Diplomatic victory
 
-In any Always War game (FFA, Teamers or tournament), turn off the Diplomatic victory when the lobby is first
-created.
+- In any Always War game (FFA, Teamers or tournament), turn off the Diplomatic victory when the lobby is first
+  created.
+- Turn it off in every No Diplo game too: FFA No Diplo games, and team games with more than 2 teams. In games with
+  2 teams, the Diplomatic victory is allowed.
+
+### Team games
+
+A team game has 2 or more teams of 2 or more players, chosen before the game starts: 2v2, 3v3, 4v4 and so on, or
+other set-ups such as 2v2v2 if all players accept them. If teams aren't chosen before the game starts, it is an FFA
+game, even if alliances form.
+
+### Using Discord for your games
+
+Start and run your games in the CPL Discord, and watch the Discord chat when a player drops, so they can get help
+rejoining. You don't have to stay in the voice channel during a game, but it is encouraged. In tournament games,
+every player must be in the voice channel at all times.
 
 ### Custom host rules
 
 - To add your own rule to a game, for example banning a pantheon, post the rule in #voting before you post the
-  vote. This shows the rule wasn't made after people started voting. For example, it stops a host banning
-  Fractal after seeing the votes for Fractal come in.
+  vote. This shows the rule wasn't made after people started voting. For example, it stops a host banning Fractal
+  after seeing the votes for Fractal come in.
 - Any host rule is allowed, unless it allows toxicity or cheating, or benefits one player or a minority.
+- A host rule can't go against a CPL rule. It can only change game settings and vote thresholds.
 
 ### Novice games
 
@@ -66,8 +81,8 @@ players must be staged and advertised in the regular FFA channels.
 ### Backing out of a game
 
 The game starts when the final plus is clicked on the game settings vote. If no settings vote is used, you may
-leave without penalty until you click Ready in the game. After that, see
-[Leaving a game](/rules/general/#leaving-a-game).
+leave without penalty until you click Ready in the game. After that, see [Leaving a
+game](/rules/general/#leaving-a-game).
 
 ### Multiple drafts
 
@@ -81,8 +96,8 @@ You must trade all of your draft picks.
 
 ### Drafting civs you don't own
 
-- If your draft includes DLC civs you don't own, pick from the options you have left, or trade (see
-  [Draft trading](#draft-trading)).
+- If your draft includes DLC civs you don't own, pick from the options you have left, or trade (see [Draft
+  trading](#draft-trading)).
 - If you don't own any civ in your draft, the host drafts you a civ separately with the `.draft-1` command, after
   everyone else has picked. You must pick the first civ in that draft that nobody chose and that isn't banned.
 
@@ -94,7 +109,14 @@ Public communication must be in English. Using another language counts as privat
 
 ### Private communication
 
-Game-related private communication between opposing players is not allowed.
+- Game-related private communication between opposing players is not allowed, unless the host holds a vote to allow
+  it and a majority of players agree.
+- In FFA games, all game-related chat must be public. Chat about anything else may be private.
+- In a no-communication game, don't discuss anything that could give information away, including about yourself:
+  your location, war declarations, the quality of your land and so on. Talk that isn't about the game, like the
+  weather, is fine. Breaking this is a minor to major infraction.
+- Not following the rules voted for a game can get you disqualified (reported last), and staff may take further
+  action.
 
 ### Turn timer changes
 
@@ -129,8 +151,7 @@ In Civ 7, trading settlements is allowed (not with the AI), only as part of a pe
 
 You may liberate any city, as long as that doesn't bring a dead civilization back into the game. A civilization is
 dead as soon as its last city is captured, and may not be brought back during the same turn. Dead city-states may
-be
-liberated and brought back into the game.
+be liberated and brought back into the game.
 
 ### Trading with AI civilizations
 
@@ -141,10 +162,10 @@ The AI often makes unbalanced deals, so trading with the AI is limited to:
 - peace deals
 - ceding cities
 
-Accepting delegations and embassies is also allowed. Every other deal is not: for example new alliances or
-friendships that aren't renewals, or trading cities, strategic or luxury resources, gold, great works, relics or
-diplomatic favour. Trade routes are not limited: players may send trade routes to anyone, including the AI, even in
-No Diplo games.
+Accepting delegations and embassies is also allowed. Every other deal is not: for example trading cities, strategic
+or luxury resources, gold, great works, relics or diplomatic favour. For friendships and alliances with the AI, see
+[Friendships and alliances](#friendships-and-alliances). Trade routes are not limited: players may send trade
+routes to anyone, including the AI, even in No Diplo games.
 
 ### Friendships and alliances
 
@@ -175,16 +196,21 @@ teammates.
 ### AFK players
 
 - If you think a player has gone AFK, pause the game in the last 20 seconds of the turn. Ask the player to answer,
-  both in the game chat and out loud in the Discord voice channel. If they don't answer in the game chat within
-  5 minutes, the host must kick them at the start of the next turn. Report a player kicked for being AFK as a
-  quitter at the end of the game.
+  both in the game chat and out loud in the Discord voice channel. If they don't answer in the game chat within 5
+  minutes, the host must kick them at the start of the next turn. Report a player kicked for being AFK as a quitter
+  at the end of the game.
 - Going AFK or quitting for less than 10 minutes more than once, or calling this rule too often in the same game,
   may be unsportsmanlike conduct. Moderators decide.
 - You don't need this rule during breaks or pauses for votes, which are AFK time anyway. After a break, players
   count as AFK 1 minute after it ends.
-- The AFK rule doesn't apply to players who disconnected. For disconnects, see the
-  [drop policy](/rules/general/#drop-policy).
+- The AFK rule doesn't apply to players who disconnected. For disconnects, see the [drop
+  policy](/rules/general/#drop-policy).
 - A player who was AFK but not kicked may still be punished, based on the game log or the turn saves.
+
+### MPH commands
+
+MPH text commands are banned: they make the game very unstable, and using one gets at least a major penalty. MPH
+menu functions may be used as these rules describe.
 
 ### Infinite turns
 
@@ -207,12 +233,39 @@ A CPL member in the voice channel of a game they aren't playing must mute or dea
 
 ## Relobbies
 
+### When a relobby is granted
+
+A relobby is when the host loads the latest autosave or manual save, usually from the start of the turn where the
+problem first happened. Relobbies are for fixing technical problems, and they are the last thing to try. The host
+decides, but must grant a relobby when:
+
+- a player can't rejoin the game
+- a vote to relobby to make the game more stable passes (two-thirds majority)
+- wrong mods were hosted, or a wanted mod was missing, by mistake (the relobby then means a remap)
+- an in-game bug needs fixing, such as a bug with pantheons, religious beliefs, a leader ability or yields
+- the AI took actions for a player, and the player wants to undo them
+
+### Rejoining a relobby
+
+- Every original player must rejoin. Players have the usual 10 minutes, from when the relobby is up.
+- The host must re-host the relobby, or appoint another host, within 10 minutes. The host must tell players in
+  writing, in Discord, that a relobby is happening.
+- If a player hasn't rejoined after 10 minutes, the lobby can choose to: find a sub (this always counts as a sub);
+  scrap the game; concede the game by its exact score (gentlemen's agreements aren't covered by the rules); or
+  launch the game with an AI in place of the missing player.
+- If some players want to carry on with an AI, there are at most 10 more minutes to agree. A game can't be left
+  waiting for more than 20 minutes in total.
+- The host may ask players to rejoin again if their indicators show grey, or anything else suggests the lobby is
+  unstable or out of sync.
+- Not rejoining a relobby of a ranked game counts as quitting.
+
 ### Repeat your moves after a relobby
 
-If the game is relobbied to the start of the turn or to an earlier turn, players must repeat their actions.
-Different important actions, such as war moves, recruiting Great People, or chopping walls or wonders, may lead to
-a
-relobby, an infraction or both.
+If the game is relobbied to the start of the turn or to an earlier turn, players must repeat their actions as
+closely as they happened: the same war moves in the same order, the same moves with civilian units, the same
+production choices and so on. Different important actions, such as war moves, recruiting Great People, or chopping
+walls or wonders, may lead to a relobby, an infraction or both. If a player proves that a move was different, the
+players are asked to find a solution together or, if they can't, to relobby again.
 
 ### Desyncs
 
@@ -225,8 +278,8 @@ relobby, an infraction or both.
 
 ### Asking for a relobby
 
-To ask for a relobby for something that doesn't normally need one, see
-[Relobby votes](/rules/general/#relobby-votes).
+To ask for a relobby for something that doesn't normally need one, see [Relobby
+votes](/rules/general/#relobby-votes).
 
 ## End of the game
 
