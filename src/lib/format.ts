@@ -22,3 +22,9 @@ export function formatDate(date: Date): string {
 export function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
+
+/** "Updated" times: "17 Nov 2026, 03:17 UTC". */
+export function formatDateTime(date: Date): string {
+  const time = date.toISOString().slice(11, 16);
+  return `${formatDate(date)}, ${time} UTC`;
+}

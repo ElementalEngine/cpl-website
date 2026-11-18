@@ -53,6 +53,11 @@ export function shownGames(site: Site): GameId[] {
   return GAMES.map(([id]) => id).filter((id) => gameSections(site, id).length > 0);
 }
 
+/** Shown games with their Tournaments section switched on. */
+export function tournamentGames(site: Site): GameId[] {
+  return shownGames(site).filter((game) => site.games[game].tournaments);
+}
+
 /** Header menu: each shown game (to its first section), then the fixed pages. */
 export function mainNav(site: Site): NavLink[] {
   const games = shownGames(site).map((game) => ({

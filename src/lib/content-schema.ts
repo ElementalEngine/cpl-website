@@ -1,4 +1,6 @@
 import { z } from 'astro/zod';
+import { challongeId } from './challonge';
+import { ruleTabs } from './nav';
 import { discordInvite, httpsUrl } from './site-schema';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -84,4 +86,44 @@ export const aboutSchema = z.strictObject({
 export const privacySchema = z.strictObject({
   description,
   updatedOn: pastDate,
+});
+
+const rulePages = ruleTabs().map((tab) => tab.href);
+
+/** A bracket on Challonge: the link as copied from the browser, plus its API id. */
+const bracket = z
+  .strictObject({ name: line(60), challonge: z.string() })
+  .transform(({ name, challonge }, ctx) => {
+    const apiId = challongeId(challonge);
+    if (!apiId) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['challonge'],
+        message: "must be a Challonge bracket link, e.g. https://challonge.com/abc123 (copy it from the bracket's page)",
+      });
+      return z.NEVER;
+    }
+    return { name, link: challonge, apiId };
+  });
+
+/** `src/content/tournaments/<slug>.yaml`. The file name is the page anchor. */
+export const tournamentSchema = z.strictObject({
+  name: line(80),
+  game: z.enum(['civ6', 'civ7']),
+  order: z.number().int().min(1).max(99).optional(),
+  format: line(60).optional(),
+  description: line(300).optional(),
+  rules: z
+    .string()
+    .refine((rules) => rulePages.includes(rules) || /^https:\/\/\S+$/.test(rules), {
+      message: `must be a rules page (${rulePages.join(', ')}) or a link starting with https://`,
+    })
+    .optional(),
+  brackets: z.array(bracket).max(10, 'must have 10 brackets or fewer').default([]),
+  winners: z
+    .array(line(80))
+    .min(1, 'must name at least the winner')
+    .max(3, 'must name 3 or fewer (winner, 2nd, 3rd)')
+    .optional(),
+  endedOn: pastDate.optional(),
 });

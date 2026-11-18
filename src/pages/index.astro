@@ -2,13 +2,27 @@
 import Button from '../components/Button.astro';
 import Base from '../layouts/Base.astro';
 import { getHome, getSite } from '../lib/content';
-import { gameLabel, shownGames } from '../lib/nav';
+import { gameLabel, tournamentGames } from '../lib/nav';
+import { getTournaments } from '../lib/tournament-data';
 
 const site = await getSite();
 const { intro, joinSteps } = await getHome();
-const tournaments = shownGames(site)
-  .filter((game) => site.games[game].tournaments)
-  .map((game) => ({ label: `${gameLabel(game)} tournaments`, href: `/${game}/tournaments/` }));
+const games = tournamentGames(site);
+const onNow = (
+  await Promise.all(
+    games.map(async (game) =>
+      (await getTournaments(game)).active.map(({ id, data }) => ({
+        name: data.name,
+        meta: [games.length > 1 && gameLabel(game), data.format].filter(Boolean).join(' · '),
+        href: `/${game}/tournaments/#${id}`,
+      }))
+    )
+  )
+).flat();
+const allTournaments = games.map((game) => ({
+  label: `All ${gameLabel(game)} tournaments`,
+  href: `/${game}/tournaments/`,
+}));
 const heading = 'text-xl font-semibold';
 ---
 
@@ -37,12 +51,31 @@ const heading = 'text-xl font-semibold';
     </section>
 
     {
-      tournaments.length > 0 && (
+      games.length > 0 && (
         <section data-reveal class="space-y-4" aria-labelledby="on-now">
           <h2 id="on-now" class={heading}>On now</h2>
-          <p class="text-text-2">Leagues and cups running now, with their standings.</p>
+          {onNow.length > 0 ? (
+            <ul role="list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {onNow.map((item) => (
+                <li
+                  data-reveal
+                  class="panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4"
+                >
+                  <a href={item.href} class="panel-link font-semibold text-text">
+                    {item.name}
+                  </a>
+                  {item.meta && <p class="text-text-2">{item.meta}</p>}
+                  <p aria-hidden="true" class="mt-auto pt-2 text-sm font-semibold text-accent">
+                    Standings →
+                  </p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="text-text-2">No tournaments are running right now.</p>
+          )}
           <ul>
-            {tournaments.map((item) => (
+            {allTournaments.map((item) => (
               <li>
                 <a class="link inline-flex min-h-11 items-center" href={item.href}>
                   {item.label}
