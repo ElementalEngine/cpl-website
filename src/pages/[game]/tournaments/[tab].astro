@@ -1,0 +1,176 @@
+---
+import Bracket from '../../../components/Bracket.astro';
+import Medal from '../../../components/Medal.astro';
+import Tabs from '../../../components/Tabs.astro';
+import TournamentBadge from '../../../components/TournamentBadge.astro';
+import Page from '../../../layouts/Page.astro';
+import { getSite } from '../../../lib/content';
+import { formatDate, isoDate } from '../../../lib/format';
+import { linkDestination } from '../../../lib/links';
+import {
+  gameLabel,
+  gameSections,
+  RULE_SETS,
+  TOURNAMENT_TABS,
+  tournamentGames,
+  tournamentTabs,
+  type GameId,
+} from '../../../lib/nav';
+import { getBracketData, getTournaments } from '../../../lib/tournament-data';
+
+type Tab = (typeof TOURNAMENT_TABS)[number];
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return tournamentGames(site).flatMap((game) =>
+    TOURNAMENT_TABS.map((tab) => ({ params: { game, tab: tab.id }, props: { game, tab } }))
+  );
+}
+
+interface Props {
+  game: GameId;
+  tab: Tab;
+}
+
+const { game, tab } = Astro.props;
+const site = await getSite();
+const label = gameLabel(game);
+const all = await getTournaments(game);
+const isPast = tab.id === 'past-winners';
+const active = isPast ? [] : all.active.filter((entry) => entry.data.category === tab.id);
+const past = isPast ? all.past : [];
+const { states } = await getBracketData(game);
+const places = ['Winner', '2nd', '3rd'];
+
+/** "PL rules" for a rules page on this site, "Rules" for a link elsewhere. */
+function rulesLabel(href: string): string {
+  const set = RULE_SETS.find(({ id }) => href === `/rules/${id}/`);
+  return set ? `${set.label} rules` : 'Rules';
+}
+
+const jumpLinks = active.map((entry) => ({ label: entry.data.name, href: `#${entry.id}` }));
+const showJumpList = jumpLinks.length > 1;
+// Boxed from md up; on phones the box would squeeze the tables.
+const block = 'scroll-mt-4 space-y-4 md:rounded-lg md:border md:border-border md:bg-surface md:p-6';
+const title = isPast ? 'Past winners' : `${tab.label} tournaments`;
+const description = isPast
+  ? `Winners of past CPL ${label} tournaments.`
+  : `CPL ${label} ${tab.label} tournaments with their Challonge standings.`;
+---
+
+<Page
+  title={`${label} tournaments`}
+  documentTitle={`${title} · ${label} · CPL`}
+  description={description}
+  wide
+>
+  <Fragment slot="tabs">
+    <Tabs label={`${label} sections`} items={gameSections(site, game)} />
+    <Tabs label="Tournament types" items={tournamentTabs(game)} />
+  </Fragment>
+
+  <div
+    slot="sections"
+    class:list={[showJumpList && 'lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10']}
+  >
+    {
+      showJumpList && (
+        <nav aria-labelledby="on-this-page" class="mb-8 lg:mb-0">
+          <h2 id="on-this-page" class="text-sm font-semibold text-text-2">
+            On this page
+          </h2>
+          <ul class="mt-2">
+            {jumpLinks.map((item) => (
+              <li>
+                <a class="link inline-flex min-h-11 items-center" href={item.href}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <div class="min-w-0 space-y-8">
+      {
+        !isPast && active.length === 0 && (
+          <p>No {tab.label} tournaments are running right now.</p>
+        )
+      }
+
+      {
+        active.map(({ id, data }) => (
+          <section id={id} data-reveal class={block} aria-labelledby={`${id}-heading`}>
+            <div class="space-y-2">
+              <div class="flex items-center gap-4">
+                <TournamentBadge slug={id} />
+                <h2 id={`${id}-heading`} class="text-xl font-semibold">
+                  {data.name}
+                </h2>
+              </div>
+              {data.format && <p class="text-text-2">{data.format}</p>}
+              {data.description && <p>{data.description}</p>}
+              {data.rules && (
+                <p>
+                  <a class="link inline-flex min-h-11 min-w-11 items-center" href={data.rules}>
+                    {rulesLabel(data.rules)}
+                    {data.rules.startsWith('https://') && (
+                      <span class="sr-only">
+                        {' '}
+                        for {data.name} ({linkDestination(data.rules)})
+                      </span>
+                    )}
+                  </a>
+                </p>
+              )}
+            </div>
+            {data.brackets.length === 0 && <p class="text-text-2">Starting soon.</p>}
+            {data.brackets.map((bracket) => (
+              <Bracket
+                tournament={data.name}
+                name={bracket.name}
+                link={bracket.link}
+                state={states.get(bracket.apiId) ?? { kind: 'none' as const }}
+                reportUrl={site.discordInvite}
+              />
+            ))}
+          </section>
+        ))
+      }
+
+      {isPast && past.length === 0 && <p>No past winners yet.</p>}
+
+      {
+        past.length > 0 && (
+          <ul role="list" class="grid gap-4 md:grid-cols-2">
+            {past.map(({ id, data }) => (
+              <li data-reveal class="space-y-2 rounded-lg border border-border bg-surface p-4">
+                <div class="flex items-center gap-4">
+                  <TournamentBadge slug={id} />
+                  <h2 class="font-semibold">{data.name}</h2>
+                </div>
+                <dl class="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1">
+                  {(data.winners ?? []).map((winner, i) => (
+                    <>
+                      <dt class="flex items-center gap-2 text-text-2">
+                        <Medal place={(i + 1) as 1 | 2 | 3} />
+                        {places[i]}
+                      </dt>
+                      <dd>{winner}</dd>
+                    </>
+                  ))}
+                </dl>
+                {data.endedOn && (
+                  <p class="text-sm text-muted">
+                    Ended <time datetime={isoDate(data.endedOn)}>{formatDate(data.endedOn)}</time>
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+</Page>

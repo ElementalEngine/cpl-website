@@ -1,0 +1,21 @@
+---
+// A gold, silver or bronze medal beside a past winner's place. Decorative: the place is always written next to it.
+interface Props {
+  place: 1 | 2 | 3;
+}
+
+const METALS = {
+  1: { face: '#e3b341', edge: '#9a7417' },
+  2: { face: '#c3cad3', edge: '#7d8693' },
+  3: { face: '#c98a4b', edge: '#8a5527' },
+} as const;
+
+const { face, edge } = METALS[Astro.props.place];
+---
+
+<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20" class="shrink-0">
+  <path d="M6.5 2h4.5l2.5 7h-4.5z" fill="#2f6fb3"></path>
+  <path d="M17.5 2H13l-2.5 7H15z" fill="#b23a3a"></path>
+  <circle cx="12" cy="15.5" r="6.5" fill={face} stroke={edge} stroke-width="1.2"></circle>
+  <circle cx="12" cy="15.5" r="3.8" fill="none" stroke={edge} stroke-width="1"></circle>
+</svg>

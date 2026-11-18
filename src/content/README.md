@@ -41,7 +41,7 @@ propose a change. If a check fails, the live site keeps its last good version.
 | `rules/pl.md` | Rules → PL | The Premier League rules |
 | `rules/discord.md` | Rules → Discord | The Discord server rules |
 | `resources.yaml` | Resources | `modsNote`, the `mods` list, the `tools` list, extra `links` on mods and tools |
-| `tournaments/*.yaml` | Civ 6 → Tournaments, Home "On now" | One file per tournament: running ones and past winners |
+| `tournaments/*.yaml` | Civ 6 → Tournaments (tabs Cloud, FFA, PL, Past winners), Home "On now" | One file per tournament: running ones and past winners |
 | `about.md` | About | The text about CPL, `partnersIntro`, the `partners` list, the `streamers` list |
 | `privacy.md` | Privacy | Owner only |
 | `site.yaml` | Every page | Owner only: Discord invite, which games and sections show, footer links |
@@ -88,8 +88,8 @@ tools:
 
 ### Tournaments (`tournaments/*.yaml`)
 
-One file per tournament. **The file name is part of the web address**: `pl-season-7.yaml` is
-`/civ6/tournaments/#pl-season-7`. Use lowercase letters, numbers and hyphens, and never rename it.
+One file per tournament. **The file name is part of the web address**: `pl-season-7.yaml` in the PL tab is
+`/civ6/tournaments/pl/#pl-season-7`. Use lowercase letters, numbers and hyphens, and never rename it.
 For a new season, make a new file (copy the last one) instead of editing the old one.
 
 A running tournament:
@@ -97,6 +97,7 @@ A running tournament:
 ```yaml
 name: CPL Premier League Season 7
 game: civ6
+category: pl
 order: 1
 format: League, 3 divisions
 description: Weekly league games. Top of each division goes up.
@@ -108,8 +109,9 @@ brackets:
     challonge: https://challonge.com/CPL_PL_S7_D2
 ```
 
-- `name` and `game` (`civ6` or `civ7`) are required. Everything else is optional.
-- `order`: a number from 1 to 99. Lower numbers show first; tournaments without one come after, by file name.
+- `name` and `game` (`civ6` or `civ7`) are required.
+- `category` is required while it runs: the tab it shows under, `cloud`, `ffa` or `pl`.
+- `order`: a number from 1 to 99. Lower numbers show first in their tab; tournaments without one come after, by file name.
 - `format`: short, up to 60 characters. `description`: one line, up to 300 characters.
 - `rules`: a rules page on this site (`/rules/general/`, `/rules/in-game/`, `/rules/exploits/`, `/rules/cloud/`,
   `/rules/pl/`, `/rules/discord/`) or a link starting with `https://`.
@@ -119,7 +121,7 @@ brackets:
 - No `brackets` yet: the page shows the tournament as "Starting soon".
 
 **When a tournament ends**, add `winners` (the winner, or the top 3 in order) and `endedOn`. It then moves to
-**Past winners** at the bottom of the page and its brackets are no longer shown:
+the **Past winners** tab and its brackets are no longer shown (`category` can stay):
 
 ```yaml
 winners: [Player A, Player B, Player C]

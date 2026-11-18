@@ -1,6 +1,6 @@
 import { z } from 'astro/zod';
 import { challongeId } from './challonge';
-import { ruleTabs } from './nav';
+import { ruleTabs, TOURNAMENT_CATEGORIES } from './nav';
 import { discordInvite, httpsUrl } from './site-schema';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -107,23 +107,29 @@ const bracket = z
   });
 
 /** `src/content/tournaments/<slug>.yaml`. The file name is the page anchor. */
-export const tournamentSchema = z.strictObject({
-  name: line(80),
-  game: z.enum(['civ6', 'civ7']),
-  order: z.number().int().min(1).max(99).optional(),
-  format: line(60).optional(),
-  description: line(300).optional(),
-  rules: z
-    .string()
-    .refine((rules) => rulePages.includes(rules) || /^https:\/\/\S+$/.test(rules), {
-      message: `must be a rules page (${rulePages.join(', ')}) or a link starting with https://`,
-    })
-    .optional(),
-  brackets: z.array(bracket).max(10, 'must have 10 brackets or fewer').default([]),
-  winners: z
-    .array(line(80))
-    .min(1, 'must name at least the winner')
-    .max(3, 'must name 3 or fewer (winner, 2nd, 3rd)')
-    .optional(),
-  endedOn: pastDate.optional(),
-});
+export const tournamentSchema = z
+  .strictObject({
+    name: line(80),
+    game: z.enum(['civ6', 'civ7']),
+    category: z.enum(TOURNAMENT_CATEGORIES).optional(),
+    order: z.number().int().min(1).max(99).optional(),
+    format: line(60).optional(),
+    description: line(300).optional(),
+    rules: z
+      .string()
+      .refine((rules) => rulePages.includes(rules) || /^https:\/\/\S+$/.test(rules), {
+        message: `must be a rules page (${rulePages.join(', ')}) or a link starting with https://`,
+      })
+      .optional(),
+    brackets: z.array(bracket).max(10, 'must have 10 brackets or fewer').default([]),
+    winners: z
+      .array(line(80))
+      .min(1, 'must name at least the winner')
+      .max(3, 'must name 3 or fewer (winner, 2nd, 3rd)')
+      .optional(),
+    endedOn: pastDate.optional(),
+  })
+  .refine((tournament) => tournament.winners || tournament.category, {
+    path: ['category'],
+    message: `a running tournament needs a category (${TOURNAMENT_CATEGORIES.join(', ')}); add winners when it has ended`,
+  });

@@ -2,7 +2,7 @@
 import Button from '../components/Button.astro';
 import Base from '../layouts/Base.astro';
 import { getHome, getSite } from '../lib/content';
-import { gameLabel, tournamentGames } from '../lib/nav';
+import { gameLabel, TOURNAMENT_TABS, tournamentGames, tournamentTabs } from '../lib/nav';
 import { getTournaments } from '../lib/tournament-data';
 
 const site = await getSite();
@@ -11,17 +11,20 @@ const games = tournamentGames(site);
 const onNow = (
   await Promise.all(
     games.map(async (game) =>
-      (await getTournaments(game)).active.map(({ id, data }) => ({
-        name: data.name,
-        meta: [games.length > 1 && gameLabel(game), data.format].filter(Boolean).join(' · '),
-        href: `/${game}/tournaments/#${id}`,
-      }))
+      (await getTournaments(game)).active.map(({ id, data }) => {
+        const tab = TOURNAMENT_TABS.find((item) => item.id === data.category) ?? TOURNAMENT_TABS[0];
+        return {
+          name: data.name,
+          meta: [games.length > 1 && gameLabel(game), tab.label, data.format].filter(Boolean).join(' · '),
+          href: `/${game}/tournaments/${tab.id}/#${id}`,
+        };
+      })
     )
   )
 ).flat();
 const allTournaments = games.map((game) => ({
   label: `All ${gameLabel(game)} tournaments`,
-  href: `/${game}/tournaments/`,
+  href: tournamentTabs(game)[0].href,
 }));
 const heading = 'text-xl font-semibold';
 ---

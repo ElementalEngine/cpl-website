@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Icône du site : l'hexagone du logo (bandeau), doré sur fond sombre. -->
+  <rect width="64" height="64" rx="14" fill="#11151c"/>
+  <g fill="none" stroke="#d4a259" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M32 8 52 19.5v25L32 56 12 44.5v-25Z"/>
+    <path d="M32 19v26M22.5 25.5 32 31.5l9.5-6"/>
+  </g>
+</svg>
