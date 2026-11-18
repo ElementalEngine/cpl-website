@@ -81,6 +81,13 @@
   .js .theme-toggle {
     display: inline-flex;
   }
+  /* Rules search needs JavaScript: hidden without it. */
+  .rules-search {
+    display: none;
+  }
+  .js .rules-search {
+    display: block;
+  }
   /* "Use device setting": a plain <button data-theme-reset> in content, styled like a secondary button. */
   [data-theme-reset] {
     display: none;

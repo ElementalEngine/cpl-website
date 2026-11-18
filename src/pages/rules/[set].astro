@@ -1,6 +1,7 @@
 ---
 import type { InferGetStaticPropsType } from 'astro';
 import { render } from 'astro:content';
+import RulesSearch from '../../components/RulesSearch.astro';
 import Tabs from '../../components/Tabs.astro';
 import Page from '../../layouts/Page.astro';
 import { getRuleSets } from '../../lib/content';
@@ -24,6 +25,9 @@ const { Content } = await render(entry);
   description={description}
   updatedOn={updatedOn}
 >
-  <Tabs slot="tabs" label="Rule sets" items={ruleTabs()} />
+  <Fragment slot="tabs">
+    <Tabs label="Rule sets" items={ruleTabs()} />
+    <RulesSearch />
+  </Fragment>
   <Content />
 </Page>

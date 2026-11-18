@@ -1,0 +1,22 @@
+---
+// Search box for the rules pages. Needs JavaScript, so it stays hidden without it;
+// every rules page still works as a normal page.
+---
+
+<form role="search" data-rules-search class="rules-search mb-6 space-y-3">
+  <label for="rules-search-input" class="block font-semibold">Search the rules</label>
+  <input
+    id="rules-search-input"
+    type="search"
+    autocomplete="off"
+    placeholder="For example: stacking, quit, 48 hours"
+    class="min-h-11 w-full max-w-reading rounded-lg border-2 border-muted bg-bg px-3 text-text placeholder:text-muted"
+    data-rules-search-input
+  />
+  <p role="status" class="text-sm text-text-2" data-rules-search-status></p>
+  <ul role="list" class="space-y-3" data-rules-search-results></ul>
+</form>
+
+<script>
+  import '../scripts/rules-search';
+</script>
