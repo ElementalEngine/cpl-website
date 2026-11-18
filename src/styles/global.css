@@ -81,6 +81,29 @@
   .js .theme-toggle {
     display: inline-flex;
   }
+  /* "Use device setting": a plain <button data-theme-reset> in content, styled like a secondary button. */
+  [data-theme-reset] {
+    display: none;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-accent);
+    border-radius: 0.5rem;
+    padding-inline: 1rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-underline-offset: 4px;
+  }
+  .js [data-theme-reset] {
+    display: inline-flex;
+  }
+  [data-theme-reset]:hover {
+    text-decoration-line: underline;
+  }
+  /* Live region for the reset message: always present, no gap while empty. */
+  [data-theme-status]:empty {
+    margin-top: 0;
+  }
   .menu-button[aria-expanded='true'] .menu-icon-open,
   .menu-button:not([aria-expanded='true']) .menu-icon-close {
     display: none;
@@ -145,6 +168,8 @@
 
   .prose {
     max-width: var(--container-reading);
+    /* Long links and email addresses wrap instead of widening the page at 320 px. */
+    overflow-wrap: break-word;
   }
   .prose > * + * {
     margin-top: 1rem;

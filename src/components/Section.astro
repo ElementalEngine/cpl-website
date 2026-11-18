@@ -1,0 +1,15 @@
+---
+// A titled block on a text page, below the Markdown body.
+interface Props {
+  /** Heading text; also the anchor id, lowercased with hyphens. */
+  title: string;
+}
+
+const { title } = Astro.props;
+const id = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+---
+
+<section class="mt-10 space-y-4" aria-labelledby={id}>
+  <h2 id={id} class="text-xl font-semibold">{title}</h2>
+  <slot />
+</section>

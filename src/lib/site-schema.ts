@@ -1,11 +1,11 @@
 import { z } from 'astro/zod';
 
-const httpsUrl = z
+export const httpsUrl = z
   .string()
   .regex(/^https:\/\/\S+$/, 'must be a link starting with https://');
 
 /** A Discord invite link. Use a permanent invite: temporary ones expire. */
-const discordInvite = z
+export const discordInvite = z
   .string()
   .regex(
     /^https:\/\/(discord\.gg|discord\.com\/invite)\/[A-Za-z0-9-]+$/,

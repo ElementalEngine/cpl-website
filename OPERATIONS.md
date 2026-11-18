@@ -34,6 +34,19 @@ Never add `'unsafe-inline'`. After a deploy, https://securityheaders.com should 
 - HTTP → HTTPS: redirect rule `cpl: HTTP to HTTPS` (Cloudflare → `elementalengine.net` → Rules), applies to `cpl.elementalengine.net` only.
 - `*.workers.dev` and preview URLs are switched off (Worker → **Domains** tab, and `wrangler.jsonc`).
 - At go-live the preview host gets a permanent (301) redirect to the live domain.
+- **Search engines follow one setting:** `SITE` in `astro.config.ts`. While it is the preview host, the build
+  writes a `robots.txt` that blocks all crawlers and no sitemap (and `_headers` adds `X-Robots-Tag: noindex` on
+  the preview host). At go-live, set `SITE` to the live domain: the next build writes a `robots.txt` that allows
+  crawlers and a `sitemap.xml` of every page except those marked `noindex` (404, style guide).
+
+## Files the build writes
+
+| File | From | Notes |
+|---|---|---|
+| `_headers` | `public/_headers` + a CSP hash per inline script and style | See "Security headers" |
+| `robots.txt` | `SITE` | Preview: block all. Live: allow all + `Sitemap:` line |
+| `sitemap.xml` | Built pages | Live only. Pages with `<meta name="robots" content="noindex">` are left out |
+| `_redirects` | Built pages | `/civ6/` → the game's first built section, `/rules/` → the first rule set. Temporary (302), because the target changes when sections are switched on |
 
 ## Secrets and tokens
 

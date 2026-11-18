@@ -1,5 +1,6 @@
 ---
 // Text page template: Rules, Resources, About, Privacy.
+// Default slot: Markdown body (prose styles). "sections" slot: lists and other blocks below it.
 import LastUpdated from '../components/LastUpdated.astro';
 import Base from './Base.astro';
 
@@ -27,8 +28,13 @@ const {
     <h1 class="mb-6 text-2xl font-bold md:text-3xl">{title}</h1>
     <slot name="tabs" />
     {updatedOn && <LastUpdated date={updatedOn} />}
-    <div class="prose mt-4">
-      <slot />
-    </div>
+    {
+      Astro.slots.has('default') && (
+        <div class="prose mt-4">
+          <slot />
+        </div>
+      )
+    }
+    <slot name="sections" />
   </article>
 </Base>

@@ -1,0 +1,12 @@
+# Home page. Also used as the page's description in search results and link previews.
+
+# One line about CPL, 160 characters or fewer.
+intro: >-
+  CPL is a community for competitive Civilization VI and VII multiplayer:
+  ranked games, leagues and tournaments, all organised on Discord.
+
+# Exactly 3 short steps.
+joinSteps:
+  - Join the CPL Discord server with the Join Discord button.
+  - Register with the bot to link your Steam, Epic, 2K or Xbox account.
+  - Read the rules, then join your first ranked game.

@@ -19,6 +19,21 @@ const SECTIONS = [
   ['tournaments', 'Tournaments'],
 ] as const;
 
+/** Rule sets, in tab order. Each has a file `src/content/rules/<id>.md`. */
+export const RULE_SETS = [
+  { id: 'general', label: 'General' },
+  { id: 'in-game', label: 'In-game' },
+  { id: 'exploits', label: 'Exploits' },
+  { id: 'cloud', label: 'Cloud' },
+  { id: 'pl', label: 'PL' },
+  { id: 'discord', label: 'Discord' },
+] as const;
+
+/** Tabs on the rules pages. */
+export function ruleTabs(): NavLink[] {
+  return RULE_SETS.map(({ id, label }) => ({ label, href: `/rules/${id}/` }));
+}
+
 export function gameLabel(game: GameId): string {
   return GAMES.find(([id]) => id === game)?.[1] ?? game;
 }
@@ -46,7 +61,7 @@ export function mainNav(site: Site): NavLink[] {
   }));
   return [
     ...games,
-    { label: 'Rules', href: '/rules/game/' },
+    { label: 'Rules', href: ruleTabs()[0].href },
     { label: 'Resources', href: '/resources/' },
     { label: 'About', href: '/about/' },
   ];
@@ -60,4 +75,21 @@ export function navCurrent(href: string, pathname: string): 'page' | 'true' | un
   if (href === pathname) return 'page';
   const section = href.split('/')[1];
   return section && pathname.split('/')[1] === section ? 'true' : undefined;
+}
+
+/** A short path that redirects to the first of its targets that has a page. */
+export interface ShortLink {
+  from: string;
+  to: string[];
+}
+
+/** `/civ6/` opens the game's first built section; `/rules/` the first rule set. */
+export function shortLinks(): ShortLink[] {
+  return [
+    ...GAMES.map(([game]) => ({
+      from: `/${game}/`,
+      to: SECTIONS.map(([key]) => `/${game}/${key}/`),
+    })),
+    { from: '/rules/', to: ruleTabs().map((tab) => tab.href) },
+  ];
 }

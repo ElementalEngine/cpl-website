@@ -1,0 +1,80 @@
+import { z } from 'astro/zod';
+import { discordInvite, httpsUrl } from './site-schema';
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** One line of text, at most `max` characters. */
+function line(max: number) {
+  return z
+    .string()
+    .trim()
+    .min(1, 'must not be empty')
+    .max(max, `must be ${max} characters or fewer`)
+    .refine((text) => !text.includes('\n'), 'must be one line');
+}
+
+/** Shown in search results and link previews. */
+const description = line(160);
+
+/**
+ * A date typed as YYYY-MM-DD. It must not be in the future; one day of
+ * leeway lets editors ahead of UTC use their own date.
+ */
+export const pastDate = z.coerce
+  .date()
+  .refine((date) => date.getTime() <= Date.now() + DAY_MS, 'must not be in the future');
+
+const link = z.strictObject({
+  name: line(80),
+  summary: line(160),
+  url: httpsUrl,
+});
+
+/** `src/content/home.yaml` */
+export const homeSchema = z.strictObject({
+  intro: description,
+  joinSteps: z.array(line(120)).length(3, 'must have exactly 3 steps'),
+});
+
+/** `src/content/rules/*.md` front matter. */
+export const rulesSchema = z.strictObject({
+  title: line(60),
+  description,
+  updatedOn: pastDate,
+});
+
+/** `src/content/resources.yaml` */
+export const resourcesSchema = z.strictObject({
+  description,
+  modsNote: line(200).optional(),
+  mods: z.array(link).min(1, 'must list at least one mod'),
+  bbgDiscord: z
+    .strictObject({ name: line(80), summary: line(160), invite: discordInvite })
+    .optional(),
+  tools: z.array(link).min(1, 'must list at least one tool'),
+});
+
+/** `src/content/about.md` front matter. */
+export const aboutSchema = z.strictObject({
+  description,
+  partnersIntro: line(200),
+  partners: z
+    .array(
+      z.strictObject({
+        name: line(80),
+        summary: line(160),
+        invite: discordInvite,
+        website: httpsUrl.optional(),
+      })
+    )
+    .min(1, 'must list at least one partner'),
+  streamers: z
+    .array(z.strictObject({ name: line(80), url: httpsUrl }))
+    .default([]),
+});
+
+/** `src/content/privacy.md` front matter. */
+export const privacySchema = z.strictObject({
+  description,
+  updatedOn: pastDate,
+});
