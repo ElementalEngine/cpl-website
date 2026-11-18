@@ -5,19 +5,27 @@ import Section from '../components/Section.astro';
 import Page from '../layouts/Page.astro';
 import { getResources } from '../lib/content';
 
-const { description, modsNote, mods, bbgDiscord, tools } = await getResources();
+const { description, modsNote, mods, tools } = await getResources();
 
-const modItems = [...mods, ...(bbgDiscord ? [{ ...bbgDiscord, url: bbgDiscord.invite }] : [])];
+const withExtras = (items: typeof tools) =>
+  items.map(({ links, ...item }) => ({
+    ...item,
+    extras: links.map((link) => ({ ...link, name: `${item.name}: ${link.label}` })),
+  }));
 ---
 
-<Page title="Resources" description={description}>
+<Page title="Resources" description={description} wide>
   <Fragment slot="sections">
-    <Section title="Mods">
+    <Section title="Official mods">
       {modsNote && <Notice>{modsNote}</Notice>}
-      <LinkCards items={modItems} />
+      <LinkCards items={withExtras(mods)} />
+      <p class="text-text-2">
+        Questions or bug reports about BBG? Join the BBG Discord, listed with our
+        <a class="link" href="/about/#partner-communities">partner communities</a>.
+      </p>
     </Section>
     <Section title="Tools">
-      <LinkCards items={tools} />
+      <LinkCards items={withExtras(tools)} />
     </Section>
   </Fragment>
 </Page>

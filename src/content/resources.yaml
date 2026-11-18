@@ -3,12 +3,15 @@
 description: The mods CPL games use and the tools CPL players use, with links.
 
 # Shown above the mods list.
-modsNote: These are the only 4 mods you need. Don't subscribe to BBS or any other version.
+modsNote: Players need BBG, BBM, MPH and BBG Expanded. BSM is only for spectating. Don't subscribe to BBS or any other version.
 
 mods:
   - name: Better Balanced Game (BBG)
     summary: Balance changes for civs, leaders and game rules.
     url: https://steamcommunity.com/sharedfiles/filedetails/?id=2865001760
+    links:
+      - label: GitHub
+        url: https://github.com/orgs/CivilizationVIBetterBalancedGame/repositories
   - name: Better Balanced Map (BBM)
     summary: Fairer map generation for multiplayer games.
     url: https://steamcommunity.com/sharedfiles/filedetails/?id=3179425402
@@ -18,19 +21,20 @@ mods:
   - name: Better Balanced Game Expanded (BBG Expanded)
     summary: Extra content that goes with BBG.
     url: https://steamcommunity.com/sharedfiles/filedetails/?id=3533091092
+  - name: Better Spectator Mod (BSM)
+    summary: For spectators and casters watching a game. Not needed to play.
+    url: https://steamcommunity.com/sharedfiles/filedetails/?id=1916397407
 
-# Shown after the mods. The invite must be a permanent Discord invite.
-bbgDiscord:
-  name: BBG Discord server
-  summary: Patch notes, bug reports and balance questions for the BBG mods.
-  invite: https://discord.gg/PVATxMgdyJ
-
+# Mods and tools: links is optional, up to 3 extra links shown at the bottom of the panel.
 tools:
   - name: CivReplay
     summary: Upload your games to civgg to get replays and stats.
     url: https://civgg-five.vercel.app/upload
+    links:
+      - label: GitHub
+        url: https://github.com/bartsake/civreplay-releases
   - name: CivDraft
-    summary: Run a leader draft with bans before a game.
+    summary: Run a leader draft with bans before a game. Sign in with Steam to start one.
     url: https://civgg-five.vercel.app/draft
   - name: civgg
     summary: Deep stats from uploaded games, players and leaders.
@@ -38,3 +42,8 @@ tools:
   - name: Play Your Damn Turn (PYDT)
     summary: Play turn by turn, at your own pace, by passing save files.
     url: https://www.playyourdamnturn.com/
+    links:
+      - label: Download client
+        url: https://github.com/pydt/client/releases/latest
+      - label: Discord
+        url: https://discord.gg/HQWARWuQNs

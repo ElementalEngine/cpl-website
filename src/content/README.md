@@ -40,7 +40,7 @@ propose a change. If a check fails, the live site keeps its last good version.
 | `rules/cloud.md` | Rules → Cloud | Play-by-cloud rules |
 | `rules/pl.md` | Rules → PL | The Premier League rules |
 | `rules/discord.md` | Rules → Discord | The Discord server rules |
-| `resources.yaml` | Resources | `modsNote`, the `mods` list, `bbgDiscord`, the `tools` list |
+| `resources.yaml` | Resources | `modsNote`, the `mods` list, the `tools` list, extra `links` on mods and tools |
 | `about.md` | About | The text about CPL, `partnersIntro`, the `partners` list, the `streamers` list |
 | `privacy.md` | Privacy | Owner only |
 | `site.yaml` | Every page | Owner only: Discord invite, which games and sections show, footer links |
@@ -71,15 +71,36 @@ Each item in a list starts with `- ` and its fields line up under it:
 
 ```yaml
 tools:
-  - name: CivDraft
-    summary: Run a leader draft with bans before a game.
-    url: https://civgg-five.vercel.app/draft
+  - name: CivReplay
+    summary: Upload your games to civgg to get replays and stats.
+    url: https://civgg-five.vercel.app/upload
+    links:
+      - label: GitHub
+        url: https://github.com/bartsake/civreplay-releases
 ```
 
 - `name`: up to 80 characters. `summary`: one line, up to 160 characters.
 - Order in the file is the order on the page.
 - Partners need an `invite` (a permanent Discord invite); `website` is optional.
 - Streamers need a `name` and a `url`.
+- Mods and tools may have up to 3 extra `links` (each a short `label` and a `url`), shown at the bottom of the panel.
+
+## Icons (`icons/`)
+
+Mod panels show the mod's Steam Workshop image; Discord panels show the server's icon. They live in
+`src/content/icons/`, named after the link:
+
+- `workshop-<id>` for a Workshop item (the number after `?id=` in its link), for example `workshop-2865001760.jpg`
+- `discord-<invite code>` for a Discord invite (the part after `discord.gg/`), for example `discord-civfr.png`
+
+A panel with no image here shows a plain icon instead, so a new mod or partner never breaks the page.
+
+**After adding a mod or partner** (owner, on a PC): run `npm run icons` in the repo. It downloads the
+missing images, lists every Discord invite and says whether it expires, then you commit the new files.
+`npm run icons -- --force` downloads them all again (for a changed server icon).
+
+**Editors on github.com:** upload a PNG, JPEG or WebP to `src/content/icons/` with the name above
+(**Add file** → **Upload files**). Square images look best.
 
 ## When a check fails
 

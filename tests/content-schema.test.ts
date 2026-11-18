@@ -37,7 +37,7 @@ test('rules: title, description and updatedOn are required; unknown fields fail'
   assert.ok(!rulesSchema.safeParse({ ...rules, updatedon: rules.updatedOn }).success);
 });
 
-test('resources: https links, at least one mod and tool, optional BBG Discord', () => {
+test('resources: https links, at least one mod and tool; unknown fields fail', () => {
   const resources = { description: 'Mods and tools.', mods: [link], tools: [link] };
   assert.ok(resourcesSchema.safeParse(resources).success);
   assert.ok(!resourcesSchema.safeParse({ ...resources, mods: [] }).success);
@@ -45,14 +45,7 @@ test('resources: https links, at least one mod and tool, optional BBG Discord', 
     !resourcesSchema.safeParse({ ...resources, tools: [{ ...link, url: 'http://example.org' }] })
       .success
   );
-  const bbgDiscord = { name: 'BBG Discord', summary: 'Bugs.', invite: 'https://discord.gg/abc' };
-  assert.ok(resourcesSchema.safeParse({ ...resources, bbgDiscord }).success);
-  assert.ok(
-    !resourcesSchema.safeParse({
-      ...resources,
-      bbgDiscord: { ...bbgDiscord, invite: 'https://example.org/abc' },
-    }).success
-  );
+  assert.ok(!resourcesSchema.safeParse({ ...resources, bbgDiscord: {} }).success);
 });
 
 test('about: partner invites use the Discord invite check; streamers default to none', () => {
@@ -81,4 +74,16 @@ test('privacy: description and a past updatedOn', () => {
     privacySchema.safeParse({ description: 'Privacy.', updatedOn: new Date('2026-11-18') }).success
   );
   assert.ok(!privacySchema.safeParse({ description: 'Privacy.' }).success);
+});
+
+test('mods and tools may have up to 3 extra links, each https with a short label', () => {
+  const extra = { label: 'Download client', url: 'https://github.com/pydt/client/releases/latest' };
+  const resources = { description: 'Mods and tools.', mods: [link], tools: [{ ...link, links: [extra] }] };
+  assert.ok(resourcesSchema.safeParse(resources).success);
+  assert.deepEqual(resourcesSchema.parse({ ...resources, tools: [link] }).tools[0].links, []);
+  assert.ok(resourcesSchema.safeParse({ ...resources, mods: [{ ...link, links: [extra] }] }).success);
+  const bad = (links: unknown) => !resourcesSchema.safeParse({ ...resources, tools: [{ ...link, links }] }).success;
+  assert.ok(bad([{ ...extra, url: 'github.com/a/b' }]));
+  assert.ok(bad([extra, extra, extra, extra]));
+  assert.ok(bad([{ label: 'x'.repeat(31), url: extra.url }]));
 });

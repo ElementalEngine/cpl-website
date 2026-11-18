@@ -66,5 +66,8 @@ const previewImage = new URL('/og-image.png', Astro.site).href;
       <slot />
     </main>
     <Footer site={site} />
+    <script>
+      import '../scripts/reveal';
+    </script>
   </body>
 </html>
