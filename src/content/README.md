@@ -5,7 +5,7 @@ Page text (Markdown) and lists (YAML) for the website.
 ## Who can change what
 
 - Files in this folder have no code owner: editors can merge their own changes once checks pass.
-- `site.yaml` and `privacy.md` require review from @ProjectCisco.
+- `site.yaml` and `privacy.md` require review from @ProjectCisco. `site.yaml` holds the Discord invite, which games and sections are shown, and the footer links.
 - Everything outside this folder requires review from @ProjectCisco.
 
 ## How to edit

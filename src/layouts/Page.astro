@@ -1,0 +1,34 @@
+---
+// Text page template: Rules, Resources, About, Privacy.
+import LastUpdated from '../components/LastUpdated.astro';
+import Base from './Base.astro';
+
+interface Props {
+  /** The page heading. */
+  title: string;
+  /** Browser title; defaults to "<title> · CPL". */
+  documentTitle?: string;
+  description: string;
+  updatedOn?: Date;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  documentTitle = `${title} · CPL`,
+  description,
+  updatedOn,
+  noindex,
+} = Astro.props;
+---
+
+<Base title={documentTitle} description={description} noindex={noindex}>
+  <article class="mx-auto max-w-reading">
+    <h1 class="mb-6 text-2xl font-bold md:text-3xl">{title}</h1>
+    <slot name="tabs" />
+    {updatedOn && <LastUpdated date={updatedOn} />}
+    <div class="prose mt-4">
+      <slot />
+    </div>
+  </article>
+</Base>

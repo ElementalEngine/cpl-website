@@ -1,0 +1,42 @@
+# Site settings. Changes need review from the site owner.
+
+# Permanent CPL Discord invite: the "Join Discord" button on every page.
+discordInvite: https://discord.gg/cpl
+
+# Which games and sections are built. Anything switched off has no page and no menu item.
+# Ladder and Stats can't be switched on yet: their pages come with the leaderboards.
+games:
+  civ6:
+    show: true
+    ladder: false
+    stats: false
+    tournaments: true
+  civ7:
+    show: false
+    ladder: false
+    stats: false
+    tournaments: false
+
+# Footer links. kind: follow or support.
+socials:
+  - name: YouTube
+    url: https://www.youtube.com/channel/UCbwQClbMfJ2w-BrFY1V8UGw
+    kind: follow
+  - name: Twitch
+    url: https://www.twitch.tv/civplayersleague
+    kind: follow
+  - name: X (Twitter)
+    url: https://x.com/cplciv
+    kind: follow
+  - name: Facebook
+    url: https://www.facebook.com/groups/7128875663
+    kind: follow
+  - name: Steam
+    url: https://steamcommunity.com/groups/civplayers
+    kind: follow
+  - name: Patreon
+    url: https://www.patreon.com/cplciv
+    kind: support
+  - name: Store
+    url: https://streamelements.com/canucksoldiercpl/store
+    kind: support

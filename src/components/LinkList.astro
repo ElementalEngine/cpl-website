@@ -1,0 +1,30 @@
+---
+// Name · one line · link. External links say where they go.
+interface Props {
+  items: {
+    name: string;
+    url: string;
+    summary?: string;
+    /** Where the link goes, e.g. "Steam Workshop". */
+    destination?: string;
+  }[];
+}
+
+const { items } = Astro.props;
+---
+
+<ul class="space-y-3">
+  {
+    items.map((item) => (
+      <li>
+        <a class="link inline-flex min-h-11 flex-wrap items-center gap-x-2" href={item.url}>
+          <span class="font-semibold">{item.name}</span>
+          {item.destination && (
+            <span class="text-sm">({item.destination})</span>
+          )}
+        </a>
+        {item.summary && <p class="text-text-2">{item.summary}</p>}
+      </li>
+    ))
+  }
+</ul>

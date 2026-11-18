@@ -71,6 +71,7 @@ const TYPES: Record<string, string> = {
   '.png': 'image/png',
   '.woff2': 'font/woff2',
   '.txt': 'text/plain; charset=utf-8',
+  '.ico': 'image/x-icon',
 };
 
 const name = process.env.A11Y_BROWSER ?? (process.env.CI ? 'chrome' : 'zen');

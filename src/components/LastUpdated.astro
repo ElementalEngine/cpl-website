@@ -1,0 +1,13 @@
+---
+import { formatDate, isoDate } from '../lib/format';
+
+interface Props {
+  date: Date;
+}
+
+const { date } = Astro.props;
+---
+
+<p class="text-sm text-muted">
+  Last updated <time datetime={isoDate(date)}>{formatDate(date)}</time>
+</p>

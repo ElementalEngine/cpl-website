@@ -1,5 +1,34 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
+import type { AstroIntegration } from 'astro';
+import { defineConfig, fontProviders } from 'astro/config';
+import { addHashesToHeaders, collectInlineHashes } from './scripts/lib/csp';
+import { listHtmlFiles } from './scripts/lib/site-pages';
+
+/** Adds a CSP hash for each inline script and style in the built pages to `dist/_headers`. */
+function cspHashes(): AstroIntegration {
+  return {
+    name: 'csp-hashes',
+    hooks: {
+      'astro:build:done': async ({ dir, logger }) => {
+        const root = fileURLToPath(dir);
+        const files = await listHtmlFiles(root);
+        const pages = await Promise.all(
+          files.map((file) => readFile(join(root, file), 'utf8'))
+        );
+        const hashes = collectInlineHashes(pages);
+        const headersFile = join(root, '_headers');
+        const headers = await readFile(headersFile, 'utf8');
+        await writeFile(headersFile, addHashesToHeaders(headers, hashes));
+        logger.info(
+          `CSP: ${hashes.script.length} inline script and ${hashes.style.length} inline style hash(es) added`
+        );
+      },
+    },
+  };
+}
 
 export default defineConfig({
   site: 'https://cpl.elementalengine.net',
@@ -9,7 +38,28 @@ export default defineConfig({
     // External stylesheets only, so the CSP needs no 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: 'Inter',
+      cssVariable: '--font-inter',
+      fallbacks: ['sans-serif'],
+      options: {
+        variants: [
+          {
+            // Inter 4.1, Latin + Latin Extended, weights 400–700 (SIL OFL 1.1).
+            src: ['./src/assets/fonts/inter-latin-wght.woff2'],
+            weight: '400 700',
+            style: 'normal',
+          },
+        ],
+      },
+    },
+  ],
+  integrations: [cspHashes()],
   vite: {
+    // Never inline scripts or assets: each becomes a file the CSP allows as 'self'.
+    build: { assetsInlineLimit: 0 },
     plugins: [tailwindcss()],
   },
 });

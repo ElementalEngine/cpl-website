@@ -1,0 +1,19 @@
+---
+// A data table in a labelled box that scrolls sideways if it is still too wide.
+// Put <thead> and <tbody> in the slot; mark number cells with class="num",
+// and cells that can hide on phones with class="max-md:hidden".
+interface Props {
+  caption: string;
+  /** Hide the caption visually when a heading above already names the table. */
+  hideCaption?: boolean;
+}
+
+const { caption, hideCaption = false } = Astro.props;
+---
+
+<div role="region" aria-label={caption} tabindex="0" class="overflow-x-auto">
+  <table class="data-table">
+    <caption class:list={[hideCaption && 'sr-only']}>{caption}</caption>
+    <slot />
+  </table>
+</div>

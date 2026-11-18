@@ -43,10 +43,13 @@ test('CSP: own origin only, inline scripts never allowed, no framing', () => {
       assert.ok(!sources.includes(unsafe), `${directive} must not allow ${unsafe}`);
     }
   }
+  // The template lists no hashes: the build adds one per inline script and style.
   assert.deepEqual(csp['script-src'], [
     "'self'",
     'https://static.cloudflareinsights.com',
   ]);
+  assert.deepEqual(csp['style-src'], ["'self'"]);
+  assert.deepEqual(csp['font-src'], ["'self'"]);
 });
 
 test('HSTS, nosniff, referrer and permissions headers are set', () => {

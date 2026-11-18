@@ -1,0 +1,30 @@
+---
+import Tabs from '../../components/Tabs.astro';
+import Page from '../../layouts/Page.astro';
+import { getSite } from '../../lib/content';
+import { gameLabel, gameSections, shownGames, type GameId } from '../../lib/nav';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return shownGames(site)
+    .filter((game) => site.games[game].tournaments)
+    .map((game) => ({ params: { game }, props: { game } }));
+}
+
+interface Props {
+  game: GameId;
+}
+
+const { game } = Astro.props;
+const site = await getSite();
+const label = gameLabel(game);
+---
+
+<Page
+  title={`${label} tournaments`}
+  documentTitle={`Tournaments · ${label} · CPL`}
+  description={`CPL ${label} tournaments and past winners.`}
+>
+  <Tabs slot="tabs" label={`${label} sections`} items={gameSections(site, game)} />
+  <p>Tournaments and past winners will appear here soon.</p>
+</Page>

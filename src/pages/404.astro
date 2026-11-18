@@ -1,5 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
+import { getSite } from '../lib/content';
+import { gameLabel, gameSections, shownGames } from '../lib/nav';
+
+const site = await getSite();
+const links = [
+  { label: 'Home', href: '/' },
+  ...shownGames(site).flatMap((game) =>
+    gameSections(site, game).map((section) => ({
+      label: `${gameLabel(game)} ${section.label.toLowerCase()}`,
+      href: section.href,
+    }))
+  ),
+];
 ---
 
 <Base
@@ -7,13 +20,19 @@ import Base from '../layouts/Base.astro';
   description="This page could not be found."
   noindex
 >
-  <h1 class="text-3xl font-bold">Page not found</h1>
-  <p>It may have moved, or a ladder page may no longer exist.</p>
-  <p>
-    <a
-      href="/"
-      class="text-blue-700 underline underline-offset-4 dark:text-blue-300"
-      >Go to the home page</a
-    >
-  </p>
+  <div class="max-w-reading space-y-6">
+    <h1 class="text-2xl font-bold md:text-3xl">Page not found</h1>
+    <p>It may have moved, or a ladder page may no longer exist.</p>
+    <ul class="space-y-1">
+      {
+        links.map((link) => (
+          <li>
+            <a class="link inline-flex min-h-11 items-center" href={link.href}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </Base>

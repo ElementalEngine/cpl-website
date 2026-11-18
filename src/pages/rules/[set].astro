@@ -1,0 +1,31 @@
+---
+import Tabs from '../../components/Tabs.astro';
+import Page from '../../layouts/Page.astro';
+import type { NavLink } from '../../lib/nav';
+
+export function getStaticPaths() {
+  const sets = [
+    { set: 'game', label: 'Game' },
+    { set: 'pl', label: 'PL' },
+    { set: 'discord', label: 'Discord' },
+  ];
+  const tabs = sets.map(({ set, label }) => ({ label, href: `/rules/${set}/` }));
+  return sets.map(({ set, label }) => ({ params: { set }, props: { label, tabs } }));
+}
+
+interface Props {
+  label: string;
+  tabs: NavLink[];
+}
+
+const { label, tabs } = Astro.props;
+---
+
+<Page
+  title="Rules"
+  documentTitle={`${label} rules · Rules · CPL`}
+  description={`CPL ${label} rules.`}
+>
+  <Tabs slot="tabs" label="Rule sets" items={tabs} />
+  <p>The {label} rules will appear here soon.</p>
+</Page>
