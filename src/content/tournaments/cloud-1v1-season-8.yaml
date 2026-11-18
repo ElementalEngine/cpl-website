@@ -1,0 +1,11 @@
+# Web address: /civ6/tournaments/#cloud-1v1-season-8. Never rename this file.
+name: Cloud 1v1 Season 8
+game: civ6
+order: 2
+format: Play by cloud duels, 2 divisions
+rules: /rules/cloud/
+brackets:
+  - name: Division 1
+    challonge: https://challonge.com/9m78dlwk
+  - name: Division 2
+    challonge: https://challonge.com/tp678nrm

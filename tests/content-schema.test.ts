@@ -7,6 +7,7 @@ import {
   privacySchema,
   resourcesSchema,
   rulesSchema,
+  tournamentSchema,
 } from '../src/lib/content-schema';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -86,4 +87,36 @@ test('mods and tools may have up to 3 extra links, each https with a short label
   assert.ok(bad([{ ...extra, url: 'github.com/a/b' }]));
   assert.ok(bad([extra, extra, extra, extra]));
   assert.ok(bad([{ label: 'x'.repeat(31), url: extra.url }]));
+});
+
+test('tournaments: Challonge links become API ids; rules point to a rules page or https', () => {
+  const pl = {
+    name: 'CPL Premier League Season 6',
+    game: 'civ6',
+    order: 1,
+    format: 'League, 3 divisions',
+    rules: '/rules/pl/',
+    brackets: [{ name: 'Division 1', challonge: 'https://challonge.com/CPL_PL_S6_D1/standings' }],
+  };
+  const parsed = tournamentSchema.parse(pl);
+  assert.deepEqual(parsed.brackets, [
+    { name: 'Division 1', link: 'https://challonge.com/CPL_PL_S6_D1/standings', apiId: 'CPL_PL_S6_D1' },
+  ]);
+  const bad = (change: object) => !tournamentSchema.safeParse({ ...pl, ...change }).success;
+  assert.ok(bad({ brackets: [{ name: 'D1', challonge: 'https://challonge.com/communities/cpl' }] }));
+  assert.ok(bad({ rules: '/rules/nope/' }));
+  assert.ok(!bad({ rules: 'https://docs.example.org/pl' }));
+  assert.ok(bad({ game: 'civ5' }));
+  assert.ok(bad({ order: 0 }));
+  assert.ok(bad({ brakets: [] }), 'unknown fields fail');
+});
+
+test('tournaments: a past event needs only name, game and 1–3 winners; brackets default to none', () => {
+  const past = { name: 'CCC 10', game: 'civ6', winners: ['A', 'B', 'C'], endedOn: '2024-05-12' };
+  const parsed = tournamentSchema.parse(past);
+  assert.deepEqual(parsed.brackets, []);
+  assert.equal(parsed.endedOn?.toISOString().slice(0, 10), '2024-05-12');
+  assert.ok(!tournamentSchema.safeParse({ ...past, winners: [] }).success);
+  assert.ok(!tournamentSchema.safeParse({ ...past, winners: ['A', 'B', 'C', 'D'] }).success);
+  assert.ok(!tournamentSchema.safeParse({ ...past, endedOn: '2999-01-01' }).success);
 });

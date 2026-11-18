@@ -1,0 +1,137 @@
+---
+// One Challonge bracket: open while it runs, folded once it has finished.
+// Shows the standings table, the last good table with a notice, or just the link.
+import { formatDate, formatDateTime } from '../lib/format';
+import type { BracketState } from '../lib/tournaments';
+import Button from './Button.astro';
+import Notice from './Notice.astro';
+import Table from './Table.astro';
+
+interface Props {
+  tournament: string;
+  name: string;
+  link: string;
+  state: BracketState;
+  /** Where visitors report a wrong table. */
+  reportUrl: string;
+}
+
+const { tournament, name, link, state, reportUrl } = Astro.props;
+const data = state.kind === 'fresh' || state.kind === 'stale' ? state.data : undefined;
+const rows = data?.rows ?? [];
+const ranked = rows.some((row) => row.rank !== null);
+const record = rows.some((row) => row.record);
+const ties = rows.some((row) => (row.record?.ties ?? 0) > 0);
+const updated = data ? new Date(data.updated_at) : undefined;
+const caption = `${tournament}, ${name}: standings`;
+---
+
+<details open={!data?.finished} class="group rounded-lg border border-border bg-bg">
+  <summary
+    class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-4 py-2 font-semibold [&::-webkit-details-marker]:hidden"
+  >
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      class="shrink-0 transition-transform duration-150 group-open:rotate-90"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m9 6 6 6-6 6"></path>
+    </svg>
+    {name}
+    {data?.finished && <span class="text-sm font-normal text-muted">Finished</span>}
+  </summary>
+
+  <div class="space-y-4 border-t border-border p-4">
+    {
+      state.kind === 'stale' && updated && (
+        <Notice>
+          Live data unavailable. Showing data from{' '}
+          <time datetime={updated.toISOString()}>{formatDate(updated)}</time>.
+        </Notice>
+      )
+    }
+    {
+      data && rows.length > 0 && (
+        <Table caption={caption} hideCaption>
+          <thead>
+            <tr>
+              {ranked && (
+                <th scope="col" class="num">
+                  #
+                </th>
+              )}
+              <th scope="col">Name</th>
+              {record && (
+                <>
+                  <th scope="col" class="num">
+                    Wins
+                  </th>
+                  <th scope="col" class="num">
+                    Losses
+                  </th>
+                  {ties && (
+                    <th scope="col" class="num">
+                      Ties
+                    </th>
+                  )}
+                </>
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                {ranked && <td class="num">{row.rank ?? '—'}</td>}
+                <th scope="row">{row.name}</th>
+                {row.record && (
+                  <>
+                    <td class="num">{row.record.wins}</td>
+                    <td class="num">{row.record.losses}</td>
+                    {ties && <td class="num">{row.record.ties}</td>}
+                  </>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )
+    }
+    {data && rows.length === 0 && <p>No players have joined yet.</p>}
+    {
+      data && !data.finished && record && (
+        <p class="text-sm text-muted">
+          Until it ends, places follow wins. Equal records share a place.
+        </p>
+      )
+    }
+    {
+      updated && (
+        <p class="text-sm text-muted">
+          Updated <time datetime={updated.toISOString()}>{formatDateTime(updated)}</time> ·
+          Source: Challonge
+        </p>
+      )
+    }
+    {state.kind === 'none' && <p>Standings will appear here soon.</p>}
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <Button href={link}>
+        View on Challonge<span class="sr-only">: {tournament}, {name}</span>
+      </Button>
+      {
+        data && (
+          <a class="link inline-flex min-h-11 items-center text-sm" href={reportUrl}>
+            Something wrong? Tell staff on Discord
+          </a>
+        )
+      }
+    </div>
+  </div>
+</details>

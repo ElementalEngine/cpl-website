@@ -6,6 +6,7 @@ import {
   privacySchema,
   resourcesSchema,
   rulesSchema,
+  tournamentSchema,
 } from './lib/content-schema';
 import { siteSchema } from './lib/site-schema';
 
@@ -41,4 +42,9 @@ const privacy = defineCollection({
   schema: privacySchema,
 });
 
-export const collections = { site, home, rules, resources, about, privacy };
+const tournaments = defineCollection({
+  loader: glob({ pattern: '*.yaml', base: `${base}/tournaments` }),
+  schema: tournamentSchema,
+});
+
+export const collections = { site, home, rules, resources, about, privacy, tournaments };

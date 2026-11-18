@@ -41,6 +41,7 @@ propose a change. If a check fails, the live site keeps its last good version.
 | `rules/pl.md` | Rules → PL | The Premier League rules |
 | `rules/discord.md` | Rules → Discord | The Discord server rules |
 | `resources.yaml` | Resources | `modsNote`, the `mods` list, the `tools` list, extra `links` on mods and tools |
+| `tournaments/*.yaml` | Civ 6 → Tournaments, Home "On now" | One file per tournament: running ones and past winners |
 | `about.md` | About | The text about CPL, `partnersIntro`, the `partners` list, the `streamers` list |
 | `privacy.md` | Privacy | Owner only |
 | `site.yaml` | Every page | Owner only: Discord invite, which games and sections show, footer links |
@@ -85,6 +86,49 @@ tools:
 - Streamers need a `name` and a `url`.
 - Mods and tools may have up to 3 extra `links` (each a short `label` and a `url`), shown at the bottom of the panel.
 
+### Tournaments (`tournaments/*.yaml`)
+
+One file per tournament. **The file name is part of the web address**: `pl-season-7.yaml` is
+`/civ6/tournaments/#pl-season-7`. Use lowercase letters, numbers and hyphens, and never rename it.
+For a new season, make a new file (copy the last one) instead of editing the old one.
+
+A running tournament:
+
+```yaml
+name: CPL Premier League Season 7
+game: civ6
+order: 1
+format: League, 3 divisions
+description: Weekly league games. Top of each division goes up.
+rules: /rules/pl/
+brackets:
+  - name: Division 1
+    challonge: https://challonge.com/CPL_PL_S7_D1
+  - name: Division 2
+    challonge: https://challonge.com/CPL_PL_S7_D2
+```
+
+- `name` and `game` (`civ6` or `civ7`) are required. Everything else is optional.
+- `order`: a number from 1 to 99. Lower numbers show first; tournaments without one come after, by file name.
+- `format`: short, up to 60 characters. `description`: one line, up to 300 characters.
+- `rules`: a rules page on this site (`/rules/general/`, `/rules/in-game/`, `/rules/exploits/`, `/rules/cloud/`,
+  `/rules/pl/`, `/rules/discord/`) or a link starting with `https://`.
+- `brackets`: up to 10. For `challonge`, open the bracket on challonge.com and copy the address from the browser.
+  Links like `https://challonge.com/abc123`, `https://challonge.com/abc123/standings` and
+  `https://yourgroup.challonge.com/abc123` all work. The standings are read from Challonge once a day.
+- No `brackets` yet: the page shows the tournament as "Starting soon".
+
+**When a tournament ends**, add `winners` (the winner, or the top 3 in order) and `endedOn`. It then moves to
+**Past winners** at the bottom of the page and its brackets are no longer shown:
+
+```yaml
+winners: [Player A, Player B, Player C]
+endedOn: 2027-02-14
+```
+
+An old event from before the website needs only `name`, `game` and `winners` (`endedOn` if you know it).
+Past winners show newest `endedOn` first, then those without a date.
+
 ## Icons (`icons/`)
 
 Mod panels show the mod's Steam Workshop image; Discord panels show the server's icon. They live in
@@ -110,6 +154,6 @@ missing images, lists every Discord invite and says whether it expires, then you
    `updatedOn: must not be in the future`.
 3. Edit the same file on your branch to fix it. The check runs again by itself.
 
-Common causes: a missing or misspelled field name, a wrong indent in YAML, a link without `https://`,
+Common causes: a missing or misspelled field name, a Challonge link that isn't a bracket page, a wrong indent in YAML, a link without `https://`,
 a temporary Discord invite format, or text over the length limit. If you can't find it, ask
 @ProjectCisco on the pull request.

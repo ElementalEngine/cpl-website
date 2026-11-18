@@ -1,0 +1,11 @@
+# Web address: /civ6/tournaments/#cloud-2v2-season-8. Never rename this file.
+name: Cloud 2v2 Season 8
+game: civ6
+order: 3
+format: Play by cloud teams of 2, 2 divisions
+rules: /rules/cloud/
+brackets:
+  - name: Division 1
+    challonge: https://challonge.com/CPL_PBC_2v2_S8_D1
+  - name: Division 2
+    challonge: https://challonge.com/CPL_PBC_2v2_S8_D2

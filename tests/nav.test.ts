@@ -7,6 +7,7 @@ import {
   ruleTabs,
   shortLinks,
   shownGames,
+  tournamentGames,
 } from '../src/lib/nav';
 import type { Site } from '../src/lib/site-schema';
 
@@ -51,6 +52,15 @@ test('a game with show off, or no sections on, has no menu item', () => {
   assert.deepEqual(gameSections(hidden, 'civ6'), []);
   const empty = site({ civ6: { ...off, show: true } });
   assert.deepEqual(shownGames(empty), []);
+});
+
+test('tournament pages are built only for shown games with Tournaments on', () => {
+  const both = site({
+    civ6: { ...off, show: true, tournaments: true },
+    civ7: { show: false, ladder: false, stats: false, tournaments: true },
+  });
+  assert.deepEqual(tournamentGames(both), ['civ6']);
+  assert.deepEqual(tournamentGames(site({})), []);
 });
 
 test('navCurrent marks the page, then its section', () => {

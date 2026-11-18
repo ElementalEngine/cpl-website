@@ -1,0 +1,13 @@
+# Web address: /civ6/tournaments/#pl-season-6. Never rename this file.
+name: CPL Premier League Season 6
+game: civ6
+order: 1
+format: League, 3 divisions
+rules: /rules/pl/
+brackets:
+  - name: Division 1
+    challonge: https://challonge.com/CPL_PL_S6_D1/standings
+  - name: Division 2
+    challonge: https://challonge.com/CPL_PL_S6_D2/standings
+  - name: Division 3
+    challonge: https://challonge.com/CPL_PL_S6_D3/standings

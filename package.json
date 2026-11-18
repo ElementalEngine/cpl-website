@@ -18,6 +18,7 @@
     "contracts:check": "node -e \"console.log('contracts: none yet')\"",
     "a11y": "tsx scripts/a11y.ts",
     "icons": "tsx scripts/fetch-icons.ts",
+    "challonge": "tsx scripts/challonge-check.ts",
     "verify": "npm run check && npm run lint && npm run test && npm run knip && npm run build && npm run contracts:check && npm run a11y",
     "deploy": "wrangler deploy"
   },
