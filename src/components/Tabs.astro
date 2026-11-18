@@ -1,0 +1,41 @@
+---
+// Every tab is a link to its own page. Renders nothing with fewer than two tabs.
+import type { NavLink } from '../lib/nav';
+
+interface Props {
+  /** Names the tab group for screen readers, e.g. "Rule sets". */
+  label: string;
+  items: NavLink[];
+}
+
+const { label, items } = Astro.props;
+const { pathname } = Astro.url;
+---
+
+{
+  items.length > 1 && (
+    <nav aria-label={label} class="mb-6">
+      <ul class="flex flex-wrap gap-x-6 border-b border-border">
+        {items.map((item) => {
+          const active = item.href === pathname;
+          return (
+            <li>
+              <a
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  '-mb-px inline-flex min-h-11 items-center border-b-2 transition-colors duration-150',
+                  active
+                    ? 'border-accent font-semibold text-text'
+                    : 'border-transparent text-text-2 hover:text-text',
+                ]}
+              >
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  )
+}

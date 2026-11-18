@@ -1,0 +1,24 @@
+---
+// Words plus an icon, never colour alone.
+---
+
+<p
+  class="flex items-start gap-3 rounded-lg bg-notice-bg px-4 py-3 text-notice-text"
+>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    viewBox="0 0 24 24"
+    width="20"
+    height="20"
+    class="mt-0.5 shrink-0"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+  >
+    <path d="M12 3 2 20h20L12 3z"></path>
+    <path d="M12 10v4M12 17h.01"></path>
+  </svg>
+  <span><slot /></span>
+</p>

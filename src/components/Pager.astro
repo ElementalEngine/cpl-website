@@ -1,0 +1,39 @@
+---
+// "← Previous · Page 2 of 7 · Next →". Renders nothing for a single page.
+interface Props {
+  page: number;
+  pages: number;
+  prev?: string;
+  next?: string;
+}
+
+const { page, pages, prev, next } = Astro.props;
+const link =
+  'inline-flex min-h-11 items-center rounded-lg px-2 text-accent underline underline-offset-4 hover:decoration-2';
+---
+
+{
+  pages > 1 && (
+    <nav aria-label="Pages" class="mt-6">
+      <ul class="flex flex-wrap items-center gap-x-4">
+        {prev && (
+          <li>
+            <a class={link} href={prev} rel="prev">
+              <span aria-hidden="true">←</span> Previous
+            </a>
+          </li>
+        )}
+        <li class="text-muted">
+          Page {page} of {pages}
+        </li>
+        {next && (
+          <li>
+            <a class={link} href={next} rel="next">
+              Next <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  )
+}

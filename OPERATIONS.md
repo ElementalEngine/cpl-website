@@ -16,6 +16,13 @@ One workflow, `.github/workflows/ci.yml`:
 `verify` = `astro check` → lint → tests → Knip → build → contracts check → accessibility check.
 If any step fails, nothing deploys and the live site keeps its last good version.
 
+## Security headers
+
+`public/_headers` is the template. The build adds a `sha256` hash for each inline script and style
+it emits to the CSP in `dist/_headers` (`astro.config.ts`, `scripts/lib/csp.ts`), so the hashes always
+match the pages. The build fails on inline event handlers (`onclick=`) or `style=` attributes.
+Never add `'unsafe-inline'`. After a deploy, https://securityheaders.com should still grade A+.
+
 ## Domains
 
 | Domain | Use | Owner | Registrar | Renews | Auto-renew |
@@ -53,7 +60,9 @@ Nothing secret is in the repo, Cloudflare settings or the browser.
 |---|---|---|---|
 | Healthchecks.io check `cpl-website pipeline` | The pipeline ran and deployed | Period 1 day, grace 6 hours | Email to owner |
 | UptimeRobot `cpl-website home` | Home page answers | HTTP(s), every 5 minutes | Email to owner |
-| Cloudflare Web Analytics | Page views and speed | Snippet in `src/layouts/Base.astro` (site token is public). No cookies or browser storage | — |
+| Cloudflare Web Analytics | Page views and speed | Snippet in `src/layouts/Base.astro` (site token is public). 0 cookies (Webbkoll, 2026-11-18) | — |
+
+The analytics script is loaded without Subresource Integrity: Cloudflare updates it in place, so a pinned hash would break it. Accepted; it is the only third-party script.
 
 ## Alert → action
 
@@ -74,4 +83,4 @@ undone by the next deploy, including the daily scheduled one.
 
 | Rollback test | Date | Result |
 |---|---|---|
-| Initial test | _fill in_ | _fill in_ |
+| Initial test | 2026-11-18 | Passed. Rolled back to the previous version in the dashboard (old build served), then re-ran CI manually on `main` (current build restored) |

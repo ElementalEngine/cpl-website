@@ -25,6 +25,11 @@ Requires Node.js 24.
 | `npm run verify` | Type check, lint, test, Knip, build, contracts check, accessibility check |
 | `npm run a11y` | Accessibility check of `dist/` |
 
+The page `/styleguide/` shows every shared component with placeholder data (not linked, not indexed).
+Use it for keyboard, contrast, zoom and reduced-motion checks in both themes.
+
+Design tokens (colours, type sizes, breakpoints) live in `src/styles/global.css`. Only those colours exist.
+
 ### Accessibility check
 
 Runs axe-core (WCAG 2.2 A/AA) against every built page in light and dark mode.
@@ -44,3 +49,4 @@ Deployed by GitHub Actions from `main`. See `OPERATIONS.md`.
 
 - **Code:** Apache License 2.0 (`LICENSE`).
 - **Page content and images:** © Civilization Players League. Not covered by the code licence.
+- **Font:** Inter, SIL Open Font License 1.1 (`public/licenses/inter-OFL.txt`). Subset to Latin and Latin Extended, weights 400–700.
