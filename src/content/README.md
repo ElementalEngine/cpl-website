@@ -136,6 +136,8 @@ Mod panels show the mod's Steam Workshop image; Discord panels show the server's
 
 - `workshop-<id>` for a Workshop item (the number after `?id=` in its link), for example `workshop-2865001760.jpg`
 - `discord-<invite code>` for a Discord invite (the part after `discord.gg/`), for example `discord-civfr.png`
+- `tournament-<file name>` for a tournament's badge, for example `tournament-ccc-17.png` for
+  `tournaments/ccc-17.yaml`. It shows next to the tournament's name (optional; round images look best)
 
 A panel with no image here shows a plain icon instead, so a new mod or partner never breaks the page.
 

@@ -1,6 +1,7 @@
 ---
 import Bracket from '../../components/Bracket.astro';
 import Tabs from '../../components/Tabs.astro';
+import TournamentBadge from '../../components/TournamentBadge.astro';
 import Page from '../../layouts/Page.astro';
 import { getSite } from '../../lib/content';
 import { formatDate, isoDate } from '../../lib/format';
@@ -40,7 +41,8 @@ const jumpLinks = [
   ...active.map((entry) => ({ label: entry.data.name, href: `#${entry.id}` })),
   ...(past.length > 0 ? [{ label: 'Past winners', href: '#past-winners' }] : []),
 ];
-const block = 'scroll-mt-4 space-y-4 rounded-lg border border-border bg-surface p-4 md:p-6';
+// Boxed from md up; on phones the box would squeeze the tables.
+const block = 'scroll-mt-4 space-y-4 md:rounded-lg md:border md:border-border md:bg-surface md:p-6';
 ---
 
 <Page
@@ -78,9 +80,12 @@ const block = 'scroll-mt-4 space-y-4 rounded-lg border border-border bg-surface 
         active.map(({ id, data }) => (
           <section id={id} data-reveal class={block} aria-labelledby={`${id}-heading`}>
             <div class="space-y-2">
-              <h2 id={`${id}-heading`} class="text-xl font-semibold">
-                {data.name}
-              </h2>
+              <div class="flex items-center gap-4">
+                <TournamentBadge slug={id} />
+                <h2 id={`${id}-heading`} class="text-xl font-semibold">
+                  {data.name}
+                </h2>
+              </div>
               {data.format && <p class="text-text-2">{data.format}</p>}
               {data.description && <p>{data.description}</p>}
               {data.rules && (
@@ -118,9 +123,12 @@ const block = 'scroll-mt-4 space-y-4 rounded-lg border border-border bg-surface 
               Past winners
             </h2>
             <ul role="list" class="grid gap-4 md:grid-cols-2">
-              {past.map(({ data }) => (
+              {past.map(({ id, data }) => (
                 <li data-reveal class="space-y-2 rounded-lg border border-border bg-surface p-4">
-                  <h3 class="font-semibold">{data.name}</h3>
+                  <div class="flex items-center gap-4">
+                    <TournamentBadge slug={id} />
+                    <h3 class="font-semibold">{data.name}</h3>
+                  </div>
                   <dl class="grid grid-cols-[auto_1fr] gap-x-3">
                     {(data.winners ?? []).map((winner, i) => (
                       <>

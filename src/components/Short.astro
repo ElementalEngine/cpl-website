@@ -1,0 +1,11 @@
+---
+// A column heading shortened on phones ("W"); screen readers always hear the full word.
+interface Props {
+  short: string;
+  full: string;
+}
+
+const { short, full } = Astro.props;
+---
+
+<span aria-hidden="true" class="md:hidden">{short}</span><span class="max-md:sr-only">{full}</span>

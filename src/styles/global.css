@@ -165,6 +165,12 @@
   .data-table .num {
     text-align: right;
   }
+  @media (width < 48rem) {
+    .data-table th,
+    .data-table td {
+      padding-inline: 0.5rem;
+    }
+  }
 
   .prose {
     max-width: var(--container-reading);

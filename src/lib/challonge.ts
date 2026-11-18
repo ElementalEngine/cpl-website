@@ -104,7 +104,7 @@ interface StandingsRow {
   /** Place; equal records share one. Null when no place is known yet. */
   rank: number | null;
   name: string;
-  /** Present when the bracket has played two-player matches. */
+  /** Present for brackets of two-player matches. */
   record?: MatchRecord;
 }
 
@@ -159,6 +159,9 @@ export function standingsFrom(tournament: ChallongeTournament): Standings {
     }
   }
 
+  // Two-player brackets get a record from the start (0–0), so the table shape doesn't change with the first result.
+  const twoPlayer =
+    played > 0 || tournament.matches.some(({ match }) => match.player1_id != null || match.player2_id != null);
   const finished = tournament.state === 'complete';
   const useFinal =
     finished && people.length > 0 && people.every((person) => person.final_rank != null);
@@ -193,7 +196,7 @@ export function standingsFrom(tournament: ChallongeTournament): Standings {
 
   return {
     finished,
-    rows: rows.map(({ rank, name, record }) => (played > 0 ? { rank, name, record } : { rank, name })),
+    rows: rows.map(({ rank, name, record }) => (twoPlayer ? { rank, name, record } : { rank, name })),
   };
 }
 
