@@ -7,7 +7,10 @@ import {
   ruleTabs,
   shortLinks,
   shownGames,
+  TOURNAMENT_CATEGORIES,
+  TOURNAMENT_TABS,
   tournamentGames,
+  tournamentTabs,
 } from '../src/lib/nav';
 import type { Site } from '../src/lib/site-schema';
 
@@ -25,7 +28,7 @@ test('stage 1: Civ 6 links to its tournaments; Civ 7 is hidden', () => {
   const stage1 = site({ civ6: { ...off, show: true, tournaments: true } });
   assert.deepEqual(shownGames(stage1), ['civ6']);
   assert.deepEqual(mainNav(stage1), [
-    { label: 'Civ 6', href: '/civ6/tournaments/' },
+    { label: 'Civ 6', href: '/civ6/tournaments/cloud/' },
     { label: 'Rules', href: '/rules/general/' },
     { label: 'Resources', href: '/resources/' },
     { label: 'About', href: '/about/' },
@@ -39,7 +42,7 @@ test('sections keep tab order, and a game links to its first one', () => {
   });
   assert.deepEqual(
     gameSections(both, 'civ6').map((s) => s.href),
-    ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/']
+    ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/cloud/']
   );
   assert.deepEqual(mainNav(both).slice(0, 2), [
     { label: 'Civ 6', href: '/civ6/ladder/' },
@@ -87,10 +90,29 @@ test('rule tabs follow the rule sets, and the menu opens the first', () => {
   assert.equal(mainNav(stage1).find((item) => item.label === 'Rules')?.href, '/rules/general/');
 });
 
-test('short links cover each game and the rules', () => {
+test('short links cover each game, its tournaments and the rules', () => {
   assert.deepEqual(
     shortLinks().map((link) => link.from),
-    ['/civ6/', '/civ7/', '/rules/']
+    ['/civ6/', '/civ6/tournaments/', '/civ7/', '/civ7/tournaments/', '/rules/']
   );
-  assert.deepEqual(shortLinks()[0].to, ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/']);
+  assert.deepEqual(shortLinks()[0].to, ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/cloud/']);
+  assert.deepEqual(shortLinks()[1].to, tournamentTabs('civ6').map((tab) => tab.href));
+});
+
+test('tournament tabs: one per category, then past winners; each a page of its own', () => {
+  assert.deepEqual(
+    TOURNAMENT_TABS.map((tab) => tab.id),
+    [...TOURNAMENT_CATEGORIES, 'past-winners']
+  );
+  assert.deepEqual(
+    tournamentTabs('civ6').map((tab) => tab.href),
+    ['/civ6/tournaments/cloud/', '/civ6/tournaments/ffa/', '/civ6/tournaments/pl/', '/civ6/tournaments/past-winners/']
+  );
+});
+
+test('the Tournaments section tab is current on every tournament tab', () => {
+  const stage1 = site({ civ6: { ...off, show: true, tournaments: true } });
+  const [tournaments] = gameSections(stage1, 'civ6');
+  assert.equal(tournaments.section, '/civ6/tournaments/');
+  assert.ok('/civ6/tournaments/pl/'.startsWith(tournaments.section ?? '-'));
 });

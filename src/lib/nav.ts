@@ -5,6 +5,8 @@ export type GameId = keyof Site['games'];
 export interface NavLink {
   label: string;
   href: string;
+  /** Marks the tab current on any page under this path (a section with its own tabs). */
+  section?: string;
 }
 
 const GAMES: readonly (readonly [GameId, string])[] = [
@@ -29,6 +31,27 @@ export const RULE_SETS = [
   { id: 'discord', label: 'Discord' },
 ] as const;
 
+/** A running tournament's `category`: the tab it shows under. */
+export const TOURNAMENT_CATEGORIES = ['cloud', 'ffa', 'pl'] as const;
+
+/** Tabs on a game's Tournaments pages, in order: one per category, then past winners. */
+export const TOURNAMENT_TABS = [
+  { id: 'cloud', label: 'Cloud' },
+  { id: 'ffa', label: 'FFA' },
+  { id: 'pl', label: 'PL' },
+  { id: 'past-winners', label: 'Past winners' },
+] as const;
+
+/** Tabs on a game's Tournaments pages. */
+export function tournamentTabs(game: GameId): NavLink[] {
+  return TOURNAMENT_TABS.map(({ id, label }) => ({ label, href: `/${game}/tournaments/${id}/` }));
+}
+
+/** Where a section starts: its own page, or its first tab when it has tabs. */
+function sectionHref(game: GameId, key: (typeof SECTIONS)[number][0]): string {
+  return key === 'tournaments' ? tournamentTabs(game)[0].href : `/${game}/${key}/`;
+}
+
 /** Tabs on the rules pages. */
 export function ruleTabs(): NavLink[] {
   return RULE_SETS.map(({ id, label }) => ({ label, href: `/rules/${id}/` }));
@@ -44,7 +67,8 @@ export function gameSections(site: Site, game: GameId): NavLink[] {
   if (!switches.show) return [];
   return SECTIONS.filter(([key]) => switches[key]).map(([key, label]) => ({
     label,
-    href: `/${game}/${key}/`,
+    href: sectionHref(game, key),
+    section: `/${game}/${key}/`,
   }));
 }
 
@@ -88,13 +112,16 @@ export interface ShortLink {
   to: string[];
 }
 
-/** `/civ6/` opens the game's first built section; `/rules/` the first rule set. */
+/**
+ * `/civ6/` opens the game's first built section, `/civ6/tournaments/` its first
+ * tournament tab, `/rules/` the first rule set.
+ */
 export function shortLinks(): ShortLink[] {
   return [
-    ...GAMES.map(([game]) => ({
-      from: `/${game}/`,
-      to: SECTIONS.map(([key]) => `/${game}/${key}/`),
-    })),
+    ...GAMES.flatMap(([game]) => [
+      { from: `/${game}/`, to: SECTIONS.map(([key]) => sectionHref(game, key)) },
+      { from: `/${game}/tournaments/`, to: tournamentTabs(game).map((tab) => tab.href) },
+    ]),
     { from: '/rules/', to: ruleTabs().map((tab) => tab.href) },
   ];
 }

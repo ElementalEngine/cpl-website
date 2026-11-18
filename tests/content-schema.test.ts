@@ -93,6 +93,7 @@ test('tournaments: Challonge links become API ids; rules point to a rules page o
   const pl = {
     name: 'CPL Premier League Season 6',
     game: 'civ6',
+    category: 'pl',
     order: 1,
     format: 'League, 3 divisions',
     rules: '/rules/pl/',
@@ -108,6 +109,9 @@ test('tournaments: Challonge links become API ids; rules point to a rules page o
   assert.ok(!bad({ rules: 'https://docs.example.org/pl' }));
   assert.ok(bad({ game: 'civ5' }));
   assert.ok(bad({ order: 0 }));
+  assert.ok(bad({ category: 'duel' }));
+  assert.ok(bad({ category: undefined }), 'a running tournament needs a category');
+  assert.ok(!bad({ category: undefined, winners: ['A'] }), 'a past one does not');
   assert.ok(bad({ brakets: [] }), 'unknown fields fail');
 });
 

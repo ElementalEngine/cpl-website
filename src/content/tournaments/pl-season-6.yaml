@@ -1,6 +1,7 @@
-# Web address: /civ6/tournaments/#pl-season-6. Never rename this file.
+# Web address: /civ6/tournaments/pl/#pl-season-6. Never rename this file.
 name: CPL Premier League Season 6
 game: civ6
+category: pl
 order: 1
 format: League, 3 divisions
 rules: /rules/pl/

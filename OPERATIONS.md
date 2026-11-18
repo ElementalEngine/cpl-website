@@ -50,7 +50,7 @@ Never add `'unsafe-inline'`. After a deploy, https://securityheaders.com should 
 | `robots.txt` | `SITE` | Preview: block all. Live: allow all + `Sitemap:` line |
 | `sitemap.xml` | Built pages | Live only. Pages with `<meta name="robots" content="noindex">` are left out |
 | `data/<game>/tournaments.json` | Challonge standings shown on the Tournaments page | Last good data: the next build reads it back from the live site if Challonge fails |
-| `_redirects` | Built pages | `/civ6/` → the game's first built section, `/rules/` → the first rule set. Temporary (302), because the target changes when sections are switched on |
+| `_redirects` | Built pages | `/civ6/` → the game's first built section, `/civ6/tournaments/` → its first tournament tab, `/rules/` → the first rule set. Temporary (302), because the target changes when sections are switched on |
 
 ## Secrets and tokens
 

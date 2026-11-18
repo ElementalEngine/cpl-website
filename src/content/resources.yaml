@@ -31,8 +31,8 @@ tools:
     summary: Upload your games to civgg to get replays and stats.
     url: https://civgg-five.vercel.app/upload
     links:
-      - label: GitHub
-        url: https://github.com/bartsake/civreplay-releases
+      - label: Download
+        url: https://github.com/bartsake/civreplay-releases/releases/latest
   - name: CivDraft
     summary: Run a leader draft with bans before a game. Sign in with Steam to start one.
     url: https://civgg-five.vercel.app/draft

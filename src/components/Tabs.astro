@@ -1,5 +1,6 @@
 ---
 // Every tab is a link to its own page. Renders nothing with fewer than two tabs.
+// A tab with a `section` path is also current on the pages under it.
 import type { NavLink } from '../lib/nav';
 
 interface Props {
@@ -17,12 +18,18 @@ const { pathname } = Astro.url;
     <nav aria-label={label} class="mb-6">
       <ul class="flex flex-wrap gap-x-6 border-b border-border">
         {items.map((item) => {
-          const active = item.href === pathname;
+          const current =
+            item.href === pathname
+              ? 'page'
+              : item.section && pathname.startsWith(item.section)
+                ? 'true'
+                : undefined;
+          const active = current !== undefined;
           return (
             <li>
               <a
                 href={item.href}
-                aria-current={active ? 'page' : undefined}
+                aria-current={current}
                 class:list={[
                   '-mb-px inline-flex min-h-11 min-w-11 items-center justify-center border-b-2 transition-colors duration-150',
                   active
