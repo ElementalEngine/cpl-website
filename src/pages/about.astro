@@ -9,10 +9,12 @@ const entry = await getAbout();
 const { description, partnersIntro, partners, streamers } = entry.data;
 const { Content } = await render(entry);
 
+// The panel opens the Discord invite; a website is an extra link. A website-only partner opens the website.
 const partnerItems = partners.map(({ invite, website, ...partner }) => ({
   ...partner,
-  url: invite,
-  extras: website ? [{ label: 'Website', url: website, name: `${partner.name} website` }] : [],
+  url: invite ?? website ?? '',
+  extras:
+    invite && website ? [{ label: 'Website', url: website, name: `${partner.name} website` }] : [],
 }));
 ---
 

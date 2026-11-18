@@ -8,10 +8,10 @@ test('stage 1: /civ6/ and /civ6/tournaments/ open the first tournament tab; /rul
   assert.equal(
     redirectsFile(shortLinks(), built),
     [
-      '/civ6/ /civ6/tournaments/cloud/ 302',
-      '/civ6 /civ6/tournaments/cloud/ 302',
-      '/civ6/tournaments/ /civ6/tournaments/cloud/ 302',
-      '/civ6/tournaments /civ6/tournaments/cloud/ 302',
+      '/civ6/ /civ6/tournaments/pl/ 302',
+      '/civ6 /civ6/tournaments/pl/ 302',
+      '/civ6/tournaments/ /civ6/tournaments/pl/ 302',
+      '/civ6/tournaments /civ6/tournaments/pl/ 302',
       '/rules/ /rules/general/ 302',
       '/rules /rules/general/ 302',
       '',
@@ -20,7 +20,7 @@ test('stage 1: /civ6/ and /civ6/tournaments/ open the first tournament tab; /rul
 });
 
 test('the first built section wins, and hidden games get no redirect', () => {
-  const built = ['/civ6/stats/', '/civ6/tournaments/cloud/'];
+  const built = ['/civ6/stats/', '/civ6/tournaments/pl/'];
   const file = redirectsFile(shortLinks(), built);
   assert.match(file, /^\/civ6\/ \/civ6\/stats\/ 302$/m);
   assert.doesNotMatch(file, /civ7/);

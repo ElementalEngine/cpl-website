@@ -70,6 +70,15 @@ test('about: partner invites use the Discord invite check; streamers default to 
   );
 });
 
+test('about: a partner needs an invite, a website, or both', () => {
+  const about = { description: 'About CPL.', partnersIntro: 'Our partners.' };
+  const partners = (partner: object) =>
+    aboutSchema.safeParse({ ...about, partners: [{ name: 'civgg', summary: 'Stats.', ...partner }] }).success;
+  assert.ok(partners({ website: 'https://civgg-five.vercel.app/' }));
+  assert.ok(partners({ invite: 'https://discord.gg/FZW5pr6zTk' }));
+  assert.ok(!partners({}));
+});
+
 test('privacy: description and a past updatedOn', () => {
   assert.ok(
     privacySchema.safeParse({ description: 'Privacy.', updatedOn: new Date('2026-11-18') }).success
@@ -110,6 +119,8 @@ test('tournaments: Challonge links become API ids; rules point to a rules page o
   assert.ok(bad({ game: 'civ5' }));
   assert.ok(bad({ order: 0 }));
   assert.ok(bad({ category: 'duel' }));
+  assert.ok(bad({ category: 'ffa' }), 'FFA has no tab yet');
+  assert.ok(!bad({ teams: true }));
   assert.ok(bad({ category: undefined }), 'a running tournament needs a category');
   assert.ok(!bad({ category: undefined, winners: ['A'] }), 'a past one does not');
   assert.ok(bad({ brakets: [] }), 'unknown fields fail');
