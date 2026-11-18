@@ -74,6 +74,10 @@ export default defineConfig({
     // External stylesheets only, so the CSP needs no 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
+  markdown: {
+    // The highlighter writes style="" on every code block, which the CSP blocks.
+    syntaxHighlight: false,
+  },
   fonts: [
     {
       provider: fontProviders.local(),
