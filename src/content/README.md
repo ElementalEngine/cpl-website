@@ -41,7 +41,7 @@ propose a change. If a check fails, the live site keeps its last good version.
 | `rules/pl.md` | Rules → PL | The Premier League rules |
 | `rules/discord.md` | Rules → Discord | The Discord server rules |
 | `resources.yaml` | Resources | `modsNote`, the `mods` list, the `tools` list, extra `links` on mods and tools |
-| `tournaments/*.yaml` | Civ 6 → Tournaments (tabs Cloud, FFA, PL, Past winners), Home "On now" | One file per tournament: running ones and past winners |
+| `tournaments/*.yaml` | Civ 6 → Tournaments (tabs PL, Cloud, Past winners), Home "On now" | One file per tournament: running ones and past winners |
 | `about.md` | About | The text about CPL, `partnersIntro`, the `partners` list, the `streamers` list |
 | `privacy.md` | Privacy | Owner only |
 | `site.yaml` | Every page | Owner only: Discord invite, which games and sections show, footer links |
@@ -82,7 +82,7 @@ tools:
 
 - `name`: up to 80 characters. `summary`: one line, up to 160 characters.
 - Order in the file is the order on the page.
-- Partners need an `invite` (a permanent Discord invite); `website` is optional.
+- Partners need an `invite` (a permanent Discord invite), a `website`, or both. The panel opens the invite when there is one.
 - Streamers need a `name` and a `url`.
 - Mods and tools may have up to 3 extra `links` (each a short `label` and a `url`), shown at the bottom of the panel.
 
@@ -110,7 +110,7 @@ brackets:
 ```
 
 - `name` and `game` (`civ6` or `civ7`) are required.
-- `category` is required while it runs: the tab it shows under, `cloud`, `ffa` or `pl`.
+- `category` is required while it runs: the tab it shows under, `pl` or `cloud`.
 - `order`: a number from 1 to 99. Lower numbers show first in their tab; tournaments without one come after, by file name.
 - `format`: short, up to 60 characters. `description`: one line, up to 300 characters.
 - `rules`: a rules page on this site (`/rules/general/`, `/rules/in-game/`, `/rules/exploits/`, `/rules/cloud/`,
@@ -129,6 +129,7 @@ endedOn: 2027-02-14
 ```
 
 An old event from before the website needs only `name`, `game` and `winners` (`endedOn` if you know it).
+If the winners are clans or teams, add `teams: true`: the first place then reads "Winners".
 Past winners show newest `endedOn` first, then those without a date.
 
 ## Icons (`icons/`)

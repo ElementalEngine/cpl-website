@@ -32,13 +32,12 @@ export const RULE_SETS = [
 ] as const;
 
 /** A running tournament's `category`: the tab it shows under. */
-export const TOURNAMENT_CATEGORIES = ['cloud', 'ffa', 'pl'] as const;
+export const TOURNAMENT_CATEGORIES = ['pl', 'cloud'] as const;
 
 /** Tabs on a game's Tournaments pages, in order: one per category, then past winners. */
 export const TOURNAMENT_TABS = [
-  { id: 'cloud', label: 'Cloud' },
-  { id: 'ffa', label: 'FFA' },
   { id: 'pl', label: 'PL' },
+  { id: 'cloud', label: 'Cloud' },
   { id: 'past-winners', label: 'Past winners' },
 ] as const;
 

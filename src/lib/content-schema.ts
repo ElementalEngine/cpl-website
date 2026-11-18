@@ -72,8 +72,11 @@ export const aboutSchema = z.strictObject({
       z.strictObject({
         name: line(80),
         summary: line(160),
-        invite: discordInvite,
+        invite: discordInvite.optional(),
         website: httpsUrl.optional(),
+      })
+      .refine((partner) => partner.invite || partner.website, {
+        message: 'needs an invite, a website, or both',
       })
     )
     .min(1, 'must list at least one partner'),
@@ -128,6 +131,8 @@ export const tournamentSchema = z
       .max(3, 'must name 3 or fewer (winner, 2nd, 3rd)')
       .optional(),
     endedOn: pastDate.optional(),
+    /** The winners are clans or teams: the first place reads "Winners". */
+    teams: z.boolean().optional(),
   })
   .refine((tournament) => tournament.winners || tournament.category, {
     path: ['category'],

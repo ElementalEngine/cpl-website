@@ -1,4 +1,5 @@
 # Web address: /civ6/tournaments/past-winners/. Never rename this file.
 name: CCC 17
 game: civ6
+teams: true
 winners: [SeaDogs, Eleumas7, Unluckhyw]

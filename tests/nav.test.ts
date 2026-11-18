@@ -28,7 +28,7 @@ test('stage 1: Civ 6 links to its tournaments; Civ 7 is hidden', () => {
   const stage1 = site({ civ6: { ...off, show: true, tournaments: true } });
   assert.deepEqual(shownGames(stage1), ['civ6']);
   assert.deepEqual(mainNav(stage1), [
-    { label: 'Civ 6', href: '/civ6/tournaments/cloud/' },
+    { label: 'Civ 6', href: '/civ6/tournaments/pl/' },
     { label: 'Rules', href: '/rules/general/' },
     { label: 'Resources', href: '/resources/' },
     { label: 'About', href: '/about/' },
@@ -42,7 +42,7 @@ test('sections keep tab order, and a game links to its first one', () => {
   });
   assert.deepEqual(
     gameSections(both, 'civ6').map((s) => s.href),
-    ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/cloud/']
+    ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/pl/']
   );
   assert.deepEqual(mainNav(both).slice(0, 2), [
     { label: 'Civ 6', href: '/civ6/ladder/' },
@@ -95,7 +95,7 @@ test('short links cover each game, its tournaments and the rules', () => {
     shortLinks().map((link) => link.from),
     ['/civ6/', '/civ6/tournaments/', '/civ7/', '/civ7/tournaments/', '/rules/']
   );
-  assert.deepEqual(shortLinks()[0].to, ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/cloud/']);
+  assert.deepEqual(shortLinks()[0].to, ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/pl/']);
   assert.deepEqual(shortLinks()[1].to, tournamentTabs('civ6').map((tab) => tab.href));
 });
 
@@ -106,7 +106,7 @@ test('tournament tabs: one per category, then past winners; each a page of its o
   );
   assert.deepEqual(
     tournamentTabs('civ6').map((tab) => tab.href),
-    ['/civ6/tournaments/cloud/', '/civ6/tournaments/ffa/', '/civ6/tournaments/pl/', '/civ6/tournaments/past-winners/']
+    ['/civ6/tournaments/pl/', '/civ6/tournaments/cloud/', '/civ6/tournaments/past-winners/']
   );
 });
 

@@ -40,7 +40,7 @@ const isPast = tab.id === 'past-winners';
 const active = isPast ? [] : all.active.filter((entry) => entry.data.category === tab.id);
 const past = isPast ? all.past : [];
 const { states } = await getBracketData(game);
-const places = ['Winner', '2nd', '3rd'];
+const places = (teams?: boolean) => [teams ? 'Winners' : 'Winner', '2nd', '3rd'];
 
 /** "PL rules" for a rules page on this site, "Rules" for a link elsewhere. */
 function rulesLabel(href: string): string {
@@ -155,7 +155,7 @@ const description = isPast
                     <>
                       <dt class="flex items-center gap-2 text-text-2">
                         <Medal place={(i + 1) as 1 | 2 | 3} />
-                        {places[i]}
+                        {places(data.teams)[i]}
                       </dt>
                       <dd>{winner}</dd>
                     </>
