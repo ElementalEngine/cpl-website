@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getSite } from '../lib/content';
-import { gameLabel, gameSections, shownGames } from '../lib/nav';
+import { gameLabel, gameSections, ruleTabs, shownGames } from '../lib/nav';
 
 const site = await getSite();
 const links = [
@@ -12,6 +12,7 @@ const links = [
       href: section.href,
     }))
   ),
+  { label: 'Rules', href: ruleTabs()[0].href },
 ];
 ---
 
@@ -22,7 +23,7 @@ const links = [
 >
   <div class="max-w-reading space-y-6">
     <h1 class="text-2xl font-bold md:text-3xl">Page not found</h1>
-    <p>It may have moved, or a ladder page may no longer exist.</p>
+    <p>It may have moved, or it no longer exists.</p>
     <ul class="space-y-1">
       {
         links.map((link) => (

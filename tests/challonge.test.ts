@@ -66,6 +66,16 @@ test('mapping: running league ranked by record; equal records share a place; tie
   ].sort((a, b) => a.rank - b.rank || a.name.localeCompare(b.name)));
 });
 
+test('mapping: a winner id sent as text still counts as a win', () => {
+  const standings = standingsFrom(
+    tournament({ participants: [person(1, 'Ann'), person(2, 'Bob')], matches: [match(1, 2, '2')] })
+  );
+  assert.deepEqual(standings.rows, [
+    { rank: 1, name: 'Bob', record: { wins: 1, losses: 0, ties: 0 } },
+    { rank: 2, name: 'Ann', record: { wins: 0, losses: 1, ties: 0 } },
+  ]);
+});
+
 test('mapping: finished brackets use Challonge final ranks; group-stage ids count', () => {
   const standings = standingsFrom(
     tournament({

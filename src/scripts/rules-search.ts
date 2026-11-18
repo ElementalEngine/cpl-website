@@ -6,12 +6,21 @@ const input = form?.querySelector<HTMLInputElement>('[data-rules-search-input]')
 const status = form?.querySelector<HTMLElement>('[data-rules-search-status]');
 const list = form?.querySelector<HTMLElement>('[data-rules-search-results]');
 
+const LIMIT = 20;
+
 let index: Promise<RuleSection[]> | undefined;
 
+/** The search index. A failed download isn't kept, so the next search tries again. */
 function load(): Promise<RuleSection[]> {
   index ??= fetch('/data/rules-search.json')
-    .then((response) => (response.ok ? response.json() : []))
-    .then((data: unknown) => (Array.isArray(data) ? (data as RuleSection[]) : []))
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then((data: unknown) => {
+      if (!Array.isArray(data)) throw new Error('unexpected index');
+      return data as RuleSection[];
+    })
     .catch(() => {
       index = undefined;
       return [];
@@ -30,12 +39,16 @@ function show(query: string, sections: RuleSection[]) {
     status.textContent = 'Search is not available right now.';
     return;
   }
-  const results = searchRules(sections, query);
+  // One more than shown, to tell when there are more.
+  const results = searchRules(sections, query, LIMIT + 1);
+  const shown = results.slice(0, LIMIT);
   status.textContent =
     results.length === 0
       ? `No rules match "${query}".`
-      : `${results.length} result${results.length === 1 ? '' : 's'} for "${query}".`;
-  for (const { section, snippet } of results) {
+      : results.length > LIMIT
+        ? `More than ${LIMIT} results for "${query}". Showing the first ${LIMIT}: add a word to narrow it down.`
+        : `${results.length} result${results.length === 1 ? '' : 's'} for "${query}".`;
+  for (const { section, snippet } of shown) {
     const item = document.createElement('li');
     const link = document.createElement('a');
     link.href = section.id ? `${section.page}#${section.id}` : section.page;

@@ -364,6 +364,16 @@
 ::view-transition-new(root) {
   animation-duration: 150ms;
 }
+/* The header stays still while the page fades, so the logo doesn't blink. */
+.site-header {
+  view-transition-name: site-header;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
