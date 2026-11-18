@@ -2,8 +2,8 @@
 // A panel's icon: the link's own image from src/content/icons/ (a mod's Workshop
 // image, a Discord server's icon, a website's logo) when there is one, otherwise
 // a plain line icon. Raster images are resized by Astro; SVG logos are used as is.
-import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
+import { contentIcon } from '../lib/content-icons';
 import { iconKey, linkKind } from '../lib/links';
 import LinkIcon from './LinkIcon.astro';
 
@@ -11,23 +11,8 @@ interface Props {
   url: string;
 }
 
-const keyOf = (path: string) => path.replace(/^.*\//, '').replace(/\.[^.]+$/, '');
-const rasters = import.meta.glob<ImageMetadata>('../content/icons/*.{png,jpg,jpeg,webp,gif}', {
-  eager: true,
-  import: 'default',
-});
-const svgs = import.meta.glob<string>('../content/icons/*.svg', {
-  eager: true,
-  query: '?url',
-  import: 'default',
-});
-const rasterByKey = new Map(Object.entries(rasters).map(([path, image]) => [keyOf(path), image]));
-const svgByKey = new Map(Object.entries(svgs).map(([path, src]) => [keyOf(path), src]));
-
 const { url } = Astro.props;
-const key = iconKey(url);
-const raster = key ? rasterByKey.get(key) : undefined;
-const svg = key ? svgByKey.get(key) : undefined;
+const { raster, svg } = contentIcon(iconKey(url));
 const iconClass = 'panel-icon size-14 shrink-0 rounded-lg object-cover';
 ---
 

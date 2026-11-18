@@ -1,0 +1,21 @@
+---
+// A tournament's own badge, saved as src/content/icons/tournament-<file name>.*.
+// Renders nothing when there is none. Decorative: the name is always next to it.
+import { Image } from 'astro:assets';
+import { contentIcon } from '../lib/content-icons';
+
+interface Props {
+  slug: string;
+}
+
+const { raster, svg } = contentIcon(`tournament-${Astro.props.slug}`);
+const badgeClass = 'size-14 shrink-0 rounded-full object-contain';
+---
+
+{
+  raster ? (
+    <Image src={raster} alt="" width={112} height={112} layout="none" class={badgeClass} />
+  ) : (
+    svg && <img src={svg} alt="" width="56" height="56" loading="lazy" class={badgeClass} />
+  )
+}

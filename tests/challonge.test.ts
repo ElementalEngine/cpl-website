@@ -84,6 +84,20 @@ test('mapping: finished brackets use Challonge final ranks; group-stage ids coun
   ]);
 });
 
+test('mapping: a league with no results yet → 0–0 records, no places, by seed', () => {
+  const standings = standingsFrom(
+    tournament({
+      participants: [person(1, 'Zed', { seed: 2 }), person(2, 'Amy', { seed: 1 })],
+      matches: [match(1, 2, null, 'open')],
+    })
+  );
+  const zero = { wins: 0, losses: 0, ties: 0 };
+  assert.deepEqual(standings.rows, [
+    { rank: null, name: 'Amy', record: zero },
+    { rank: null, name: 'Zed', record: zero },
+  ]);
+});
+
 test('mapping: no two-player matches (e.g. free for all) → names by seed, no record', () => {
   const standings = standingsFrom(
     tournament({

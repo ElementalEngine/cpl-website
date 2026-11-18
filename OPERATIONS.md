@@ -62,7 +62,7 @@ Nothing secret is in the repo, Cloudflare settings or the browser.
 | `CLOUDFLARE_API_TOKEN` | Secret | Workers **Editor** on the `cpl-website` Worker only | 2026-11-18 | 2027-11-18 (token expires) |
 | `HEALTHCHECKS_PING_URL` | Secret | Ping one Healthchecks check | 2026-11-18 | Only if leaked |
 | `CLOUDFLARE_ACCOUNT_ID` | Variable (not secret) | Identifies the account for Wrangler | — | — |
-| `CHALLONGE_API_KEY` | Secret | Challonge API v1 key of the account that set it up (read only is used) | — | 1 year |
+| `CHALLONGE_API_KEY` | Secret | Challonge API v1 key (Challonge Connect app `CPL website`, account `project_cisco`); only reads are used | 2026-11-18 | 2027-11-18 |
 | `CORE_API_WEBSITE_TOKEN` | Secret | `GET /api/v2/public/*` only | When leaderboards ship | 1 year |
 
 **Yearly rotation (Cloudflare token), before it expires:**
@@ -100,7 +100,9 @@ Each bracket prints `PASS` (with its format, state and what the table will show)
 account as a co-host on the bracket.
 
 **Set or rotate the key:**
-1. challonge.com → profile menu → **Settings** → **Developer API** → copy the v1 key (or **Generate a new key**).
+1. https://connect.challonge.com/ (signed in as the key's owner) → app **CPL website** → **API v1 Key** →
+   **Create a key** (or replace the old one) → copy it to a password manager. Never screenshot this page: it also
+   shows the app's client secret. The app's Sandbox plan allows 500 requests a month; the site uses about 210.
 2. GitHub → repo **Settings** → **Environments** → `production` → **Environment secrets** → `CHALLONGE_API_KEY` →
    **Add environment secret** (or the pencil icon to update) → paste → **Add secret**.
 3. Actions → CI → **Run workflow** on `main`. In the `deploy` job, "Build with live data" should log `updated` for

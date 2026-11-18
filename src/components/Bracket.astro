@@ -5,6 +5,7 @@ import { formatDate, formatDateTime } from '../lib/format';
 import type { BracketState } from '../lib/tournaments';
 import Button from './Button.astro';
 import Notice from './Notice.astro';
+import Short from './Short.astro';
 import Table from './Table.astro';
 
 interface Props {
@@ -22,13 +23,15 @@ const rows = data?.rows ?? [];
 const ranked = rows.some((row) => row.rank !== null);
 const record = rows.some((row) => row.record);
 const ties = rows.some((row) => (row.record?.ties ?? 0) > 0);
+const noResults =
+  record && rows.every((row) => row.record && row.record.wins + row.record.losses + row.record.ties === 0);
 const updated = data ? new Date(data.updated_at) : undefined;
 const caption = `${tournament}, ${name}: standings`;
 ---
 
 <details open={!data?.finished} class="group rounded-lg border border-border bg-bg">
   <summary
-    class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-4 py-2 font-semibold [&::-webkit-details-marker]:hidden"
+    class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-3 py-2 font-semibold md:px-4 [&::-webkit-details-marker]:hidden"
   >
     <svg
       aria-hidden="true"
@@ -49,7 +52,7 @@ const caption = `${tournament}, ${name}: standings`;
     {data?.finished && <span class="text-sm font-normal text-muted">Finished</span>}
   </summary>
 
-  <div class="space-y-4 border-t border-border p-4">
+  <div class="space-y-4 border-t border-border p-3 md:p-4">
     {
       state.kind === 'stale' && updated && (
         <Notice>
@@ -72,14 +75,14 @@ const caption = `${tournament}, ${name}: standings`;
               {record && (
                 <>
                   <th scope="col" class="num">
-                    Wins
+                    <Short short="W" full="Wins" />
                   </th>
                   <th scope="col" class="num">
-                    Losses
+                    <Short short="L" full="Losses" />
                   </th>
                   {ties && (
                     <th scope="col" class="num">
-                      Ties
+                      <Short short="T" full="Ties" />
                     </th>
                   )}
                 </>
@@ -105,8 +108,9 @@ const caption = `${tournament}, ${name}: standings`;
       )
     }
     {data && rows.length === 0 && <p>No players have joined yet.</p>}
+    {noResults && <p class="text-sm text-muted">No results yet.</p>}
     {
-      data && !data.finished && record && (
+      data && !data.finished && record && !noResults && (
         <p class="text-sm text-muted">
           Until it ends, places follow wins. Equal records share a place.
         </p>

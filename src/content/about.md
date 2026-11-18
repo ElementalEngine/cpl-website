@@ -32,6 +32,12 @@ streamers:
     url: https://www.twitch.tv/lege
   - name: PotatoMcWhiskey
     url: https://www.twitch.tv/potatomcwhiskey
+  - name: Malm
+    url: https://www.twitch.tv/malm
+  - name: elaphantguy
+    url: https://www.twitch.tv/elaphantguy
+  - name: acsess
+    url: https://www.twitch.tv/acsess13337
 ---
 
 The Civilization Players League (CPL) is a community for competitive Civilization multiplayer. Players meet on Discord to play ranked games of Civilization VI and VII, in Free-for-all, Teamer and Duel, and to take part in leagues and tournaments such as the Premier League.
