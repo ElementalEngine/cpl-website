@@ -20,12 +20,13 @@ If any step fails, nothing deploys and the live site keeps its last good version
 
 | Domain | Use | Owner | Registrar | Renews | Auto-renew |
 |---|---|---|---|---|---|
-| `elementalengine.net` | Parent of the preview host | @ProjectCisco | _fill in_ | _fill in_ | _fill in_ |
-| `cpl.elementalengine.net` | Preview host. Cloudflare Worker `cpl-website` → Settings → Domains & Routes (custom domain) | @ProjectCisco | — | — | — |
+| `elementalengine.net` | Parent of the preview host | @ProjectCisco | Cloudflare Registrar | 2027-03-20 | On |
+| `cpl.elementalengine.net` | Preview host. Cloudflare → Worker `cpl-website` → **Domains** tab (custom domain) | @ProjectCisco | — | — | — |
 | Live domain | Not yet chosen | @ProjectCisco | Cloudflare Registrar (planned) | — | On |
 
-At go-live the preview host gets a permanent (301) redirect to the live domain.
-Never publish the `*.workers.dev` address: it is switched off in `wrangler.jsonc`.
+- HTTP → HTTPS: redirect rule `cpl: HTTP to HTTPS` (Cloudflare → `elementalengine.net` → Rules), applies to `cpl.elementalengine.net` only.
+- `*.workers.dev` and preview URLs are switched off (Worker → **Domains** tab, and `wrangler.jsonc`).
+- At go-live the preview host gets a permanent (301) redirect to the live domain.
 
 ## Secrets and tokens
 
@@ -34,17 +35,17 @@ Nothing secret is in the repo, Cloudflare settings or the browser.
 
 | Name | Kind | What it can do | Created | Rotate by |
 |---|---|---|---|---|
-| `CLOUDFLARE_API_TOKEN` | Secret | Workers **Editor** on the `cpl-website` Worker only | _fill in_ | 1 year after creation |
-| `HEALTHCHECKS_PING_URL` | Secret | Ping one Healthchecks check | _fill in_ | Only if leaked |
+| `CLOUDFLARE_API_TOKEN` | Secret | Workers **Editor** on the `cpl-website` Worker only | 2026-11-18 | 2027-11-18 (token expires) |
+| `HEALTHCHECKS_PING_URL` | Secret | Ping one Healthchecks check | 2026-11-18 | Only if leaked |
 | `CLOUDFLARE_ACCOUNT_ID` | Variable (not secret) | Identifies the account for Wrangler | — | — |
 | `CHALLONGE_API_KEY` | Secret | Read tournaments (API v1) | When tournaments ship | 1 year |
 | `CORE_API_WEBSITE_TOKEN` | Secret | `GET /api/v2/public/*` only | When leaderboards ship | 1 year |
 
-**Yearly rotation (Cloudflare token):**
-1. Cloudflare → My Profile → API Tokens → **Roll** on the `cpl-website deploy` token. Copy the new value.
+**Yearly rotation (Cloudflare token), before it expires:**
+1. Cloudflare → **Manage Account** → **Account API Tokens** → **Create Token** → **Start from scratch** → scope **Specified Workers** → `cpl-website` → **Editor** → expiration **1 year** → create. Copy the value.
 2. GitHub → Settings → Environments → `production` → `CLOUDFLARE_API_TOKEN` → **Update** → paste.
 3. Actions → CI → **Run workflow** on `main`. The `deploy` job should go green.
-4. Update the dates in the table above.
+4. Delete the old token in Cloudflare. Update the dates above.
 
 ## Monitors
 
@@ -52,7 +53,7 @@ Nothing secret is in the repo, Cloudflare settings or the browser.
 |---|---|---|---|
 | Healthchecks.io check `cpl-website pipeline` | The pipeline ran and deployed | Period 1 day, grace 6 hours | Email to owner |
 | UptimeRobot `cpl-website home` | Home page answers | HTTP(s), every 5 minutes | Email to owner |
-| Cloudflare Web Analytics | Page views and speed | No cookies or browser storage (checked at setup) | — |
+| Cloudflare Web Analytics | Page views and speed | Snippet in `src/layouts/Base.astro` (site token is public). No cookies or browser storage | — |
 
 ## Alert → action
 
@@ -64,7 +65,7 @@ Nothing secret is in the repo, Cloudflare settings or the browser.
 
 ## Roll back
 
-**Fast (seconds):** Cloudflare dashboard → Workers & Pages → `cpl-website` → **Deployments** →
+**Fast (seconds):** Cloudflare → Workers & Pages → `cpl-website` → **Deployments** tab →
 on the last good version, open the **⋯** menu → **Rollback** → confirm.
 
 **Permanent:** on GitHub, revert the bad commit (open the merged pull request → **Revert** →

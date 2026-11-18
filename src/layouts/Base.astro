@@ -18,6 +18,12 @@ const { title, description, noindex = false } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "4a8f63a6ae3e4f36a333b0f16af577f0"}'
+    ></script>
   </head>
   <body class="bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
     <main
