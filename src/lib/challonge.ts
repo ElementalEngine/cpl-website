@@ -141,7 +141,9 @@ export function standingsFrom(tournament: ChallongeTournament): Standings {
     const a = owner.get(match.player1_id ?? -1);
     const b = owner.get(match.player2_id ?? -1);
     if (a === undefined || b === undefined) continue;
-    const winner = typeof match.winner_id === 'number' ? owner.get(match.winner_id) : undefined;
+    // The API sometimes sends ids as text. No winner means a tie.
+    const winnerId = Number(match.winner_id ?? Number.NaN);
+    const winner = Number.isInteger(winnerId) ? owner.get(winnerId) : undefined;
     if (winner !== undefined && winner !== a && winner !== b) continue;
     const ra = records.get(a);
     const rb = records.get(b);

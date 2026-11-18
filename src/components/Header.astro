@@ -1,4 +1,5 @@
 ---
+import logo from '../assets/brand/logo.png';
 import Button from './Button.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { mainNav, navCurrent } from '../lib/nav';
@@ -13,13 +14,13 @@ const { pathname } = Astro.url;
 const items = mainNav(site);
 ---
 
-<header class="border-b border-border bg-surface">
+<header class="site-header border-b border-border bg-surface">
   <div
     class="mx-auto flex max-w-page flex-wrap items-center gap-x-2 px-4 py-2 md:px-6"
   >
     <a href="/" class="me-2 inline-flex rounded-lg">
       <img
-        src="/logo.png"
+        src={logo.src}
         width="73"
         height="44"
         alt="CivPlayers League home"

@@ -2,8 +2,15 @@ import { z } from 'astro/zod';
 import { formatDate } from './format';
 import type { Standings } from './challonge';
 
-/** Page ids a tournament file name must not take. */
-const RESERVED = new Set(['main', 'on-this-page', 'past-winners']);
+/** Ids already on the tournaments pages, which a tournament file name must not take. */
+const RESERVED = new Set([
+  'main',
+  'on-this-page',
+  'past-winners',
+  'site-nav',
+  'footer-follow',
+  'footer-support',
+]);
 
 interface Sortable {
   id: string;

@@ -39,6 +39,9 @@ test('split: no winners = active, by order then file name; winners = past, newes
 
 test('split: a file name the page already uses fails', () => {
   assert.throws(() => splitTournaments([entry('past-winners')]), /past-winners\.yaml/);
+  // Ids the header and footer already use on every page.
+  assert.throws(() => splitTournaments([entry('site-nav')]), /site-nav\.yaml/);
+  assert.throws(() => splitTournaments([entry('footer-follow')]), /footer-follow\.yaml/);
 });
 
 const NOW = new Date('2026-11-18T03:17:00Z');

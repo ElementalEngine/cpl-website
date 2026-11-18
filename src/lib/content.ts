@@ -30,7 +30,7 @@ export async function getPrivacy() {
   return (await getEntry('privacy', 'privacy')) ?? missing('privacy.md');
 }
 
-/** The three rule sets, in tab order. Fails on a missing or unexpected file. */
+/** The rule sets, in tab order. Fails on a missing or unexpected file. */
 export async function getRuleSets() {
   const entries = await getCollection('rules');
   const known = new Set<string>(RULE_SETS.map(({ id }) => id));
