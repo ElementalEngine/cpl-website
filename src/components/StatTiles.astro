@@ -17,7 +17,14 @@ const { facts, onSurface = false } = Astro.props;
       {facts.map((fact) => (
         <div class:list={['flex flex-col-reverse gap-1 rounded-lg border border-border p-4', onSurface ? 'bg-bg' : 'bg-surface']}>
           <dt class="text-sm text-muted">{fact.label}</dt>
-          <dd class="text-2xl font-bold tabular-nums text-text">{fact.value}</dd>
+          <dd
+            class:list={[
+              'font-bold text-text [overflow-wrap:anywhere]',
+              fact.value.length <= 12 ? 'text-2xl tabular-nums' : 'text-lg',
+            ]}
+          >
+            {fact.value}
+          </dd>
         </div>
       ))}
     </dl>

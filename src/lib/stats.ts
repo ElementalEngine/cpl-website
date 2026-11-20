@@ -115,7 +115,7 @@ export function bestPerMap(stats: ModeStats): MapPicks[] {
 /** What a game's stats page says when no mode has games. */
 export function noStatsMessage(source: Source<SeasonStats>): string {
   if (source.kind === 'no-season') return 'No season is open right now. Stats appear when the next season starts.';
-  if (source.kind === 'none') return 'Season stats will appear here soon.';
+  if (source.kind === 'none') return 'Maps, draft bans and leader win rates will appear here soon.';
   const { season_label: label, season_started_at: started } = source.data;
   return `${label} started on ${formatDate(new Date(started))}. Stats appear after the first games.`;
 }

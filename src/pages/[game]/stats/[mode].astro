@@ -61,18 +61,18 @@ const heading = 'text-lg font-semibold';
 ---
 
 <Page
-  title={`${label} season stats`}
-  documentTitle={`${mode.label} season stats · ${label} · CPL`}
-  description={`${label} ${mode.label} season stats: ${subtitle}. Updated ${formatDate(updated)}.`}
+  title={`${label} meta`}
+  documentTitle={`${mode.label} meta · ${label} · CPL`}
+  description={`${label} ${mode.label} meta: maps, draft bans and leader win rates. ${subtitle}. Updated ${formatDate(updated)}.`}
   wide
 >
   <Fragment slot="tabs">
     <Tabs label={`${label} sections`} items={gameSections(site, game)} />
-    <Tabs label="Stats modes" items={statsTabs(game, shown)} />
+    <Tabs label="Meta modes" items={statsTabs(game, shown)} />
   </Fragment>
 
   <div slot="sections" class="space-y-2">
-    <h2 class="text-xl font-semibold">{mode.label} stats</h2>
+    <h2 class="text-xl font-semibold">{mode.label} meta</h2>
     <p class="text-text-2">{subtitle}</p>
     <DataBlock updated={updated} stale={source.kind === 'stale'} reportUrl={site.discordInvite}>
       <div class="grid gap-8 lg:grid-cols-2">

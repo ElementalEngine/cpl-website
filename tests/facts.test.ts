@@ -15,14 +15,22 @@ test('league totals: registered players and games played, with separators', () =
   ]);
 });
 
-test('a game: the season, its games, then players on each ladder with players', () => {
-  assert.deepEqual(gameFacts(ladders, stats), [
+test('a game: the season, its games, players per ladder, then the standouts', () => {
+  const facts = gameFacts(ladders, stats);
+  const ffa = stats.modes[0];
+  assert.deepEqual(facts.slice(0, 5), [
     { value: 'Season 8', label: 'started 1 Nov 2026' },
     { value: '532', label: 'games this season' },
     { value: '130', label: 'on the FFA ladder' },
     { value: '41', label: 'on the Teamer ladder' },
     { value: '25', label: 'on the cloud ladder' },
   ]);
+  assert.deepEqual(facts[5], { value: ladders.ladders[0].rows[0].display_name, label: 'top of the FFA ladder' });
+  assert.equal(facts[6].value, ffa.maps[0].map);
+  assert.match(facts[6].label, /^most played map \(FFA\), \d+% of games$/);
+  assert.deepEqual(facts[7], { value: ffa.draft_bans.filter((ban) => ban.kind === 'leader')[0].name, label: 'most banned in drafts (FFA)' });
+  assert.match(facts[8].label, /^best 1st place % \(FFA\): \d+%$/);
+  assert.equal(facts.length, 9);
 });
 
 test('no open season or no data: those facts are left out', () => {

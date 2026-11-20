@@ -101,8 +101,8 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
       }
     </div>
 
-    <section data-reveal class="space-y-4" aria-labelledby="offers">
-      <h2 id="offers" class={heading}>What CPL offers</h2>
+    <section data-reveal class="space-y-4">
+      <h2 class={heading}>What CPL offers</h2>
       <ul role="list" class="grid gap-6 md:grid-cols-3">
         {
           highlights.map((item) => (
@@ -132,16 +132,16 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
       </ul>
     </section>
 
-    <section data-reveal class="space-y-4" aria-labelledby="join">
-      <h2 id="join" class={heading}>How to join</h2>
-      <ol role="list" class="grid gap-4 md:grid-cols-3">
+    <section data-reveal class="space-y-4">
+      <h2 class={heading}>How to join</h2>
+      <ol role="list" class="grid list-none gap-6 md:grid-cols-3">
         {
           joinSteps.map((step, i) => (
-            <li data-reveal class="flex gap-3 rounded-lg bg-surface p-4">
-              <span aria-hidden="true" class="text-xl font-bold text-accent">
+            <li data-reveal class="flex gap-4">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-surface text-xl font-bold text-accent">
                 {i + 1}
               </span>
-              <p>{step}</p>
+              <p class="self-center">{step}</p>
             </li>
           ))
         }
@@ -150,8 +150,8 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
 
     {
       games.length > 0 && (
-        <section data-reveal class="space-y-4" aria-labelledby="on-now">
-          <h2 id="on-now" class={heading}>On now</h2>
+        <section data-reveal class="space-y-4">
+          <h2 class={heading}>On now</h2>
           {onNow.length > 0 ? (
             <ul role="list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {onNow.map((item) => (
@@ -184,9 +184,9 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
 
     {
       ladderGame && ladderData && ladders && leaders.length > 0 && (
-        <section data-reveal class="space-y-4" aria-labelledby="leaders">
+        <section data-reveal class="space-y-4">
           <div class="space-y-1">
-            <h2 id="leaders" class={heading}>Season leaders</h2>
+            <h2 class={heading}>Season leaders</h2>
             <p class="text-text-2">
               {gameLabel(ladderGame)} · {ladderSubtitle(ladderData, leaders[0].mode)}
             </p>
@@ -234,8 +234,8 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
       )
     }
 
-    <section data-reveal class="space-y-4" aria-labelledby="explore">
-      <h2 id="explore" class={heading}>Explore the site</h2>
+    <section data-reveal class="space-y-4">
+      <h2 class={heading}>Explore the site</h2>
       <ul role="list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {
           explore.map((item) => (

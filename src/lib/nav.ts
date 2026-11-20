@@ -17,7 +17,7 @@ const GAMES: readonly (readonly [GameId, string])[] = [
 // Tab order inside a game, with a line for each section's card.
 const SECTIONS = [
   ['ladder', 'Ladder', 'Every ranked player this season, by mode.'],
-  ['stats', 'Season stats', 'Most played maps, draft bans and leader win rates.'],
+  ['stats', 'Meta', "This season's most played maps, draft bans and leader win rates."],
   ['tournaments', 'Tournaments', 'The Premier League and cloud events, with standings.'],
 ] as const;
 
