@@ -7,14 +7,22 @@ interface Props {
 
 const { site } = Astro.props;
 const groups = [
-  { id: 'footer-follow', title: 'Follow:', kind: 'follow' },
-  { id: 'footer-support', title: 'Support:', kind: 'support' },
-]
-  .map((group) => ({
-    ...group,
-    links: site.socials.filter((social) => social.kind === group.kind),
-  }))
-  .filter((group) => group.links.length > 0);
+  {
+    id: 'footer-cpl',
+    title: 'CPL:',
+    links: [
+      { name: 'Join Discord', url: site.discordInvite },
+      { name: 'About CPL', url: '/about/' },
+      { name: 'Privacy', url: '/privacy/' },
+    ],
+  },
+  ...[
+    { id: 'footer-follow', title: 'Follow:', kind: 'follow' },
+    { id: 'footer-support', title: 'Support:', kind: 'support' },
+  ].map((group) => ({ ...group, links: site.socials.filter((social) => social.kind === group.kind) })),
+].filter((group) => group.links.length > 0);
+
+const year = new Date().getUTCFullYear();
 
 // min-w-11 keeps short labels like "X" at a 44 px target.
 const link =
@@ -22,32 +30,27 @@ const link =
 ---
 
 <footer data-menu-inert class="border-t border-border bg-surface text-sm">
-  <div
-    class="mx-auto flex max-w-page flex-wrap items-center gap-x-6 px-4 md:px-6"
-  >
-    <ul class="flex flex-wrap gap-x-4">
-      <li><a class={link} href={site.discordInvite}>Join Discord</a></li>
-      <li><a class={link} href="/about/">About</a></li>
-      <li><a class={link} href="/privacy/">Privacy</a></li>
-    </ul>
-    {
-      groups.map((group) => (
-        <div class="flex flex-wrap items-center gap-x-3">
-          <p id={group.id} class="text-muted">
-            {group.title}
-          </p>
-          <ul aria-labelledby={group.id} class="flex flex-wrap gap-x-3">
-            {group.links.map((social) => (
-              <li>
-                <a class={link} href={social.url}>
-                  {social.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
-    <p class="text-muted">© CPL</p>
+  <div class="mx-auto flex max-w-page flex-wrap items-center justify-between gap-x-8 gap-y-2 px-4 py-4 md:px-6">
+    <div class="flex flex-wrap items-center gap-x-8">
+      {
+        groups.map((group) => (
+          <div class="flex flex-wrap items-center gap-x-3">
+            <p id={group.id} class="font-semibold text-muted">
+              {group.title}
+            </p>
+            <ul aria-labelledby={group.id} class="flex flex-wrap gap-x-3">
+              {group.links.map((item) => (
+                <li>
+                  <a class={link} href={item.url}>
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <p class="text-muted">© {year} Civilization Players League</p>
   </div>
 </footer>

@@ -17,7 +17,7 @@ const GAMES: readonly (readonly [GameId, string])[] = [
 // Tab order inside a game, with a line for each section's card.
 const SECTIONS = [
   ['ladder', 'Ladder', 'Every ranked player this season, by mode.'],
-  ['stats', 'Stats', 'Most played maps, draft bans and leader win rates.'],
+  ['stats', 'Season stats', 'Most played maps, draft bans and leader win rates.'],
   ['tournaments', 'Tournaments', 'The Premier League and cloud events, with standings.'],
 ] as const;
 
@@ -113,7 +113,7 @@ export function mainNav(site: Site): NavLink[] {
     ...games,
     { label: 'Rules', href: ruleTabs()[0].href },
     { label: 'Resources', href: '/resources/' },
-    { label: 'About', href: '/about/' },
+    { label: 'About CPL', href: '/about/' },
   ];
 }
 

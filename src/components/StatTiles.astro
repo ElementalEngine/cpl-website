@@ -1,0 +1,25 @@
+---
+// Headline numbers in a row of tiles: the number large, its label under it.
+import type { Fact } from '../lib/facts';
+
+interface Props {
+  facts: Fact[];
+  /** Tiles sit on a surface panel (Home's top block) rather than the page. */
+  onSurface?: boolean;
+}
+
+const { facts, onSurface = false } = Astro.props;
+---
+
+{
+  facts.length > 0 && (
+    <dl class="grid grid-cols-2 gap-3 md:grid-cols-4">
+      {facts.map((fact) => (
+        <div class:list={['flex flex-col-reverse gap-1 rounded-lg border border-border p-4', onSurface ? 'bg-bg' : 'bg-surface']}>
+          <dt class="text-sm text-muted">{fact.label}</dt>
+          <dd class="text-2xl font-bold tabular-nums text-text">{fact.value}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}

@@ -14,7 +14,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const link = { name: 'CivDraft', summary: 'Run a draft.', url: 'https://example.org/draft' };
 
 test('home: one intro line of 160 characters or fewer, exactly 3 highlights and 3 steps', () => {
-  const highlight = { title: 'Ranked games', text: 'Climb the ladder.' };
+  const highlight = { icon: 'ladder', title: 'Ranked games', text: 'Climb the ladder.' };
   const home = {
     intro: 'CPL is a community.',
     highlights: [highlight, highlight, highlight],
@@ -27,6 +27,7 @@ test('home: one intro line of 160 characters or fewer, exactly 3 highlights and 
   assert.ok(!homeSchema.safeParse({ ...home, joinSteps: ['One', '', 'Three'] }).success);
   assert.ok(!homeSchema.safeParse({ ...home, highlights: [highlight, highlight] }).success);
   assert.ok(!homeSchema.safeParse({ ...home, highlights: [highlight, highlight, { title: 'x' }] }).success);
+  assert.ok(!homeSchema.safeParse({ ...home, highlights: [highlight, highlight, { ...highlight, icon: 'star' }] }).success);
 });
 
 test('dates: YAML dates and YYYY-MM-DD text pass; future dates and nonsense fail', () => {

@@ -1,12 +1,15 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/cpl-logo.png';
 import Button from '../components/Button.astro';
 import DataBlock from '../components/DataBlock.astro';
+import StatTiles from '../components/StatTiles.astro';
 import Table from '../components/Table.astro';
 import Base from '../layouts/Base.astro';
 import { getLadders, getOverview } from '../lib/core-api-data';
 import { getHome, getSite } from '../lib/content';
-import { formatCount } from '../lib/format';
-import { homeLeaders, ladderSubtitle, UNREGISTERED } from '../lib/ladders';
+import { overviewFacts, seasonFact } from '../lib/facts';
+import { homeLeaders, ladderHref, ladderSubtitle, UNREGISTERED } from '../lib/ladders';
 import {
   gameLabel,
   ruleTabs,
@@ -44,7 +47,7 @@ const explore = [
   ...shownGames(site).flatMap((game) => sectionCards(site, game)),
   { name: 'Rules', href: ruleTabs()[0].href, text: 'Game, cloud, PL and Discord rules, with search.' },
   { name: 'Resources', href: '/resources/', text: 'The mods you need and the tools players use.' },
-  { name: 'About', href: '/about/', text: 'Who we are, partner communities and streamers.' },
+  { name: 'About CPL', href: '/about/', text: 'Who we are, partner communities and streamers.' },
 ];
 
 // League totals and this season's top 10 per mode, for the first game with its Ladder on.
@@ -54,6 +57,15 @@ const overview = totals?.kind === 'fresh' || totals?.kind === 'stale' ? totals.d
 const ladders = ladderGame ? await getLadders(ladderGame) : undefined;
 const ladderData = ladders?.kind === 'fresh' || ladders?.kind === 'stale' ? ladders.data : undefined;
 const leaders = ladderGame && ladderData ? homeLeaders(ladderGame, ladderData) : [];
+const facts = [...(overview ? overviewFacts(overview) : []), ...(ladderData ? seasonFact(ladderData) : [])];
+const firstLadder = ladderGame && leaders[0] ? ladderHref(ladderGame, leaders[0].mode.id) : undefined;
+
+// Line icons for the highlights (24 × 24, stroked in the accent colour).
+const ICONS = {
+  ladder: 'M4 20V11M10 20V4M16 20v-6M22 20H2',
+  trophy: 'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4',
+  chat: 'M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z',
+} as const;
 
 const heading = 'text-xl font-semibold';
 const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4';
@@ -61,29 +73,59 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
 
 <Base title="CPL · Civilization Players League" description={intro}>
   <div class="space-y-12">
-    <div class="max-w-reading space-y-6">
-      <h1 class="text-2xl font-bold md:text-3xl">Civilization Players League</h1>
-      <p class="text-lg text-text-2">{intro}</p>
+    <div class="grid items-center gap-8 rounded-xl border border-border bg-surface p-6 md:p-10 lg:grid-cols-[3fr_2fr]">
+      <div class="space-y-5">
+        <p class="text-sm font-semibold tracking-wide text-accent uppercase">Civilization VI and VII multiplayer</p>
+        <h1 class="text-2xl font-bold md:text-3xl">Civilization Players League</h1>
+        <p class="max-w-reading text-lg text-text-2">{intro}</p>
+        <div class="flex flex-wrap gap-3">
+          <Button href={site.discordInvite} variant="primary">Join Discord</Button>
+          {firstLadder && <Button href={firstLadder}>See the ladder</Button>}
+        </div>
+      </div>
+      <Image
+        src={logo}
+        alt=""
+        width={360}
+        height={217}
+        layout="none"
+        loading="eager"
+        class="mx-auto w-full max-w-60 lg:max-w-90"
+      />
       {
-        overview && (
-          <p class="text-text-2">
-            <strong class="font-semibold text-text">{formatCount(overview.registered_players)}</strong> registered
-            players · <strong class="font-semibold text-text">{formatCount(overview.matches_played)}</strong> games
-            played
-          </p>
+        facts.length > 0 && (
+          <div class="lg:col-span-2">
+            <StatTiles facts={facts} onSurface />
+          </div>
         )
       }
-      <Button href={site.discordInvite} variant="primary">Join Discord</Button>
     </div>
 
     <section data-reveal class="space-y-4" aria-labelledby="offers">
       <h2 id="offers" class={heading}>What CPL offers</h2>
-      <ul role="list" class="grid gap-4 md:grid-cols-3">
+      <ul role="list" class="grid gap-6 md:grid-cols-3">
         {
           highlights.map((item) => (
-            <li data-reveal class="space-y-1 rounded-lg border-t-2 border-accent bg-surface p-4">
-              <h3 class="font-semibold">{item.title}</h3>
-              <p class="text-text-2">{item.text}</p>
+            <li data-reveal class="flex gap-4">
+              <span class="h-fit shrink-0 rounded-lg bg-surface p-3 text-accent">
+                <svg
+                  aria-hidden="true"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d={ICONS[item.icon]} />
+                </svg>
+              </span>
+              <div class="space-y-1">
+                <h3 class="font-semibold">{item.title}</h3>
+                <p class="text-text-2">{item.text}</p>
+              </div>
             </li>
           ))
         }
