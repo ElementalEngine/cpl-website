@@ -44,7 +44,7 @@ const panelLink = link.extend({
 export const homeSchema = z.strictObject({
   intro: description,
   highlights: z
-    .array(z.strictObject({ title: line(40), text: line(120) }))
+    .array(z.strictObject({ icon: z.enum(['ladder', 'trophy', 'chat']), title: line(40), text: line(120) }))
     .length(3, 'must have exactly 3 highlights'),
   joinSteps: z.array(line(120)).length(3, 'must have exactly 3 steps'),
 });

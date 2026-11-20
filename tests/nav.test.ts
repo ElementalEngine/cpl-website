@@ -32,7 +32,7 @@ test('stage 1: Civ 6 links to its own page; Civ 7 is hidden', () => {
     { label: 'Civ 6', href: '/civ6/' },
     { label: 'Rules', href: '/rules/general/' },
     { label: 'Resources', href: '/resources/' },
-    { label: 'About', href: '/about/' },
+    { label: 'About CPL', href: '/about/' },
   ]);
 });
 
@@ -51,7 +51,7 @@ test('sections keep tab order; each game links to its own page, with a card per 
   ]);
   assert.deepEqual(
     sectionCards(both, 'civ7').map((card) => [card.name, card.href]),
-    [['Civ 7 stats', '/civ7/stats/']]
+    [['Civ 7 season stats', '/civ7/stats/']]
   );
   assert.ok(sectionCards(both, 'civ6').every((card) => card.text.length > 0));
 });

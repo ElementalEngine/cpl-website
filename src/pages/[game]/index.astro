@@ -1,9 +1,11 @@
 ---
-// A game's own page: a short intro, the section tabs, and a card for each section.
-import Tabs from '../../components/Tabs.astro';
+// A game's own page: a short intro, its headline numbers, and a card for each section.
+import StatTiles from '../../components/StatTiles.astro';
 import Page from '../../layouts/Page.astro';
+import { getLadders, getSeasonStats } from '../../lib/core-api-data';
 import { getSite } from '../../lib/content';
-import { gameLabel, gameSections, sectionCards, shownGames, type GameId } from '../../lib/nav';
+import { gameFacts } from '../../lib/facts';
+import { gameLabel, sectionCards, shownGames, type GameId } from '../../lib/nav';
 
 export async function getStaticPaths() {
   const site = await getSite();
@@ -16,26 +18,38 @@ interface Props {
 
 const { game } = Astro.props;
 const site = await getSite();
+const switches = site.games[game];
 const label = gameLabel(game);
 const cards = sectionCards(site, game);
-const intro = site.games[game].intro ?? `${label} at CPL: ${cards.map((card) => card.name).join(', ')}.`;
+const intro = switches.intro ?? `${label} at CPL: ${cards.map((card) => card.name).join(', ')}.`;
+
+// Both are fetched once per build for the section pages anyway: no extra calls.
+const ladders = switches.ladder ? await getLadders(game) : undefined;
+const stats = switches.stats ? await getSeasonStats(game) : undefined;
+const facts = gameFacts(
+  ladders?.kind === 'fresh' || ladders?.kind === 'stale' ? ladders.data : undefined,
+  stats?.kind === 'fresh' || stats?.kind === 'stale' ? stats.data : undefined
+);
 ---
 
 <Page title={label} description={intro} wide>
-  <Fragment slot="tabs">
-    <p class="mb-6 max-w-reading text-lg text-text-2">{intro}</p>
-    <Tabs label={`${label} sections`} items={gameSections(site, game)} />
-  </Fragment>
-  <ul slot="sections" role="list" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-    {
-      cards.map((card) => (
-        <li data-reveal class="panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4">
-          <a href={card.href} class="panel-link font-semibold text-text">
-            {card.name}
-          </a>
-          <p class="text-text-2">{card.text}</p>
-        </li>
-      ))
-    }
-  </ul>
+  <div slot="sections" class="space-y-8">
+    <p class="max-w-reading text-lg text-text-2">{intro}</p>
+    <StatTiles facts={facts} />
+    <ul role="list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {
+        cards.map((card) => (
+          <li data-reveal class="panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4">
+            <a href={card.href} class="panel-link font-semibold text-text">
+              {card.name}
+            </a>
+            <p class="text-text-2">{card.text}</p>
+            <p aria-hidden="true" class="mt-auto pt-2 text-sm font-semibold text-accent">
+              Open →
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </Page>

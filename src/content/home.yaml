@@ -5,13 +5,17 @@ intro: >-
   CPL is a community for competitive Civilization VI and VII multiplayer:
   ranked games, leagues and tournaments, all organised on Discord.
 
-# Exactly 3 things CPL offers, shown under the intro. title: a few words; text: one line.
+# Exactly 3 things CPL offers, shown under the intro.
+# icon: ladder, trophy or chat; title: a few words; text: one line.
 highlights:
-  - title: Ranked games
+  - icon: ladder
+    title: Ranked games
     text: Play rated FFA, Teamer and Duel games and climb the season ladder.
-  - title: Leagues and tournaments
+  - icon: trophy
+    title: Leagues and tournaments
     text: The Premier League, cloud events and a top-10 FFA final every season.
-  - title: Coaching
+  - icon: chat
+    title: Coaching
     text: Want to get better? Ask about coaching on the CPL Discord server.
 
 # Exactly 3 short steps.

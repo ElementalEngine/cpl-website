@@ -8,6 +8,7 @@ const RESERVED = new Set([
   'on-this-page',
   'past-winners',
   'site-nav',
+  'footer-cpl',
   'footer-follow',
   'footer-support',
 ]);
