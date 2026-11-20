@@ -3,6 +3,9 @@ import type { Source } from './core-api-data';
 import { formatDate } from './format';
 import { LADDER_MODES, type GameId, type NavLink } from './nav';
 
+/** core-api's name for a player with no registration record; shown muted. */
+export const UNREGISTERED = 'Unregistered player';
+
 /** Players per ladder page. A ladder this size or smaller is one page with no pager. */
 export const PAGE_SIZE = 100;
 
@@ -80,4 +83,11 @@ export function noLaddersMessage(source: Source<Ladders>): string {
   const { season_label: label, season_started_at: started } = source.data;
   if (!label || !started) return 'No season is open right now. Tables appear when the next season starts.';
   return `${label} started on ${formatDate(new Date(started))}. Tables appear after the first games.`;
+}
+
+/** Home: this season's top 10 per mode (FFA, Teamer, Duel; not cloud), with a link to each full ladder. */
+export function homeLeaders(game: GameId, data: Ladders) {
+  return shownLadders(data)
+    .filter(({ mode }) => mode.id !== 'cloud')
+    .map(({ mode, rows }) => ({ mode, rows: rows.slice(0, 10), href: ladderHref(game, mode.id) }));
 }

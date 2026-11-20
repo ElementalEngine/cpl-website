@@ -12,15 +12,13 @@ export const discordInvite = z
     'must be a Discord invite (https://discord.gg/… or https://discord.com/invite/…)'
   );
 
-const notYet = z
-  .boolean()
-  .refine((on) => !on, { message: 'not available yet: these pages are not built' });
-
 const gameSwitches = z
   .strictObject({
+    /** A line or two at the top of the game's page. */
+    intro: z.string().trim().min(1).max(240).optional(),
     show: z.boolean(),
     ladder: z.boolean(),
-    stats: notYet,
+    stats: z.boolean(),
     tournaments: z.boolean(),
   })
   .refine((game) => !game.show || game.ladder || game.stats || game.tournaments, {

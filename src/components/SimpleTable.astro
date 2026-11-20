@@ -1,0 +1,45 @@
+---
+// A small stats table: the name is the row header, every other column is a number.
+import type { Row } from '../lib/stats';
+import Table from './Table.astro';
+
+interface Props {
+  caption: string;
+  hideCaption?: boolean;
+  /** Heading of the name column, e.g. "Leader". */
+  name: string;
+  columns: string[];
+  rows: Row[];
+}
+
+const { caption, hideCaption = false, name, columns, rows } = Astro.props;
+---
+
+<Table caption={caption} hideCaption={hideCaption}>
+  <thead>
+    <tr>
+      <th scope="col">{name}</th>
+      {
+        columns.map((column) => (
+          <th scope="col" class="num">
+            {column}
+          </th>
+        ))
+      }
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((row) => (
+        <tr>
+          <th scope="row" class="player">
+            {row.name}
+          </th>
+          {row.cells.map((cell) => (
+            <td class="num">{cell}</td>
+          ))}
+        </tr>
+      ))
+    }
+  </tbody>
+</Table>

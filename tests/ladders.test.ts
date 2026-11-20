@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { laddersSchema, type Ladders } from '../src/lib/core-api';
 import {
+  homeLeaders,
   ladderHref,
   ladderPages,
   ladderSubtitle,
@@ -81,4 +82,12 @@ test('no players yet: the season start, no season, or "coming soon"', () => {
     'No season is open right now. Tables appear when the next season starts.'
   );
   assert.equal(noLaddersMessage({ kind: 'none' }), 'Leaderboards will appear here soon.');
+});
+
+test('Home shows the top 10 of each season ladder, not cloud', () => {
+  const leaders = homeLeaders('civ6', load('civ6'));
+  assert.deepEqual(leaders.map(({ mode, rows, href }) => [mode.id, rows.length, href]), [
+    ['ffa', 10, '/civ6/ladder/ffa/'],
+    ['teamer', 10, '/civ6/ladder/teamer/'],
+  ]);
 });
