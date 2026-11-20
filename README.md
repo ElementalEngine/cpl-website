@@ -25,8 +25,8 @@ Requires Node.js 24.
 | `npm run verify` | Type check, lint, test, Knip, build, contracts check, accessibility check |
 | `npm run a11y` | Accessibility check of `dist/` |
 
-The page `/styleguide/` shows every shared component with placeholder data (not linked, not indexed).
-Use it for keyboard, contrast, zoom and reduced-motion checks in both themes.
+To build the ladder and stats pages without the API, set `CORE_API_FIXTURES=tests/fixtures/core-api` (made-up
+names and numbers) before `npm run build` or `npm run verify`. CI's checks do the same.
 
 Design tokens (colours, type sizes, breakpoints) live in `src/styles/global.css`. Only those colours exist.
 
@@ -43,7 +43,7 @@ Skipped locally if the browser isn't found. Always runs in CI.
 
 ## Deployment
 
-Deployed by GitHub Actions from `main`. See `OPERATIONS.md`.
+Deployed by GitHub Actions from `main`. The maintainer keeps the operations runbook outside the repository.
 
 The build also writes `robots.txt`, `sitemap.xml` and `_redirects`. Whether search engines may index the site
 follows one setting, `SITE` in `astro.config.ts`: the preview host is always blocked.

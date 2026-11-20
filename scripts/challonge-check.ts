@@ -20,7 +20,7 @@ function linksInContent(): string[] {
 
 const apiKey = process.env.CHALLONGE_API_KEY?.trim();
 if (!apiKey) {
-  console.error('Set CHALLONGE_API_KEY first (see OPERATIONS.md, "Challonge").');
+  console.error('Set CHALLONGE_API_KEY first.');
   process.exit(1);
 }
 

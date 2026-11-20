@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { z } from 'astro/zod';
-import { contractProblems } from '../scripts/lib/contracts';
+import { contractProblems, trimSpec, WEBSITE_ROUTES } from '../scripts/lib/contracts';
 import { laddersSchema, overviewSchema, seasonStatsSchema } from '../src/lib/core-api';
 
 const spec = () => JSON.parse(readFileSync('contracts/core-api/openapi.json', 'utf8'));
@@ -61,4 +61,22 @@ test('a field the site doesn\'t read can change freely', () => {
   const changed = spec();
   changed.components.schemas.LadderRow.properties.mu = { type: 'string' };
   assert.deepEqual(contractProblems(changed, routes), []);
+});
+
+test('the vendored spec holds only the website\'s routes, and trimming it again changes nothing', () => {
+  const vendored = spec();
+  assert.deepEqual(Object.keys(vendored.paths), [...WEBSITE_ROUTES]);
+  assert.deepEqual(trimSpec(vendored), vendored);
+});
+
+test('trimming drops other routes and the schemas only they use', () => {
+  const wider = spec();
+  wider.paths['/api/v2/matches'] = { get: { responses: { '200': { content: { 'application/json': { schema: { $ref: '#/components/schemas/Match' } } } } } } };
+  wider.paths['/api/v2/public/overview'].post = { responses: {} };
+  wider.components.schemas.Match = { type: 'object', properties: { id: { type: 'string' } } };
+  const trimmed = trimSpec(wider);
+  assert.deepEqual(Object.keys(trimmed.paths), [...WEBSITE_ROUTES]);
+  assert.equal(trimmed.components.schemas.Match, undefined);
+  assert.equal(trimmed.paths['/api/v2/public/overview'].post, undefined);
+  assert.ok(trimmed.components.schemas.LadderRow);
 });
