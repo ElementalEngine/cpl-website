@@ -1,7 +1,7 @@
 ---
 title: Cloud rules
 description: The rules for CPL play-by-cloud (PBC) games.
-updatedOn: 2026-11-18
+updatedOn: 2026-11-20
 ---
 
 ## Ranked games
@@ -109,3 +109,5 @@ be used. X is usually 1–2, higher with more players.
 Players can reload and change random events so a Rock Band is never lost, and nobody can prove it. This rule is
 never put to a vote: a host who uses it must say so when advertising the game, so players who don't like it can
 stay out.
+
+Testing Edit for staff
