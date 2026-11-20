@@ -33,8 +33,8 @@ propose a change. If a check fails, the live site keeps its last good version.
 
 | File | Page | What you can change |
 |---|---|---|
-| `home.yaml` | Home | `intro` (one line, up to 160 characters), `highlights` (exactly 3, each a short `title` and one line of `text`) and `joinSteps` (exactly 3 short lines) |
-| `rules/general.md` | Rules → General | Subs, drops, re-maps, scraps, voting, timed games, punishments, other rules |
+| `home.yaml` | Home | `intro` (one line, up to 160 characters), `highlights` (exactly 3, each an `icon` (`ladder`, `trophy` or `chat`), a `title` up to 40 characters and one line of `text` up to 120) and `joinSteps` (exactly 3 short lines) |
+| `rules/general.md` | Rules → General | Subs, drops, remaps, scraps, voting, timed games, punishments, other rules |
 | `rules/in-game.md` | Rules → In-game | Rules for playing a game |
 | `rules/exploits.md` | Rules → Exploits | Banned exploits, under a `## Civ 6` and a `## Civ 7` heading |
 | `rules/cloud.md` | Rules → Cloud | Play-by-cloud rules |
@@ -42,7 +42,7 @@ propose a change. If a check fails, the live site keeps its last good version.
 | `rules/discord.md` | Rules → Discord | The Discord server rules |
 | `resources.yaml` | Resources | `modsNote`, the `mods` list, the `tools` list, extra `links` on mods and tools |
 | `tournaments/*.yaml` | Civ 6 → Tournaments (tabs PL, Cloud, Past winners), Home "On now" | One file per tournament: running ones and past winners |
-| `about.md` | About | The text about CPL, `partnersIntro`, the `partners` list, the `streamers` list |
+| `about.md` | About CPL | The text about CPL, `partnersIntro`, the `partners` list, the `streamers` list |
 | `privacy.md` | Privacy | Owner only |
 | `site.yaml` | Every page | Owner only: Discord invite, which games and sections show, footer links |
 
@@ -121,7 +121,7 @@ brackets:
   `/rules/pl/`, `/rules/discord/`) or a link starting with `https://`.
 - `brackets`: up to 10. For `challonge`, open the bracket on challonge.com and copy the address from the browser.
   Links like `https://challonge.com/abc123`, `https://challonge.com/abc123/standings` and
-  `https://yourgroup.challonge.com/abc123` all work. The standings are read from Challonge once a day.
+  `https://yourgroup.challonge.com/abc123` all work. The standings are read from Challonge every time the site is built (at least once a day).
 - No `brackets` yet: the page shows the tournament as "Starting soon".
 
 **When a tournament ends**, add `winners` (the winner, or the top 3 in order) and `endedOn`. It then moves to
