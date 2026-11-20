@@ -1,0 +1,41 @@
+---
+// A game's own page: a short intro, the section tabs, and a card for each section.
+import Tabs from '../../components/Tabs.astro';
+import Page from '../../layouts/Page.astro';
+import { getSite } from '../../lib/content';
+import { gameLabel, gameSections, sectionCards, shownGames, type GameId } from '../../lib/nav';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  return shownGames(site).map((game) => ({ params: { game }, props: { game } }));
+}
+
+interface Props {
+  game: GameId;
+}
+
+const { game } = Astro.props;
+const site = await getSite();
+const label = gameLabel(game);
+const cards = sectionCards(site, game);
+const intro = site.games[game].intro ?? `${label} at CPL: ${cards.map((card) => card.name).join(', ')}.`;
+---
+
+<Page title={label} description={intro} wide>
+  <Fragment slot="tabs">
+    <p class="mb-6 max-w-reading text-lg text-text-2">{intro}</p>
+    <Tabs label={`${label} sections`} items={gameSections(site, game)} />
+  </Fragment>
+  <ul slot="sections" role="list" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {
+      cards.map((card) => (
+        <li data-reveal class="panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4">
+          <a href={card.href} class="panel-link font-semibold text-text">
+            {card.name}
+          </a>
+          <p class="text-text-2">{card.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Page>

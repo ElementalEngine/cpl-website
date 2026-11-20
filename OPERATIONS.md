@@ -16,8 +16,8 @@ One workflow, `.github/workflows/ci.yml`:
 `verify` = `astro check` → lint → tests → Knip → build → contracts check → accessibility check.
 If any step fails, nothing deploys and the live site keeps its last good version.
 
-`verify` has no secrets, so its build links each Challonge bracket without standings and builds the ladder pages
-from the made-up test data in `tests/fixtures/core-api/` (`CORE_API_FIXTURES`). `deploy` builds again with
+`verify` has no secrets, so its build links each Challonge bracket without standings and builds the ladder and stats
+pages and the Home totals from the made-up test data in `tests/fixtures/core-api/` (`CORE_API_FIXTURES`). `deploy` builds again with
 `CHALLONGE_API_KEY` and `CORE_API_WEBSITE_TOKEN`, runs the accessibility check on those pages, uploads them, then
 fails the run if core-api reported a problem that needs a fix (see "core-api").
 
@@ -53,7 +53,9 @@ Never add `'unsafe-inline'`. After a deploy, https://securityheaders.com should 
 | `sitemap.xml` | Built pages | Live only. Pages with `<meta name="robots" content="noindex">` are left out |
 | `data/<game>/tournaments.json` | Challonge standings shown on the Tournaments page | Last good data: the next build reads it back from the live site if Challonge fails |
 | `data/<game>/ladders.json` | core-api ladders shown on the Ladder pages (no μ or σ) | Last good data, as above, if core-api fails |
-| `_redirects` | Built pages | `/civ6/` → the game's first built page, `/civ6/ladder/` and `/civ6/tournaments/` → their first built tab, `/rules/` → the first rule set. Temporary (302), because the target changes with the data and the switches. Before any ladder has players, `/civ6/ladder/` is a page of its own (the season start) and doesn't redirect |
+| `data/<game>/stats.json` | core-api season stats shown on the Stats pages | As above. Not written while no season is open |
+| `data/overview.json` | The totals on Home | As above |
+| `_redirects` | Built pages | `/civ6/ladder/`, `/civ6/stats/` and `/civ6/tournaments/` → their first built tab (`/civ6/` is the game's own page), `/rules/` → the first rule set. Temporary (302), because the target changes with the data and the switches. Before any ladder has players (or any mode has games), `/civ6/ladder/` (or `/civ6/stats/`) is a page of its own (the season start) and doesn't redirect |
 
 ## Secrets and tokens
 
@@ -116,15 +118,16 @@ site then links each bracket to Challonge with no notice (degraded mode). Moving
 
 ## core-api
 
-The Ladder pages read core-api at build time, in every `deploy` run (push to `main`, daily, manual), through
-`https://api.elementalengine.net` with `Authorization: Bearer <CORE_API_WEBSITE_TOKEN>`. Pull requests have no token and
-never call it. Switched-off games are not fetched: a build makes 1 call per shown game with the Ladder switched on.
+The Ladder and Stats pages and the Home totals read core-api at build time, in every `deploy` run (push to `main`,
+daily, manual), through `https://api.elementalengine.net` with `Authorization: Bearer <CORE_API_WEBSITE_TOKEN>`. Pull
+requests have no token and never call it. Switched-off sections and games are not fetched: a build makes 1 overview call,
+plus 1 ladders call and 1 season stats call per shown game with that section on (Civ 6 today: 3 calls).
 
 | Route (GET only) | Used for |
 |---|---|
-| `/api/v2/public/overview` | League totals |
-| `/api/v2/public/ladders/{civ6,civ7}` | Every ranked player in all four ladders (season FFA, Teamer, Duel; cloud all time), in one call |
-| `/api/v2/public/seasons/{civ6,civ7}/current/stats` | The open season's stats, all three modes in one call |
+| `/api/v2/public/overview` | Home: registered players and games played |
+| `/api/v2/public/ladders/{civ6,civ7}` | Ladder pages and Home's season leaders: every ranked player in all four ladders (season FFA, Teamer, Duel; cloud all time), in one call |
+| `/api/v2/public/seasons/{civ6,civ7}/current/stats` | Stats pages: the open season, all three modes in one call |
 
 **Limits (set in core-api):** each answer is kept 600 s, so `updated_at` can be up to ten minutes before the build;
 10 calls a minute over all three routes, then `429`. Caddy passes only these exact paths; anything else is `404`.

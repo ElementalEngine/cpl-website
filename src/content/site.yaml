@@ -4,14 +4,16 @@
 discordInvite: https://discord.gg/cpl
 
 # Which games and sections are built. Anything switched off has no page and no menu item.
-# Stats can't be switched on yet: its pages come later.
+# intro: a line or two at the top of the game's page (up to 240 characters).
 games:
   civ6:
+    intro: "Ranked Civ 6 at CPL: FFA, Teamer and Duel games every season, cloud games all year round, and tournaments like the Premier League."
     show: true
     ladder: true
-    stats: false
+    stats: true
     tournaments: true
   civ7:
+    intro: "Ranked Civ 7 at CPL: FFA, Teamer and Duel games every season, with their own ladders and stats."
     show: false
     ladder: false
     stats: false

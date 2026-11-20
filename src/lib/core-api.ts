@@ -73,8 +73,11 @@ export const seasonStatsSchema = z.object({
   modes: z.array(modeStatsSchema),
 });
 
+export type Overview = z.infer<typeof overviewSchema>;
 export type Ladders = z.infer<typeof laddersSchema>;
 export type LadderRow = Ladders['ladders'][number]['rows'][number];
+export type SeasonStats = z.infer<typeof seasonStatsSchema>;
+export type ModeStats = SeasonStats['modes'][number];
 
 /** A response that doesn't match its schema. The message names the field, never a value. */
 export class ShapeError extends Error {

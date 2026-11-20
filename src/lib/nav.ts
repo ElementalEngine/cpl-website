@@ -14,11 +14,11 @@ const GAMES: readonly (readonly [GameId, string])[] = [
   ['civ7', 'Civ 7'],
 ];
 
-// Tab order inside a game.
+// Tab order inside a game, with a line for each section's card.
 const SECTIONS = [
-  ['ladder', 'Ladder'],
-  ['stats', 'Stats'],
-  ['tournaments', 'Tournaments'],
+  ['ladder', 'Ladder', 'Every ranked player this season, by mode.'],
+  ['stats', 'Stats', 'Most played maps, draft bans and leader win rates.'],
+  ['tournaments', 'Tournaments', 'The Premier League and cloud events, with standings.'],
 ] as const;
 
 /** Ladder tabs, in order: this season's ladder per mode, then cloud over all time. `key` is core-api's. */
@@ -29,8 +29,12 @@ export const LADDER_MODES = [
   { id: 'cloud', label: 'Cloud', key: 'cloud' },
 ] as const;
 
-// Stats tabs, in order (core-api's mode names).
-const STATS_MODES = ['ffa', 'teamer', 'duel'] as const;
+/** Stats tabs, in order. `id` is core-api's mode name. */
+export const STATS_MODES = [
+  { id: 'ffa', label: 'FFA' },
+  { id: 'teamer', label: 'Teamer' },
+  { id: 'duel', label: 'Duel' },
+] as const;
 
 /** Rule sets, in tab order. Each has a file `src/content/rules/<id>.md`. */
 export const RULE_SETS = [
@@ -82,6 +86,16 @@ export function gameSections(site: Site, game: GameId): NavLink[] {
   }));
 }
 
+/** A card per switched-on section, for the game's page and Home. */
+export function sectionCards(site: Site, game: GameId): { name: string; href: string; text: string }[] {
+  const texts = new Map<string, string>(SECTIONS.map(([, label, text]) => [label, text]));
+  return gameSections(site, game).map((section) => ({
+    name: `${gameLabel(game)} ${section.label.toLowerCase()}`,
+    href: section.href,
+    text: texts.get(section.label) ?? '',
+  }));
+}
+
 /** Games with at least one page, in menu order. */
 export function shownGames(site: Site): GameId[] {
   return GAMES.map(([id]) => id).filter((id) => gameSections(site, id).length > 0);
@@ -94,10 +108,7 @@ export function tournamentGames(site: Site): GameId[] {
 
 /** Header menu: each shown game (to its first section), then the fixed pages. */
 export function mainNav(site: Site): NavLink[] {
-  const games = shownGames(site).map((game) => ({
-    label: gameLabel(game),
-    href: gameSections(site, game)[0].href,
-  }));
+  const games = shownGames(site).map((game) => ({ label: gameLabel(game), href: `/${game}/` }));
   return [
     ...games,
     { label: 'Rules', href: ruleTabs()[0].href },
@@ -122,29 +133,21 @@ export interface ShortLink {
   to: string[];
 }
 
-/**
- * A section's pages, in the order a short link tries them. Ladder and Stats end with their own
- * path: it is a page only when no mode has data yet.
- */
-function sectionPages(game: GameId, key: (typeof SECTIONS)[number][0]): string[] {
-  if (key === 'ladder') return [...LADDER_MODES.map(({ id }) => `/${game}/ladder/${id}/`), `/${game}/ladder/`];
-  if (key === 'stats') return [...STATS_MODES.map((id) => `/${game}/stats/${id}/`), `/${game}/stats/`];
+/** A section's tabs, in the order its short link tries them. */
+function sectionTabs(game: GameId, key: (typeof SECTIONS)[number][0]): string[] {
+  if (key === 'ladder') return LADDER_MODES.map(({ id }) => `/${game}/ladder/${id}/`);
+  if (key === 'stats') return STATS_MODES.map(({ id }) => `/${game}/stats/${id}/`);
   return tournamentTabs(game).map((tab) => tab.href);
 }
 
 /**
- * `/civ6/` opens the game's first built page, `/civ6/ladder/`, `/civ6/stats/` and
- * `/civ6/tournaments/` their first built tab, `/rules/` the first rule set.
+ * `/civ6/ladder/`, `/civ6/stats/` and `/civ6/tournaments/` open their first built tab;
+ * `/rules/` the first rule set. While no ladder (or stats mode) has data, `/civ6/ladder/`
+ * (or `/civ6/stats/`) is a page of its own and gets no redirect.
  */
 export function shortLinks(): ShortLink[] {
   return [
-    ...GAMES.flatMap(([game]) => [
-      { from: `/${game}/`, to: SECTIONS.flatMap(([key]) => sectionPages(game, key)) },
-      ...SECTIONS.map(([key]) => ({
-        from: `/${game}/${key}/`,
-        to: sectionPages(game, key).filter((path) => path !== `/${game}/${key}/`),
-      })),
-    ]),
+    ...GAMES.flatMap(([game]) => SECTIONS.map(([key]) => ({ from: `/${game}/${key}/`, to: sectionTabs(game, key) }))),
     { from: '/rules/', to: ruleTabs().map((tab) => tab.href) },
   ];
 }

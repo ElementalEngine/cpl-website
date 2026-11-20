@@ -3,7 +3,7 @@
 // Names are third-party text: shown as plain text, never as HTML, and long names wrap.
 import type { LadderRow } from '../lib/core-api';
 import { formatCount, formatDayMonth, isoDate } from '../lib/format';
-import { resultColumn } from '../lib/ladders';
+import { resultColumn, UNREGISTERED } from '../lib/ladders';
 import type { LADDER_MODES } from '../lib/nav';
 import Table from './Table.astro';
 
@@ -15,7 +15,6 @@ interface Props {
   now: Date;
 }
 
-const UNREGISTERED = 'Unregistered player';
 const { caption, mode, rows, now } = Astro.props;
 const result = resultColumn(mode);
 ---

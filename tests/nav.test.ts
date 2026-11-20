@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import {
   gameSections,
   mainNav,
+  sectionCards,
   navCurrent,
   ruleTabs,
   shortLinks,
@@ -24,18 +25,18 @@ function site(games: Partial<Site['games']>): Site {
   };
 }
 
-test('stage 1: Civ 6 links to its tournaments; Civ 7 is hidden', () => {
+test('stage 1: Civ 6 links to its own page; Civ 7 is hidden', () => {
   const stage1 = site({ civ6: { ...off, show: true, tournaments: true } });
   assert.deepEqual(shownGames(stage1), ['civ6']);
   assert.deepEqual(mainNav(stage1), [
-    { label: 'Civ 6', href: '/civ6/tournaments/pl/' },
+    { label: 'Civ 6', href: '/civ6/' },
     { label: 'Rules', href: '/rules/general/' },
     { label: 'Resources', href: '/resources/' },
     { label: 'About', href: '/about/' },
   ]);
 });
 
-test('sections keep tab order, and a game links to its first one', () => {
+test('sections keep tab order; each game links to its own page, with a card per section', () => {
   const both = site({
     civ6: { show: true, ladder: true, stats: true, tournaments: true },
     civ7: { show: true, ladder: false, stats: true, tournaments: false },
@@ -45,9 +46,14 @@ test('sections keep tab order, and a game links to its first one', () => {
     ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/pl/']
   );
   assert.deepEqual(mainNav(both).slice(0, 2), [
-    { label: 'Civ 6', href: '/civ6/ladder/' },
-    { label: 'Civ 7', href: '/civ7/stats/' },
+    { label: 'Civ 6', href: '/civ6/' },
+    { label: 'Civ 7', href: '/civ7/' },
   ]);
+  assert.deepEqual(
+    sectionCards(both, 'civ7').map((card) => [card.name, card.href]),
+    [['Civ 7 stats', '/civ7/stats/']]
+  );
+  assert.ok(sectionCards(both, 'civ6').every((card) => card.text.length > 0));
 });
 
 test('a game with show off, or no sections on, has no menu item', () => {
@@ -94,31 +100,19 @@ test('short links cover each game, its tournaments and the rules', () => {
   assert.deepEqual(
     shortLinks().map((link) => link.from),
     [
-      '/civ6/',
       '/civ6/ladder/',
       '/civ6/stats/',
       '/civ6/tournaments/',
-      '/civ7/',
       '/civ7/ladder/',
       '/civ7/stats/',
       '/civ7/tournaments/',
       '/rules/',
     ]
   );
-  const [game, ladder, stats, tournaments] = shortLinks();
-  const ladderModes = ['/civ6/ladder/ffa/', '/civ6/ladder/teamer/', '/civ6/ladder/duel/', '/civ6/ladder/cloud/'];
-  const statsModes = ['/civ6/stats/ffa/', '/civ6/stats/teamer/', '/civ6/stats/duel/'];
-  assert.deepEqual(ladder.to, ladderModes);
-  assert.deepEqual(stats.to, statsModes);
+  const [ladder, stats, tournaments] = shortLinks();
+  assert.deepEqual(ladder.to, ['/civ6/ladder/ffa/', '/civ6/ladder/teamer/', '/civ6/ladder/duel/', '/civ6/ladder/cloud/']);
+  assert.deepEqual(stats.to, ['/civ6/stats/ffa/', '/civ6/stats/teamer/', '/civ6/stats/duel/']);
   assert.deepEqual(tournaments.to, tournamentTabs('civ6').map((tab) => tab.href));
-  // A section's own path comes after its tabs: it is a page only while no tab has data.
-  assert.deepEqual(game.to, [
-    ...ladderModes,
-    '/civ6/ladder/',
-    ...statsModes,
-    '/civ6/stats/',
-    ...tournamentTabs('civ6').map((tab) => tab.href),
-  ]);
 });
 
 test('tournament tabs: one per category, then past winners; each a page of its own', () => {

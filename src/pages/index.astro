@@ -1,11 +1,16 @@
 ---
 import Button from '../components/Button.astro';
+import DataBlock from '../components/DataBlock.astro';
+import Table from '../components/Table.astro';
 import Base from '../layouts/Base.astro';
+import { getLadders, getOverview } from '../lib/core-api-data';
 import { getHome, getSite } from '../lib/content';
+import { formatCount } from '../lib/format';
+import { homeLeaders, ladderSubtitle, UNREGISTERED } from '../lib/ladders';
 import {
   gameLabel,
-  gameSections,
   ruleTabs,
+  sectionCards,
   shownGames,
   TOURNAMENT_TABS,
   tournamentGames,
@@ -35,24 +40,20 @@ const allTournaments = games.map((game) => ({
   href: tournamentTabs(game)[0].href,
 }));
 
-// One line per game section, by its tab label.
-const SECTION_TEXT: Record<string, string> = {
-  Ladder: 'Every ranked player this season, by mode.',
-  Stats: 'Most played maps, draft bans and leader win rates.',
-  Tournaments: 'The Premier League and cloud events, with standings.',
-};
 const explore = [
-  ...shownGames(site).flatMap((game) =>
-    gameSections(site, game).map((section) => ({
-      name: `${gameLabel(game)} ${section.label.toLowerCase()}`,
-      href: section.href,
-      text: SECTION_TEXT[section.label] ?? '',
-    }))
-  ),
+  ...shownGames(site).flatMap((game) => sectionCards(site, game)),
   { name: 'Rules', href: ruleTabs()[0].href, text: 'Game, cloud, PL and Discord rules, with search.' },
   { name: 'Resources', href: '/resources/', text: 'The mods you need and the tools players use.' },
   { name: 'About', href: '/about/', text: 'Who we are, partner communities and streamers.' },
 ];
+
+// League totals and this season's top 10 per mode, for the first game with its Ladder on.
+const ladderGame = shownGames(site).find((game) => site.games[game].ladder);
+const totals = ladderGame ? await getOverview() : undefined;
+const overview = totals?.kind === 'fresh' || totals?.kind === 'stale' ? totals.data : undefined;
+const ladders = ladderGame ? await getLadders(ladderGame) : undefined;
+const ladderData = ladders?.kind === 'fresh' || ladders?.kind === 'stale' ? ladders.data : undefined;
+const leaders = ladderGame && ladderData ? homeLeaders(ladderGame, ladderData) : [];
 
 const heading = 'text-xl font-semibold';
 const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4';
@@ -63,6 +64,15 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
     <div class="max-w-reading space-y-6">
       <h1 class="text-2xl font-bold md:text-3xl">Civilization Players League</h1>
       <p class="text-lg text-text-2">{intro}</p>
+      {
+        overview && (
+          <p class="text-text-2">
+            <strong class="font-semibold text-text">{formatCount(overview.registered_players)}</strong> registered
+            players · <strong class="font-semibold text-text">{formatCount(overview.matches_played)}</strong> games
+            played
+          </p>
+        )
+      }
       <Button href={site.discordInvite} variant="primary">Join Discord</Button>
     </div>
 
@@ -126,6 +136,58 @@ const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border
               </li>
             ))}
           </ul>
+        </section>
+      )
+    }
+
+    {
+      ladderGame && ladderData && ladders && leaders.length > 0 && (
+        <section data-reveal class="space-y-4" aria-labelledby="leaders">
+          <div class="space-y-1">
+            <h2 id="leaders" class={heading}>Season leaders</h2>
+            <p class="text-text-2">
+              {gameLabel(ladderGame)} · {ladderSubtitle(ladderData, leaders[0].mode)}
+            </p>
+          </div>
+          <DataBlock
+            updated={new Date(ladderData.updated_at)}
+            stale={ladders.kind === 'stale'}
+            reportUrl={site.discordInvite}
+          >
+            <div class="grid gap-6 lg:grid-cols-3">
+              {leaders.map(({ mode, rows, href }) => (
+                <div class="space-y-2">
+                  <h3 class="font-semibold">{mode.label}</h3>
+                  <Table caption={`${mode.label}: top ${rows.length}`} hideCaption>
+                    <thead>
+                      <tr>
+                        <th scope="col" class="num">#</th>
+                        <th scope="col">Player</th>
+                        <th scope="col" class="num">Rating</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rows.map((row) => (
+                        <tr>
+                          <td class="num">{row.rank}</td>
+                          <th
+                            scope="row"
+                            class:list={['player', row.display_name === UNREGISTERED && 'text-muted']}
+                          >
+                            {row.display_name}
+                          </th>
+                          <td class="num">{row.rating}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                  <a class="link inline-flex min-h-11 items-center" href={href}>
+                    Full {mode.label} ladder <span aria-hidden="true">&nbsp;→</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </DataBlock>
         </section>
       )
     }

@@ -1,0 +1,138 @@
+---
+import DataBlock from '../../../components/DataBlock.astro';
+import SimpleTable from '../../../components/SimpleTable.astro';
+import Tabs from '../../../components/Tabs.astro';
+import Page from '../../../layouts/Page.astro';
+import { getSeasonStats } from '../../../lib/core-api-data';
+import { getSite } from '../../../lib/content';
+import { formatDate } from '../../../lib/format';
+import { gameLabel, gameSections, shownGames, type GameId, type STATS_MODES } from '../../../lib/nav';
+import {
+  banRows,
+  bestPerMap,
+  mapRows,
+  pickRows,
+  rateHeading,
+  shownModes,
+  statsSubtitle,
+  statsTabs,
+} from '../../../lib/stats';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  const games = shownGames(site).filter((game) => site.games[game].stats);
+  const perGame = await Promise.all(
+    games.map(async (game) => {
+      const source = await getSeasonStats(game);
+      if (source.kind !== 'fresh' && source.kind !== 'stale') return [];
+      return shownModes(source.data).map(({ mode }) => ({ params: { game, mode: mode.id }, props: { game, modeId: mode.id } }));
+    })
+  );
+  return perGame.flat();
+}
+
+interface Props {
+  game: GameId;
+  modeId: (typeof STATS_MODES)[number]['id'];
+}
+
+const { game, modeId } = Astro.props;
+const site = await getSite();
+const source = await getSeasonStats(game);
+if (source.kind !== 'fresh' && source.kind !== 'stale') throw new Error(`season stats ${game}: no data`);
+const { data } = source;
+const shown = shownModes(data);
+const current = shown.find(({ mode }) => mode.id === modeId);
+if (!current) throw new Error(`season stats ${game}: no ${modeId} games`);
+const { mode, stats } = current;
+const label = gameLabel(game);
+const updated = new Date(data.updated_at);
+const subtitle = statsSubtitle(data, stats);
+const maps = mapRows(stats);
+const leaderBans = banRows(stats, 'leader');
+const civBans = banRows(stats, 'civ');
+const leaders = pickRows(mode, stats.leaders);
+const civs = pickRows(mode, stats.civs);
+const best = mode.id === 'ffa' ? bestPerMap(stats) : [];
+const hasCivs = civs.length > 0 || civBans.length > 0 || best.some((item) => item.kind === 'civ');
+const rate = rateHeading(mode);
+const block = 'space-y-3';
+const heading = 'text-lg font-semibold';
+---
+
+<Page
+  title={`${label} stats`}
+  documentTitle={`${mode.label} stats · ${label} · CPL`}
+  description={`${label} ${mode.label} season stats: ${subtitle}. Updated ${formatDate(updated)}.`}
+  wide
+>
+  <Fragment slot="tabs">
+    <Tabs label={`${label} sections`} items={gameSections(site, game)} />
+    <Tabs label="Stats modes" items={statsTabs(game, shown)} />
+  </Fragment>
+
+  <div slot="sections" class="space-y-2">
+    <h2 class="text-xl font-semibold">{mode.label} stats</h2>
+    <p class="text-text-2">{subtitle}</p>
+    <DataBlock updated={updated} stale={source.kind === 'stale'} reportUrl={site.discordInvite}>
+      <div class="grid gap-8 lg:grid-cols-2">
+        {
+          maps.length > 0 && (
+            <div class={block}>
+              <h3 class={heading}>Most played maps</h3>
+              <SimpleTable caption="Most played maps" hideCaption name="Map" columns={['Games', 'Share']} rows={maps} />
+            </div>
+          )
+        }
+        {
+          leaderBans.length > 0 && (
+            <div class={block}>
+              <h3 class={heading}>Most banned in drafts</h3>
+              <SimpleTable caption="Most banned leaders in drafts" hideCaption name="Leader" columns={['Bans']} rows={leaderBans} />
+              {civBans.length > 0 && (
+                <SimpleTable caption="Most banned civs in drafts" hideCaption name="Civ" columns={['Bans']} rows={civBans} />
+              )}
+            </div>
+          )
+        }
+      </div>
+
+      {
+        leaders.length > 0 && (
+          <div class={block}>
+            <h3 class={heading}>Leaders</h3>
+            <SimpleTable caption={`Leaders: picks and ${rate}`} hideCaption name="Leader" columns={['Picks', rate]} rows={leaders} />
+          </div>
+        )
+      }
+      {
+        civs.length > 0 && (
+          <div class={block}>
+            <h3 class={heading}>Civs</h3>
+            <SimpleTable caption={`Civs: picks and ${rate}`} hideCaption name="Civ" columns={['Picks', rate]} rows={civs} />
+          </div>
+        )
+      }
+      <p class="text-sm text-muted">— = fewer than {data.min_games} games this season.</p>
+
+      {
+        best.length > 0 && (
+          <div class={block}>
+            <h3 class={heading}>{hasCivs ? 'Best picks per map' : 'Best leaders per map'}</h3>
+            <p class="text-sm text-muted">By average finishing place: 1 is 1st, lower is better.</p>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {best.map((item) => (
+                <SimpleTable
+                  caption={hasCivs ? `${item.map}: ${item.kind === 'civ' ? 'civs' : 'leaders'}` : item.map}
+                  name={item.kind === 'civ' ? 'Civ' : 'Leader'}
+                  columns={['Games', 'Avg place']}
+                  rows={item.rows}
+                />
+              ))}
+            </div>
+          </div>
+        )
+      }
+    </DataBlock>
+  </div>
+</Page>

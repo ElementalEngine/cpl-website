@@ -32,7 +32,7 @@ jobs:
       - name: Install
         run: npm ci
 
-      # No secrets here: ladder pages are built from made-up test data, so the checks cover them.
+      # No secrets here: ladder and stats pages are built from made-up test data, so the checks cover them.
       - name: Verify
         run: npm run verify
         env:
@@ -62,7 +62,7 @@ jobs:
       - name: Install
         run: npm ci
 
-      # Only this job can read secrets, so it builds the pages with live standings and ladders.
+      # Only this job can read secrets, so it builds the pages with live standings, ladders and stats.
       - name: Build with live data
         run: npm run build
         env:

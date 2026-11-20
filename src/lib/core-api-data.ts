@@ -1,7 +1,18 @@
 import { appendFile, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import type { z } from 'astro/zod';
-import { CORE_API_ROUTES, failureKind, failureReason, getCoreApi, laddersSchema, type Ladders } from './core-api';
+import {
+  CORE_API_ROUTES,
+  failureKind,
+  failureReason,
+  getCoreApi,
+  laddersSchema,
+  overviewSchema,
+  seasonStatsSchema,
+  type Ladders,
+  type Overview,
+  type SeasonStats,
+} from './core-api';
 import { formatDate } from './format';
 import { getJson } from './http';
 import type { GameId } from './nav';
@@ -105,15 +116,37 @@ async function load<T extends { updated_at: string }>(
   return result.source;
 }
 
-const ladders = new Map<GameId, Promise<Source<Ladders>>>();
+const loaded = new Map<string, Promise<Source<unknown>>>();
 
-/** A game's ladders, fetched once per build and shared by every page. Published at `/data/<game>/ladders.json`. */
-export function getLadders(game: GameId): Promise<Source<Ladders>> {
-  let result = ladders.get(game);
+/** Each route is fetched once per build and shared by every page that shows it. */
+function shared<T>(key: string, start: () => Promise<Source<T>>): Promise<Source<T>> {
+  let result = loaded.get(key);
   if (!result) {
-    const route = CORE_API_ROUTES.ladders(game);
-    result = load(`ladders ${game}`, route, laddersSchema, `ladders-${game}.json`, `/data/${game}/ladders.json`);
-    ladders.set(game, result);
+    result = start();
+    loaded.set(key, result);
   }
-  return result;
+  return result as Promise<Source<T>>;
+}
+
+/** A game's ladders. Published at `/data/<game>/ladders.json`. */
+export function getLadders(game: GameId): Promise<Source<Ladders>> {
+  const label = `ladders ${game}`;
+  return shared(label, () =>
+    load(label, CORE_API_ROUTES.ladders(game), laddersSchema, `ladders-${game}.json`, `/data/${game}/ladders.json`)
+  );
+}
+
+/** A game's open season, all three modes. Published at `/data/<game>/stats.json`. */
+export function getSeasonStats(game: GameId): Promise<Source<SeasonStats>> {
+  const label = `season stats ${game}`;
+  return shared(label, () =>
+    load(label, CORE_API_ROUTES.stats(game), seasonStatsSchema, `season-stats-${game}.json`, `/data/${game}/stats.json`)
+  );
+}
+
+/** League totals for Home. Published at `/data/overview.json`. */
+export function getOverview(): Promise<Source<Overview>> {
+  return shared('overview', () =>
+    load('overview', CORE_API_ROUTES.overview(), overviewSchema, 'overview.json', '/data/overview.json')
+  );
 }

@@ -1,0 +1,49 @@
+---
+// A game's stats page while no mode has games: no season open, the season start, or "coming soon".
+// Once a mode has games, /<game>/stats/ redirects to its first tab instead.
+import DataBlock from '../../../components/DataBlock.astro';
+import Tabs from '../../../components/Tabs.astro';
+import Page from '../../../layouts/Page.astro';
+import { getSeasonStats } from '../../../lib/core-api-data';
+import { getSite } from '../../../lib/content';
+import { gameLabel, gameSections, shownGames, type GameId } from '../../../lib/nav';
+import { noStatsMessage, shownModes } from '../../../lib/stats';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  const games = shownGames(site).filter((game) => site.games[game].stats);
+  const perGame = await Promise.all(
+    games.map(async (game) => {
+      const source = await getSeasonStats(game);
+      const data = source.kind === 'fresh' || source.kind === 'stale' ? source.data : undefined;
+      return data && shownModes(data).length > 0 ? [] : [{ params: { game }, props: { game } }];
+    })
+  );
+  return perGame.flat();
+}
+
+interface Props {
+  game: GameId;
+}
+
+const { game } = Astro.props;
+const site = await getSite();
+const source = await getSeasonStats(game);
+const label = gameLabel(game);
+const message = noStatsMessage(source);
+---
+
+<Page title={`${label} stats`} documentTitle={`Stats · ${label} · CPL`} description={`${label} season stats. ${message}`}>
+  <Tabs slot="tabs" label={`${label} sections`} items={gameSections(site, game)} />
+  <div slot="sections">
+    {
+      source.kind === 'fresh' || source.kind === 'stale' ? (
+        <DataBlock updated={new Date(source.data.updated_at)} stale={source.kind === 'stale'} reportUrl={site.discordInvite}>
+          <p>{message}</p>
+        </DataBlock>
+      ) : (
+        <p>{message}</p>
+      )
+    }
+  </div>
+</Page>
