@@ -111,3 +111,46 @@ export function contractProblems(spec: Json, routes: ContractRoute[]): string[] 
   }
   return problems;
 }
+
+/** The core-api routes the website reads, as written in the spec. */
+export const WEBSITE_ROUTES = [
+  '/api/v2/public/overview',
+  '/api/v2/public/ladders/{edition}',
+  '/api/v2/public/seasons/{edition}/current/stats',
+] as const;
+
+interface TrimmedSpec extends Json {
+  paths: Record<string, Json>;
+  components: { schemas: Json };
+}
+
+/**
+ * The spec cut down to the website's routes (GET only) and the schemas they use, so the public
+ * repo holds no other core-api route.
+ */
+export function trimSpec(spec: Json): TrimmedSpec {
+  const allPaths = isObject(spec.paths) ? spec.paths : {};
+  const schemas = isObject(spec.components) && isObject(spec.components.schemas) ? spec.components.schemas : {};
+  const paths: Record<string, Json> = {};
+  for (const path of WEBSITE_ROUTES) {
+    const route = allPaths[path];
+    if (isObject(route) && route.get) paths[path] = { get: route.get };
+  }
+  const used = new Set<string>();
+  const visit = (node: unknown): void => {
+    if (Array.isArray(node)) node.forEach(visit);
+    if (!isObject(node)) return;
+    for (const [key, value] of Object.entries(node)) {
+      if (key === '$ref' && typeof value === 'string') {
+        const name = value.split('/').pop() ?? '';
+        if (!used.has(name)) {
+          used.add(name);
+          visit(schemas[name]);
+        }
+      } else visit(value);
+    }
+  };
+  visit(paths);
+  const kept = Object.fromEntries([...used].sort().map((name) => [name, schemas[name]]));
+  return { openapi: spec.openapi, info: spec.info, paths, components: { schemas: kept } };
+}

@@ -16,7 +16,7 @@ import { formatDateTime } from '../src/lib/format';
 
 const fromEnv = process.env.CORE_API_WEBSITE_TOKEN?.trim();
 if (!fromEnv) {
-  console.error('Set CORE_API_WEBSITE_TOKEN first (see OPERATIONS.md, "core-api").');
+  console.error('Set CORE_API_WEBSITE_TOKEN first.');
   process.exit(1);
 }
 const token: string = fromEnv;

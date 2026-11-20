@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { z } from 'astro/zod';
 import { laddersSchema, overviewSchema, seasonStatsSchema } from '../src/lib/core-api';
-import { contractProblems } from './lib/contracts';
+import { contractProblems, WEBSITE_ROUTES } from './lib/contracts';
 
 const FOLDER = 'contracts/core-api';
 const specText = readFileSync(`${FOLDER}/openapi.json`, 'utf8');
@@ -18,9 +18,9 @@ if (md5 !== field('md5')) problems.push(`openapi.json: md5 ${md5} differs from P
 const jsonSchema = (schema: z.ZodType) => z.toJSONSchema(schema, { io: 'input', unrepresentable: 'any' });
 problems.push(
   ...contractProblems(JSON.parse(specText), [
-    { path: '/api/v2/public/overview', schema: jsonSchema(overviewSchema) },
-    { path: '/api/v2/public/ladders/{edition}', schema: jsonSchema(laddersSchema) },
-    { path: '/api/v2/public/seasons/{edition}/current/stats', schema: jsonSchema(seasonStatsSchema) },
+    { path: WEBSITE_ROUTES[0], schema: jsonSchema(overviewSchema) },
+    { path: WEBSITE_ROUTES[1], schema: jsonSchema(laddersSchema) },
+    { path: WEBSITE_ROUTES[2], schema: jsonSchema(seasonStatsSchema) },
   ])
 );
 
