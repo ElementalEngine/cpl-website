@@ -13,13 +13,20 @@ import {
 const DAY_MS = 24 * 60 * 60 * 1000;
 const link = { name: 'CivDraft', summary: 'Run a draft.', url: 'https://example.org/draft' };
 
-test('home: one intro line of 160 characters or fewer, exactly 3 steps', () => {
-  const home = { intro: 'CPL is a community.', joinSteps: ['One', 'Two', 'Three'] };
+test('home: one intro line of 160 characters or fewer, exactly 3 highlights and 3 steps', () => {
+  const highlight = { title: 'Ranked games', text: 'Climb the ladder.' };
+  const home = {
+    intro: 'CPL is a community.',
+    highlights: [highlight, highlight, highlight],
+    joinSteps: ['One', 'Two', 'Three'],
+  };
   assert.ok(homeSchema.safeParse(home).success);
   assert.ok(!homeSchema.safeParse({ ...home, joinSteps: ['One', 'Two'] }).success);
   assert.ok(!homeSchema.safeParse({ ...home, intro: 'x'.repeat(161) }).success);
   assert.ok(!homeSchema.safeParse({ ...home, intro: 'Two\nlines' }).success);
   assert.ok(!homeSchema.safeParse({ ...home, joinSteps: ['One', '', 'Three'] }).success);
+  assert.ok(!homeSchema.safeParse({ ...home, highlights: [highlight, highlight] }).success);
+  assert.ok(!homeSchema.safeParse({ ...home, highlights: [highlight, highlight, { title: 'x' }] }).success);
 });
 
 test('dates: YAML dates and YYYY-MM-DD text pass; future dates and nonsense fail', () => {

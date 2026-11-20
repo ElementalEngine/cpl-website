@@ -3,7 +3,7 @@
 description: The mods CPL games use and the tools CPL players use, with links.
 
 # Shown above the mods list.
-modsNote: Players need BBG, BBM, MPH and BBG Expanded. BSM is only for spectating. Don't subscribe to BBS or any other version.
+modsNote: "You need four mods to play: BBG, BBM, MPH and BBG Expanded. Don't use any other versions. BSM is only for spectators and casters."
 
 mods:
   - name: Better Balanced Game (BBG)

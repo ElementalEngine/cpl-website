@@ -33,7 +33,7 @@ propose a change. If a check fails, the live site keeps its last good version.
 
 | File | Page | What you can change |
 |---|---|---|
-| `home.yaml` | Home | `intro` (one line, up to 160 characters) and `joinSteps` (exactly 3 short lines) |
+| `home.yaml` | Home | `intro` (one line, up to 160 characters), `highlights` (exactly 3, each a short `title` and one line of `text`) and `joinSteps` (exactly 3 short lines) |
 | `rules/general.md` | Rules → General | Subs, drops, re-maps, scraps, voting, timed games, punishments, other rules |
 | `rules/in-game.md` | Rules → In-game | Rules for playing a game |
 | `rules/exploits.md` | Rules → Exploits | Banned exploits, under a `## Civ 6` and a `## Civ 7` heading |
