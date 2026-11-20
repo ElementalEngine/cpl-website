@@ -90,5 +90,5 @@ test('no games yet: no season, the season start, or "coming soon"', () => {
     'No season is open right now. Stats appear when the next season starts.'
   );
   assert.equal(noStatsMessage({ kind: 'fresh', data }), 'Season 8 started on 1 Nov 2026. Stats appear after the first games.');
-  assert.equal(noStatsMessage({ kind: 'none' }), 'Season stats will appear here soon.');
+  assert.equal(noStatsMessage({ kind: 'none' }), 'Maps, draft bans and leader win rates will appear here soon.');
 });

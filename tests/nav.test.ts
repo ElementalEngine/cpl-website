@@ -51,7 +51,7 @@ test('sections keep tab order; each game links to its own page, with a card per 
   ]);
   assert.deepEqual(
     sectionCards(both, 'civ7').map((card) => [card.name, card.href]),
-    [['Civ 7 season stats', '/civ7/stats/']]
+    [['Civ 7 meta', '/civ7/stats/']]
   );
   assert.ok(sectionCards(both, 'civ6').every((card) => card.text.length > 0));
 });
