@@ -43,6 +43,9 @@ const panelLink = link.extend({
 /** `src/content/home.yaml` */
 export const homeSchema = z.strictObject({
   intro: description,
+  highlights: z
+    .array(z.strictObject({ title: line(40), text: line(120) }))
+    .length(3, 'must have exactly 3 highlights'),
   joinSteps: z.array(line(120)).length(3, 'must have exactly 3 steps'),
 });
 

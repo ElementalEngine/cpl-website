@@ -2,11 +2,19 @@
 import Button from '../components/Button.astro';
 import Base from '../layouts/Base.astro';
 import { getHome, getSite } from '../lib/content';
-import { gameLabel, TOURNAMENT_TABS, tournamentGames, tournamentTabs } from '../lib/nav';
+import {
+  gameLabel,
+  gameSections,
+  ruleTabs,
+  shownGames,
+  TOURNAMENT_TABS,
+  tournamentGames,
+  tournamentTabs,
+} from '../lib/nav';
 import { getTournaments } from '../lib/tournament-data';
 
 const site = await getSite();
-const { intro, joinSteps } = await getHome();
+const { intro, highlights, joinSteps } = await getHome();
 const games = tournamentGames(site);
 const onNow = (
   await Promise.all(
@@ -26,7 +34,28 @@ const allTournaments = games.map((game) => ({
   label: `All ${gameLabel(game)} tournaments`,
   href: tournamentTabs(game)[0].href,
 }));
+
+// One line per game section, by its tab label.
+const SECTION_TEXT: Record<string, string> = {
+  Ladder: 'Every ranked player this season, by mode.',
+  Stats: 'Most played maps, draft bans and leader win rates.',
+  Tournaments: 'The Premier League and cloud events, with standings.',
+};
+const explore = [
+  ...shownGames(site).flatMap((game) =>
+    gameSections(site, game).map((section) => ({
+      name: `${gameLabel(game)} ${section.label.toLowerCase()}`,
+      href: section.href,
+      text: SECTION_TEXT[section.label] ?? '',
+    }))
+  ),
+  { name: 'Rules', href: ruleTabs()[0].href, text: 'Game, cloud, PL and Discord rules, with search.' },
+  { name: 'Resources', href: '/resources/', text: 'The mods you need and the tools players use.' },
+  { name: 'About', href: '/about/', text: 'Who we are, partner communities and streamers.' },
+];
+
 const heading = 'text-xl font-semibold';
+const card = 'panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4';
 ---
 
 <Base title="CPL · Civilization Players League" description={intro}>
@@ -36,6 +65,20 @@ const heading = 'text-xl font-semibold';
       <p class="text-lg text-text-2">{intro}</p>
       <Button href={site.discordInvite} variant="primary">Join Discord</Button>
     </div>
+
+    <section data-reveal class="space-y-4" aria-labelledby="offers">
+      <h2 id="offers" class={heading}>What CPL offers</h2>
+      <ul role="list" class="grid gap-4 md:grid-cols-3">
+        {
+          highlights.map((item) => (
+            <li data-reveal class="space-y-1 rounded-lg border-t-2 border-accent bg-surface p-4">
+              <h3 class="font-semibold">{item.title}</h3>
+              <p class="text-text-2">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
 
     <section data-reveal class="space-y-4" aria-labelledby="join">
       <h2 id="join" class={heading}>How to join</h2>
@@ -60,10 +103,7 @@ const heading = 'text-xl font-semibold';
           {onNow.length > 0 ? (
             <ul role="list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {onNow.map((item) => (
-                <li
-                  data-reveal
-                  class="panel relative flex flex-col gap-1 rounded-lg border border-border bg-surface p-4"
-                >
+                <li data-reveal class={card}>
                   <a href={item.href} class="panel-link font-semibold text-text">
                     {item.name}
                   </a>
@@ -90,10 +130,20 @@ const heading = 'text-xl font-semibold';
       )
     }
 
-    <section data-reveal class="max-w-reading space-y-4" aria-labelledby="ready">
-      <h2 id="ready" class={heading}>Ready to play?</h2>
-      <p class="text-text-2">Everything happens on Discord: games, sign-ups and results.</p>
-      <Button href={site.discordInvite} variant="primary">Join Discord</Button>
+    <section data-reveal class="space-y-4" aria-labelledby="explore">
+      <h2 id="explore" class={heading}>Explore the site</h2>
+      <ul role="list" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+          explore.map((item) => (
+            <li data-reveal class={card}>
+              <a href={item.href} class="panel-link font-semibold text-text">
+                {item.name}
+              </a>
+              <p class="text-text-2">{item.text}</p>
+            </li>
+          ))
+        }
+      </ul>
     </section>
   </div>
 </Base>
