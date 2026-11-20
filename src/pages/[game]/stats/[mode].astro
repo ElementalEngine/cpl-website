@@ -78,47 +78,47 @@ const heading = 'text-lg font-semibold';
       <div class="grid gap-8 lg:grid-cols-2">
         {
           maps.length > 0 && (
-            <section class={block} aria-labelledby="maps">
-              <h3 id="maps" class={heading}>Most played maps</h3>
+            <div class={block}>
+              <h3 class={heading}>Most played maps</h3>
               <SimpleTable caption="Most played maps" hideCaption name="Map" columns={['Games', 'Share']} rows={maps} />
-            </section>
+            </div>
           )
         }
         {
           leaderBans.length > 0 && (
-            <section class={block} aria-labelledby="bans">
-              <h3 id="bans" class={heading}>Most banned in drafts</h3>
+            <div class={block}>
+              <h3 class={heading}>Most banned in drafts</h3>
               <SimpleTable caption="Most banned leaders in drafts" hideCaption name="Leader" columns={['Bans']} rows={leaderBans} />
               {civBans.length > 0 && (
                 <SimpleTable caption="Most banned civs in drafts" hideCaption name="Civ" columns={['Bans']} rows={civBans} />
               )}
-            </section>
+            </div>
           )
         }
       </div>
 
       {
         leaders.length > 0 && (
-          <section class={block} aria-labelledby="leaders">
-            <h3 id="leaders" class={heading}>Leaders</h3>
+          <div class={block}>
+            <h3 class={heading}>Leaders</h3>
             <SimpleTable caption={`Leaders: picks and ${rate}`} hideCaption name="Leader" columns={['Picks', rate]} rows={leaders} />
-          </section>
+          </div>
         )
       }
       {
         civs.length > 0 && (
-          <section class={block} aria-labelledby="civs">
-            <h3 id="civs" class={heading}>Civs</h3>
+          <div class={block}>
+            <h3 class={heading}>Civs</h3>
             <SimpleTable caption={`Civs: picks and ${rate}`} hideCaption name="Civ" columns={['Picks', rate]} rows={civs} />
-          </section>
+          </div>
         )
       }
       <p class="text-sm text-muted">— = fewer than {data.min_games} games this season.</p>
 
       {
         best.length > 0 && (
-          <section class={block} aria-labelledby="best">
-            <h3 id="best" class={heading}>{hasCivs ? 'Best picks per map' : 'Best leaders per map'}</h3>
+          <div class={block}>
+            <h3 class={heading}>{hasCivs ? 'Best picks per map' : 'Best leaders per map'}</h3>
             <p class="text-sm text-muted">By average finishing place: 1 is 1st, lower is better.</p>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {best.map((item) => (
@@ -130,7 +130,7 @@ const heading = 'text-lg font-semibold';
                 />
               ))}
             </div>
-          </section>
+          </div>
         )
       }
     </DataBlock>
