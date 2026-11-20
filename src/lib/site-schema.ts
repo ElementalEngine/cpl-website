@@ -19,7 +19,7 @@ const notYet = z
 const gameSwitches = z
   .strictObject({
     show: z.boolean(),
-    ladder: notYet,
+    ladder: z.boolean(),
     stats: notYet,
     tournaments: z.boolean(),
   })

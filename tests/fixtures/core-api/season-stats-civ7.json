@@ -1,0 +1,1132 @@
+{
+  "updated_at": "2026-11-20T03:17:42.512000Z",
+  "edition": "civ7",
+  "season_label": "Season 1",
+  "season_started_at": "2026-09-15T12:00:00Z",
+  "min_games": 5,
+  "map_top_n": 5,
+  "modes": [
+    {
+      "mode": "ffa",
+      "games": 40,
+      "maps": [
+        {
+          "map": "Highlands",
+          "games": 10
+        },
+        {
+          "map": "Inland Sea",
+          "games": 10
+        },
+        {
+          "map": "Tilted Axis",
+          "games": 9
+        },
+        {
+          "map": "Terra",
+          "games": 8
+        },
+        {
+          "map": "Primordial",
+          "games": 7
+        },
+        {
+          "map": "Continents",
+          "games": 6
+        },
+        {
+          "map": "Seven Seas",
+          "games": 6
+        },
+        {
+          "map": "Lakes",
+          "games": 5
+        },
+        {
+          "map": "Archipelago",
+          "games": 4
+        },
+        {
+          "map": "Fractal",
+          "games": 3
+        },
+        {
+          "map": "Pangaea",
+          "games": 3
+        },
+        {
+          "map": "Island Plates",
+          "games": 1
+        }
+      ],
+      "draft_bans": [
+        {
+          "token": "LEADER_AMINA",
+          "name": "Amina",
+          "kind": "leader",
+          "bans": 81
+        },
+        {
+          "token": "LEADER_TECUMSEH",
+          "name": "Tecumseh",
+          "kind": "leader",
+          "bans": 60
+        },
+        {
+          "token": "LEADER_AUGUSTUS",
+          "name": "Augustus",
+          "kind": "leader",
+          "bans": 48
+        },
+        {
+          "token": "LEADER_CONFUCIUS",
+          "name": "Confucius",
+          "kind": "leader",
+          "bans": 48
+        },
+        {
+          "token": "CIVILIZATION_HAN",
+          "name": "Han",
+          "kind": "civ",
+          "bans": 39
+        },
+        {
+          "token": "CIVILIZATION_MAYA",
+          "name": "Maya",
+          "kind": "civ",
+          "bans": 21
+        },
+        {
+          "token": "LEADER_HATSHEPSUT",
+          "name": "Hatshepsut",
+          "kind": "leader",
+          "bans": 14
+        },
+        {
+          "token": "CIVILIZATION_EGYPT",
+          "name": "Egypt",
+          "kind": "civ",
+          "bans": 10
+        },
+        {
+          "token": "CIVILIZATION_ROME",
+          "name": "Rome",
+          "kind": "civ",
+          "bans": 6
+        },
+        {
+          "token": "CIVILIZATION_AKSUM",
+          "name": "Aksum",
+          "kind": "civ",
+          "bans": 2
+        }
+      ],
+      "leaders": [
+        {
+          "token": "LEADER_AUGUSTUS",
+          "name": "Augustus",
+          "picks": 9,
+          "wins": 6,
+          "firsts": 3,
+          "win_rate": 0.6667
+        },
+        {
+          "token": "LEADER_CONFUCIUS",
+          "name": "Confucius",
+          "picks": 9,
+          "wins": 3,
+          "firsts": 1,
+          "win_rate": 0.3333
+        },
+        {
+          "token": "LEADER_AMINA",
+          "name": "Amina",
+          "picks": 7,
+          "wins": 5,
+          "firsts": 2,
+          "win_rate": 0.7143
+        },
+        {
+          "token": "LEADER_HATSHEPSUT",
+          "name": "Hatshepsut",
+          "picks": 6,
+          "wins": 5,
+          "firsts": 0,
+          "win_rate": 0.8333
+        },
+        {
+          "token": "LEADER_TECUMSEH",
+          "name": "Tecumseh",
+          "picks": 3,
+          "wins": 1,
+          "firsts": 1,
+          "win_rate": null
+        }
+      ],
+      "civs": [
+        {
+          "token": "CIVILIZATION_MAYA",
+          "name": "Maya",
+          "picks": 11,
+          "wins": 11,
+          "firsts": 1,
+          "win_rate": 1.0
+        },
+        {
+          "token": "CIVILIZATION_ROME",
+          "name": "Rome",
+          "picks": 9,
+          "wins": 1,
+          "firsts": 3,
+          "win_rate": 0.1111
+        },
+        {
+          "token": "CIVILIZATION_AKSUM",
+          "name": "Aksum",
+          "picks": 7,
+          "wins": 1,
+          "firsts": 3,
+          "win_rate": 0.1429
+        },
+        {
+          "token": "CIVILIZATION_HAN",
+          "name": "Han",
+          "picks": 7,
+          "wins": 1,
+          "firsts": 0,
+          "win_rate": 0.1429
+        },
+        {
+          "token": "CIVILIZATION_EGYPT",
+          "name": "Egypt",
+          "picks": 5,
+          "wins": 5,
+          "firsts": 2,
+          "win_rate": 1.0
+        }
+      ],
+      "map_picks": [
+        {
+          "map": "Highlands",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 5,
+              "firsts": 0,
+              "avg_placement": 1.76
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 13,
+              "firsts": 6,
+              "avg_placement": 2.97
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 16,
+              "firsts": 4,
+              "avg_placement": 4.15
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 20,
+              "firsts": 9,
+              "avg_placement": 4.38
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 8,
+              "firsts": 3,
+              "avg_placement": 5.36
+            }
+          ]
+        },
+        {
+          "map": "Highlands",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 17,
+              "firsts": 1,
+              "avg_placement": 1.73
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 9,
+              "firsts": 2,
+              "avg_placement": 5.73
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 6,
+              "firsts": 2,
+              "avg_placement": 5.87
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 19,
+              "firsts": 7,
+              "avg_placement": 6.24
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 15,
+              "firsts": 3,
+              "avg_placement": 6.47
+            }
+          ]
+        },
+        {
+          "map": "Inland Sea",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 12,
+              "firsts": 5,
+              "avg_placement": 2.04
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 7,
+              "firsts": 2,
+              "avg_placement": 3.16
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 17,
+              "firsts": 2,
+              "avg_placement": 3.8
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 7,
+              "firsts": 3,
+              "avg_placement": 6.12
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 10,
+              "firsts": 2,
+              "avg_placement": 6.33
+            }
+          ]
+        },
+        {
+          "map": "Inland Sea",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 12,
+              "firsts": 1,
+              "avg_placement": 1.79
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 13,
+              "firsts": 2,
+              "avg_placement": 1.89
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 20,
+              "firsts": 0,
+              "avg_placement": 2.1
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 5,
+              "firsts": 0,
+              "avg_placement": 2.86
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 15,
+              "firsts": 0,
+              "avg_placement": 6.2
+            }
+          ]
+        },
+        {
+          "map": "Tilted Axis",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 13,
+              "firsts": 3,
+              "avg_placement": 2.21
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 12,
+              "firsts": 6,
+              "avg_placement": 2.3
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 20,
+              "firsts": 6,
+              "avg_placement": 2.43
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 8,
+              "firsts": 3,
+              "avg_placement": 3.19
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 14,
+              "firsts": 7,
+              "avg_placement": 5.31
+            }
+          ]
+        },
+        {
+          "map": "Tilted Axis",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 11,
+              "firsts": 0,
+              "avg_placement": 2.37
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 5,
+              "firsts": 1,
+              "avg_placement": 5.11
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 16,
+              "firsts": 2,
+              "avg_placement": 5.41
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 8,
+              "firsts": 3,
+              "avg_placement": 5.73
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 12,
+              "firsts": 0,
+              "avg_placement": 6.18
+            }
+          ]
+        },
+        {
+          "map": "Primordial",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 14,
+              "firsts": 1,
+              "avg_placement": 2.86
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 8,
+              "firsts": 3,
+              "avg_placement": 3.02
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 11,
+              "firsts": 2,
+              "avg_placement": 3.72
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 6,
+              "firsts": 1,
+              "avg_placement": 4.34
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 13,
+              "firsts": 1,
+              "avg_placement": 6.13
+            }
+          ]
+        },
+        {
+          "map": "Primordial",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 14,
+              "firsts": 2,
+              "avg_placement": 3.36
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 15,
+              "firsts": 2,
+              "avg_placement": 3.77
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 5,
+              "firsts": 1,
+              "avg_placement": 5.55
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 10,
+              "firsts": 0,
+              "avg_placement": 5.68
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 14,
+              "firsts": 2,
+              "avg_placement": 6.4
+            }
+          ]
+        },
+        {
+          "map": "Continents",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 20,
+              "firsts": 4,
+              "avg_placement": 2.46
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 12,
+              "firsts": 5,
+              "avg_placement": 2.46
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 6,
+              "firsts": 3,
+              "avg_placement": 2.67
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 10,
+              "firsts": 1,
+              "avg_placement": 5.73
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 7,
+              "firsts": 0,
+              "avg_placement": 5.96
+            }
+          ]
+        },
+        {
+          "map": "Continents",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 16,
+              "firsts": 5,
+              "avg_placement": 2.98
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 11,
+              "firsts": 4,
+              "avg_placement": 3.11
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 18,
+              "firsts": 0,
+              "avg_placement": 4.14
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 9,
+              "firsts": 4,
+              "avg_placement": 4.88
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 5,
+              "firsts": 0,
+              "avg_placement": 4.99
+            }
+          ]
+        },
+        {
+          "map": "Seven Seas",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 20,
+              "firsts": 1,
+              "avg_placement": 1.68
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 16,
+              "firsts": 0,
+              "avg_placement": 2.4
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 13,
+              "firsts": 1,
+              "avg_placement": 2.51
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 16,
+              "firsts": 0,
+              "avg_placement": 3.35
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 20,
+              "firsts": 2,
+              "avg_placement": 5.87
+            }
+          ]
+        },
+        {
+          "map": "Seven Seas",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 19,
+              "firsts": 8,
+              "avg_placement": 1.95
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 20,
+              "firsts": 7,
+              "avg_placement": 4.12
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 15,
+              "firsts": 6,
+              "avg_placement": 4.42
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 16,
+              "firsts": 3,
+              "avg_placement": 5.6
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 6,
+              "firsts": 2,
+              "avg_placement": 5.88
+            }
+          ]
+        },
+        {
+          "map": "Lakes",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 11,
+              "firsts": 2,
+              "avg_placement": 1.69
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 5,
+              "firsts": 0,
+              "avg_placement": 2.07
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 9,
+              "firsts": 0,
+              "avg_placement": 2.79
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 10,
+              "firsts": 0,
+              "avg_placement": 3.13
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 7,
+              "firsts": 1,
+              "avg_placement": 4.63
+            }
+          ]
+        },
+        {
+          "map": "Lakes",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 8,
+              "firsts": 1,
+              "avg_placement": 1.82
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 13,
+              "firsts": 0,
+              "avg_placement": 2.2
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 19,
+              "firsts": 8,
+              "avg_placement": 2.77
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 19,
+              "firsts": 1,
+              "avg_placement": 3.32
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 8,
+              "firsts": 3,
+              "avg_placement": 4.02
+            }
+          ]
+        },
+        {
+          "map": "Archipelago",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 19,
+              "firsts": 6,
+              "avg_placement": 2.41
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 12,
+              "firsts": 6,
+              "avg_placement": 2.71
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 5,
+              "firsts": 2,
+              "avg_placement": 3.5
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 17,
+              "firsts": 2,
+              "avg_placement": 4.25
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 18,
+              "firsts": 9,
+              "avg_placement": 5.71
+            }
+          ]
+        },
+        {
+          "map": "Archipelago",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 12,
+              "firsts": 6,
+              "avg_placement": 3.24
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 6,
+              "firsts": 2,
+              "avg_placement": 3.26
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 18,
+              "firsts": 9,
+              "avg_placement": 5.54
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 15,
+              "firsts": 6,
+              "avg_placement": 5.75
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 6,
+              "firsts": 3,
+              "avg_placement": 6.36
+            }
+          ]
+        },
+        {
+          "map": "Fractal",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 5,
+              "firsts": 1,
+              "avg_placement": 2.13
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 10,
+              "firsts": 0,
+              "avg_placement": 3.19
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 6,
+              "firsts": 2,
+              "avg_placement": 4.14
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 11,
+              "firsts": 4,
+              "avg_placement": 4.88
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 16,
+              "firsts": 3,
+              "avg_placement": 5.87
+            }
+          ]
+        },
+        {
+          "map": "Fractal",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 6,
+              "firsts": 0,
+              "avg_placement": 2.83
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 12,
+              "firsts": 1,
+              "avg_placement": 3.66
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 13,
+              "firsts": 5,
+              "avg_placement": 4.66
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 17,
+              "firsts": 7,
+              "avg_placement": 4.7
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 6,
+              "firsts": 0,
+              "avg_placement": 5.84
+            }
+          ]
+        },
+        {
+          "map": "Pangaea",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 6,
+              "firsts": 2,
+              "avg_placement": 2.15
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 16,
+              "firsts": 2,
+              "avg_placement": 2.19
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 9,
+              "firsts": 3,
+              "avg_placement": 2.21
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 5,
+              "firsts": 1,
+              "avg_placement": 2.76
+            },
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 13,
+              "firsts": 0,
+              "avg_placement": 3.89
+            }
+          ]
+        },
+        {
+          "map": "Pangaea",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 14,
+              "firsts": 4,
+              "avg_placement": 2.79
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 12,
+              "firsts": 5,
+              "avg_placement": 3.49
+            },
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 7,
+              "firsts": 2,
+              "avg_placement": 5.71
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 16,
+              "firsts": 7,
+              "avg_placement": 5.97
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 9,
+              "firsts": 2,
+              "avg_placement": 6.09
+            }
+          ]
+        },
+        {
+          "map": "Island Plates",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_AMINA",
+              "name": "Amina",
+              "games": 17,
+              "firsts": 6,
+              "avg_placement": 1.66
+            },
+            {
+              "token": "LEADER_HATSHEPSUT",
+              "name": "Hatshepsut",
+              "games": 14,
+              "firsts": 0,
+              "avg_placement": 2.79
+            },
+            {
+              "token": "LEADER_AUGUSTUS",
+              "name": "Augustus",
+              "games": 14,
+              "firsts": 7,
+              "avg_placement": 3.9
+            },
+            {
+              "token": "LEADER_CONFUCIUS",
+              "name": "Confucius",
+              "games": 12,
+              "firsts": 1,
+              "avg_placement": 4.11
+            },
+            {
+              "token": "LEADER_TECUMSEH",
+              "name": "Tecumseh",
+              "games": 16,
+              "firsts": 2,
+              "avg_placement": 5.82
+            }
+          ]
+        },
+        {
+          "map": "Island Plates",
+          "kind": "civ",
+          "rows": [
+            {
+              "token": "CIVILIZATION_MAYA",
+              "name": "Maya",
+              "games": 11,
+              "firsts": 2,
+              "avg_placement": 1.88
+            },
+            {
+              "token": "CIVILIZATION_EGYPT",
+              "name": "Egypt",
+              "games": 20,
+              "firsts": 4,
+              "avg_placement": 3.0
+            },
+            {
+              "token": "CIVILIZATION_HAN",
+              "name": "Han",
+              "games": 5,
+              "firsts": 0,
+              "avg_placement": 4.3
+            },
+            {
+              "token": "CIVILIZATION_ROME",
+              "name": "Rome",
+              "games": 12,
+              "firsts": 2,
+              "avg_placement": 4.33
+            },
+            {
+              "token": "CIVILIZATION_AKSUM",
+              "name": "Aksum",
+              "games": 16,
+              "firsts": 7,
+              "avg_placement": 4.82
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "teamer",
+      "games": 0,
+      "maps": [],
+      "draft_bans": [],
+      "leaders": [],
+      "civs": [],
+      "map_picks": []
+    },
+    {
+      "mode": "duel",
+      "games": 0,
+      "maps": [],
+      "draft_bans": [],
+      "leaders": [],
+      "civs": [],
+      "map_picks": []
+    }
+  ]
+}

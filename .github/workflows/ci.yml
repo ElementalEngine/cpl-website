@@ -32,8 +32,11 @@ jobs:
       - name: Install
         run: npm ci
 
+      # No secrets here: ladder pages are built from made-up test data, so the checks cover them.
       - name: Verify
         run: npm run verify
+        env:
+          CORE_API_FIXTURES: tests/fixtures/core-api
 
   deploy:
     needs: verify
@@ -59,11 +62,12 @@ jobs:
       - name: Install
         run: npm ci
 
-      # Only this job can read secrets, so it builds the pages with live standings.
+      # Only this job can read secrets, so it builds the pages with live standings and ladders.
       - name: Build with live data
         run: npm run build
         env:
           CHALLONGE_API_KEY: ${{ secrets.CHALLONGE_API_KEY }}
+          CORE_API_WEBSITE_TOKEN: ${{ secrets.CORE_API_WEBSITE_TOKEN }}
 
       - name: Accessibility check
         run: npm run a11y
@@ -73,6 +77,15 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+
+      # The site went out with the last good data, but a wrong token, route or answer needs a fix:
+      # fail the run so Healthchecks alerts.
+      - name: Check core-api problems
+        run: |
+          if [ -s core-api-problems.txt ]; then
+            cat core-api-problems.txt
+            exit 1
+          fi
 
       - name: Ping Healthchecks (success)
         run: curl -fsS -m 10 --retry 5 -o /dev/null "$PING_URL"

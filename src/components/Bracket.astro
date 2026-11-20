@@ -1,6 +1,7 @@
 ---
 // One Challonge bracket: open while it runs, folded once it has finished.
 // Shows the standings table, the last good table with a notice, or just the link.
+// A note appears if the standings are more than 2 days old (the daily build stopped).
 import { formatDate, formatDateTime } from '../lib/format';
 import type { BracketState } from '../lib/tournaments';
 import Button from './Button.astro';
@@ -52,13 +53,20 @@ const caption = `${tournament}, ${name}: standings`;
     {data?.finished && <span class="text-sm font-normal text-muted">Finished</span>}
   </summary>
 
-  <div class="space-y-4 border-t border-border p-3 md:p-4">
+  <div class="space-y-4 border-t border-border p-3 md:p-4" data-stale-check>
     {
       state.kind === 'stale' && updated && (
         <Notice>
           Live data unavailable. Showing data from{' '}
           <time datetime={updated.toISOString()}>{formatDate(updated)}</time>.
         </Notice>
+      )
+    }
+    {
+      state.kind === 'fresh' && (
+        <div hidden data-stale-note>
+          <Notice>This data is more than 2 days old and may be out of date.</Notice>
+        </div>
       )
     }
     {
@@ -119,7 +127,7 @@ const caption = `${tournament}, ${name}: standings`;
     {
       updated && (
         <p class="text-sm text-muted">
-          Updated <time datetime={updated.toISOString()}>{formatDateTime(updated)}</time> ·
+          Updated <time datetime={updated.toISOString()} data-updated>{formatDateTime(updated)}</time> ·
           Source: Challonge
         </p>
       )
@@ -139,3 +147,7 @@ const caption = `${tournament}, ${name}: standings`;
     </div>
   </div>
 </details>
+
+<script>
+  import '../scripts/stale-check';
+</script>

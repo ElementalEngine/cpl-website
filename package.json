@@ -15,10 +15,11 @@
     "test": "node --import tsx --test",
     "knip": "knip",
     "build": "astro build",
-    "contracts:check": "node -e \"console.log('contracts: none yet')\"",
+    "contracts:check": "tsx scripts/contracts-check.ts",
     "a11y": "tsx scripts/a11y.ts",
     "icons": "tsx scripts/fetch-icons.ts",
     "challonge": "tsx scripts/challonge-check.ts",
+    "core-api": "tsx scripts/core-api-check.ts",
     "verify": "npm run check && npm run lint && npm run test && npm run knip && npm run build && npm run contracts:check && npm run a11y",
     "deploy": "wrangler deploy"
   },

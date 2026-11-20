@@ -4,11 +4,11 @@
 discordInvite: https://discord.gg/cpl
 
 # Which games and sections are built. Anything switched off has no page and no menu item.
-# Ladder and Stats can't be switched on yet: their pages come with the leaderboards.
+# Stats can't be switched on yet: its pages come later.
 games:
   civ6:
     show: true
-    ladder: false
+    ladder: true
     stats: false
     tournaments: true
   civ7:
