@@ -1,0 +1,44 @@
+---
+// A block of core-api data: the stale notice when the build used the last good data, the content,
+// then "Updated … · Source" and the report link. A note appears if the data is more than 2 days old.
+import { formatDate, formatDateTime } from '../lib/format';
+import Notice from './Notice.astro';
+
+interface Props {
+  updated: Date;
+  /** The build couldn't fetch; this is the last good data. */
+  stale: boolean;
+  /** Where visitors report a wrong table. */
+  reportUrl: string;
+}
+
+const { updated, stale, reportUrl } = Astro.props;
+const iso = updated.toISOString();
+---
+
+<div class="space-y-4" data-stale-check>
+  {
+    stale ? (
+      <Notice>
+        Live data unavailable. Showing data from <time datetime={iso}>{formatDate(updated)}</time>.
+      </Notice>
+    ) : (
+      <div hidden data-stale-note>
+        <Notice>This data is more than 2 days old and may be out of date.</Notice>
+      </div>
+    )
+  }
+  <slot />
+  <div class="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
+    <p class="text-muted">
+      Updated <time datetime={iso} data-updated>{formatDateTime(updated)}</time> · Source: CPL bot
+    </p>
+    <a class="link inline-flex min-h-11 items-center" href={reportUrl}>
+      Something wrong? Tell staff on Discord
+    </a>
+  </div>
+</div>
+
+<script>
+  import '../scripts/stale-check';
+</script>

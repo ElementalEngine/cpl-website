@@ -169,6 +169,10 @@
   .data-table tbody th {
     font-weight: 400;
   }
+  /* Player names are third-party text: a long one wraps instead of widening the table. */
+  .data-table .player {
+    overflow-wrap: anywhere;
+  }
   .data-table .num {
     text-align: right;
   }

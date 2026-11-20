@@ -93,10 +93,32 @@ test('rule tabs follow the rule sets, and the menu opens the first', () => {
 test('short links cover each game, its tournaments and the rules', () => {
   assert.deepEqual(
     shortLinks().map((link) => link.from),
-    ['/civ6/', '/civ6/tournaments/', '/civ7/', '/civ7/tournaments/', '/rules/']
+    [
+      '/civ6/',
+      '/civ6/ladder/',
+      '/civ6/stats/',
+      '/civ6/tournaments/',
+      '/civ7/',
+      '/civ7/ladder/',
+      '/civ7/stats/',
+      '/civ7/tournaments/',
+      '/rules/',
+    ]
   );
-  assert.deepEqual(shortLinks()[0].to, ['/civ6/ladder/', '/civ6/stats/', '/civ6/tournaments/pl/']);
-  assert.deepEqual(shortLinks()[1].to, tournamentTabs('civ6').map((tab) => tab.href));
+  const [game, ladder, stats, tournaments] = shortLinks();
+  const ladderModes = ['/civ6/ladder/ffa/', '/civ6/ladder/teamer/', '/civ6/ladder/duel/', '/civ6/ladder/cloud/'];
+  const statsModes = ['/civ6/stats/ffa/', '/civ6/stats/teamer/', '/civ6/stats/duel/'];
+  assert.deepEqual(ladder.to, ladderModes);
+  assert.deepEqual(stats.to, statsModes);
+  assert.deepEqual(tournaments.to, tournamentTabs('civ6').map((tab) => tab.href));
+  // A section's own path comes after its tabs: it is a page only while no tab has data.
+  assert.deepEqual(game.to, [
+    ...ladderModes,
+    '/civ6/ladder/',
+    ...statsModes,
+    '/civ6/stats/',
+    ...tournamentTabs('civ6').map((tab) => tab.href),
+  ]);
 });
 
 test('tournament tabs: one per category, then past winners; each a page of its own', () => {

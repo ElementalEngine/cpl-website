@@ -1,0 +1,927 @@
+{
+  "updated_at": "2026-11-20T03:17:42.512000Z",
+  "edition": "civ6",
+  "season_label": "Season 8",
+  "season_started_at": "2026-11-01T00:00:00Z",
+  "min_games": 5,
+  "map_top_n": 5,
+  "modes": [
+    {
+      "mode": "ffa",
+      "games": 412,
+      "maps": [
+        {
+          "map": "Fractal",
+          "games": 99
+        },
+        {
+          "map": "Continents",
+          "games": 98
+        },
+        {
+          "map": "Inland Sea",
+          "games": 92
+        },
+        {
+          "map": "Archipelago",
+          "games": 78
+        },
+        {
+          "map": "Island Plates",
+          "games": 65
+        },
+        {
+          "map": "Terra",
+          "games": 61
+        },
+        {
+          "map": "Primordial",
+          "games": 48
+        },
+        {
+          "map": "Pangaea",
+          "games": 45
+        },
+        {
+          "map": "Tilted Axis",
+          "games": 42
+        },
+        {
+          "map": "Seven Seas",
+          "games": 37
+        },
+        {
+          "map": "Lakes",
+          "games": 33
+        },
+        {
+          "map": "Highlands",
+          "games": 7
+        }
+      ],
+      "draft_bans": [
+        {
+          "token": "LEADER_HAMMURABI",
+          "name": "Hammurabi",
+          "kind": "leader",
+          "bans": 80
+        },
+        {
+          "token": "LEADER_KUPE",
+          "name": "Kupe",
+          "kind": "leader",
+          "bans": 69
+        },
+        {
+          "token": "LEADER_WILHELMINA",
+          "name": "LEADER_WILHELMINA",
+          "kind": "leader",
+          "bans": 67
+        },
+        {
+          "token": "LEADER_BA_TRIEU",
+          "name": "Bà Triệu",
+          "kind": "leader",
+          "bans": 61
+        },
+        {
+          "token": "LEADER_PERICLES",
+          "name": "Pericles",
+          "kind": "leader",
+          "bans": 56
+        },
+        {
+          "token": "LEADER_GILGAMESH",
+          "name": "Gilgamesh",
+          "kind": "leader",
+          "bans": 53
+        },
+        {
+          "token": "LEADER_JOHN_CURTIN",
+          "name": "John Curtin",
+          "kind": "leader",
+          "bans": 45
+        },
+        {
+          "token": "LEADER_SALADIN",
+          "name": "Saladin (Vizier)",
+          "kind": "leader",
+          "bans": 37
+        },
+        {
+          "token": "LEADER_MVEMBA",
+          "name": "Mvemba a Nzinga",
+          "kind": "leader",
+          "bans": 13
+        },
+        {
+          "token": "LEADER_LADY_SIX_SKY",
+          "name": "Lady Six Sky",
+          "kind": "leader",
+          "bans": 7
+        },
+        {
+          "token": "LEADER_TAMAR",
+          "name": "Tamar",
+          "kind": "leader",
+          "bans": 4
+        },
+        {
+          "token": "LEADER_TRAJAN",
+          "name": "Trajan",
+          "kind": "leader",
+          "bans": 4
+        }
+      ],
+      "leaders": [
+        {
+          "token": "LEADER_PERICLES",
+          "name": "Pericles",
+          "picks": 116,
+          "wins": 34,
+          "firsts": 50,
+          "win_rate": 0.2931
+        },
+        {
+          "token": "LEADER_HAMMURABI",
+          "name": "Hammurabi",
+          "picks": 113,
+          "wins": 60,
+          "firsts": 43,
+          "win_rate": 0.531
+        },
+        {
+          "token": "LEADER_BA_TRIEU",
+          "name": "Bà Triệu",
+          "picks": 110,
+          "wins": 31,
+          "firsts": 24,
+          "win_rate": 0.2818
+        },
+        {
+          "token": "LEADER_TRAJAN",
+          "name": "Trajan",
+          "picks": 107,
+          "wins": 61,
+          "firsts": 24,
+          "win_rate": 0.5701
+        },
+        {
+          "token": "LEADER_LADY_SIX_SKY",
+          "name": "Lady Six Sky",
+          "picks": 100,
+          "wins": 87,
+          "firsts": 24,
+          "win_rate": 0.87
+        },
+        {
+          "token": "LEADER_GILGAMESH",
+          "name": "Gilgamesh",
+          "picks": 93,
+          "wins": 82,
+          "firsts": 10,
+          "win_rate": 0.8817
+        },
+        {
+          "token": "LEADER_WILHELMINA",
+          "name": "LEADER_WILHELMINA",
+          "picks": 86,
+          "wins": 37,
+          "firsts": 17,
+          "win_rate": 0.4302
+        },
+        {
+          "token": "LEADER_SALADIN",
+          "name": "Saladin (Vizier)",
+          "picks": 81,
+          "wins": 47,
+          "firsts": 36,
+          "win_rate": 0.5802
+        },
+        {
+          "token": "LEADER_KUPE",
+          "name": "Kupe",
+          "picks": 60,
+          "wins": 51,
+          "firsts": 14,
+          "win_rate": 0.85
+        },
+        {
+          "token": "LEADER_TAMAR",
+          "name": "Tamar",
+          "picks": 43,
+          "wins": 9,
+          "firsts": 3,
+          "win_rate": 0.2093
+        },
+        {
+          "token": "LEADER_JOHN_CURTIN",
+          "name": "John Curtin",
+          "picks": 39,
+          "wins": 38,
+          "firsts": 9,
+          "win_rate": 0.9744
+        },
+        {
+          "token": "LEADER_MVEMBA",
+          "name": "Mvemba a Nzinga",
+          "picks": 16,
+          "wins": 10,
+          "firsts": 0,
+          "win_rate": 0.625
+        }
+      ],
+      "civs": [],
+      "map_picks": [
+        {
+          "map": "Fractal",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_JOHN_CURTIN",
+              "name": "John Curtin",
+              "games": 12,
+              "firsts": 3,
+              "avg_placement": 2.41
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 7,
+              "firsts": 2,
+              "avg_placement": 2.43
+            },
+            {
+              "token": "LEADER_TAMAR",
+              "name": "Tamar",
+              "games": 5,
+              "firsts": 2,
+              "avg_placement": 2.59
+            },
+            {
+              "token": "LEADER_GILGAMESH",
+              "name": "Gilgamesh",
+              "games": 6,
+              "firsts": 0,
+              "avg_placement": 3.3
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 8,
+              "firsts": 2,
+              "avg_placement": 3.34
+            }
+          ]
+        },
+        {
+          "map": "Continents",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_TRAJAN",
+              "name": "Trajan",
+              "games": 12,
+              "firsts": 3,
+              "avg_placement": 2.22
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 12,
+              "firsts": 4,
+              "avg_placement": 2.54
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 5,
+              "firsts": 1,
+              "avg_placement": 2.61
+            },
+            {
+              "token": "LEADER_JOHN_CURTIN",
+              "name": "John Curtin",
+              "games": 13,
+              "firsts": 4,
+              "avg_placement": 2.73
+            },
+            {
+              "token": "LEADER_MVEMBA",
+              "name": "Mvemba a Nzinga",
+              "games": 15,
+              "firsts": 2,
+              "avg_placement": 3.87
+            }
+          ]
+        },
+        {
+          "map": "Inland Sea",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 14,
+              "firsts": 7,
+              "avg_placement": 1.71
+            },
+            {
+              "token": "LEADER_JOHN_CURTIN",
+              "name": "John Curtin",
+              "games": 17,
+              "firsts": 7,
+              "avg_placement": 1.77
+            },
+            {
+              "token": "LEADER_WILHELMINA",
+              "name": "LEADER_WILHELMINA",
+              "games": 18,
+              "firsts": 4,
+              "avg_placement": 2.56
+            },
+            {
+              "token": "LEADER_MVEMBA",
+              "name": "Mvemba a Nzinga",
+              "games": 8,
+              "firsts": 2,
+              "avg_placement": 2.61
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 16,
+              "firsts": 2,
+              "avg_placement": 2.76
+            }
+          ]
+        },
+        {
+          "map": "Archipelago",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_JOHN_CURTIN",
+              "name": "John Curtin",
+              "games": 20,
+              "firsts": 7,
+              "avg_placement": 1.7
+            },
+            {
+              "token": "LEADER_GILGAMESH",
+              "name": "Gilgamesh",
+              "games": 12,
+              "firsts": 5,
+              "avg_placement": 2.49
+            },
+            {
+              "token": "LEADER_SALADIN",
+              "name": "Saladin (Vizier)",
+              "games": 5,
+              "firsts": 2,
+              "avg_placement": 2.79
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 10,
+              "firsts": 5,
+              "avg_placement": 3.21
+            },
+            {
+              "token": "LEADER_TRAJAN",
+              "name": "Trajan",
+              "games": 8,
+              "firsts": 3,
+              "avg_placement": 3.72
+            }
+          ]
+        },
+        {
+          "map": "Island Plates",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 17,
+              "firsts": 0,
+              "avg_placement": 1.67
+            },
+            {
+              "token": "LEADER_TRAJAN",
+              "name": "Trajan",
+              "games": 20,
+              "firsts": 8,
+              "avg_placement": 1.68
+            },
+            {
+              "token": "LEADER_GILGAMESH",
+              "name": "Gilgamesh",
+              "games": 19,
+              "firsts": 8,
+              "avg_placement": 2.6
+            },
+            {
+              "token": "LEADER_SALADIN",
+              "name": "Saladin (Vizier)",
+              "games": 8,
+              "firsts": 0,
+              "avg_placement": 2.83
+            },
+            {
+              "token": "LEADER_BA_TRIEU",
+              "name": "Bà Triệu",
+              "games": 6,
+              "firsts": 2,
+              "avg_placement": 2.94
+            }
+          ]
+        },
+        {
+          "map": "Primordial",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_TRAJAN",
+              "name": "Trajan",
+              "games": 17,
+              "firsts": 0,
+              "avg_placement": 2.02
+            },
+            {
+              "token": "LEADER_JOHN_CURTIN",
+              "name": "John Curtin",
+              "games": 13,
+              "firsts": 4,
+              "avg_placement": 2.1
+            },
+            {
+              "token": "LEADER_BA_TRIEU",
+              "name": "Bà Triệu",
+              "games": 9,
+              "firsts": 1,
+              "avg_placement": 2.51
+            },
+            {
+              "token": "LEADER_SALADIN",
+              "name": "Saladin (Vizier)",
+              "games": 13,
+              "firsts": 2,
+              "avg_placement": 2.8
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 14,
+              "firsts": 5,
+              "avg_placement": 3.95
+            }
+          ]
+        },
+        {
+          "map": "Pangaea",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_TAMAR",
+              "name": "Tamar",
+              "games": 11,
+              "firsts": 4,
+              "avg_placement": 1.99
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 7,
+              "firsts": 2,
+              "avg_placement": 2.57
+            },
+            {
+              "token": "LEADER_TRAJAN",
+              "name": "Trajan",
+              "games": 13,
+              "firsts": 3,
+              "avg_placement": 2.75
+            },
+            {
+              "token": "LEADER_MVEMBA",
+              "name": "Mvemba a Nzinga",
+              "games": 9,
+              "firsts": 3,
+              "avg_placement": 2.81
+            },
+            {
+              "token": "LEADER_KUPE",
+              "name": "Kupe",
+              "games": 14,
+              "firsts": 7,
+              "avg_placement": 3.44
+            }
+          ]
+        },
+        {
+          "map": "Tilted Axis",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 16,
+              "firsts": 0,
+              "avg_placement": 1.7
+            },
+            {
+              "token": "LEADER_SALADIN",
+              "name": "Saladin (Vizier)",
+              "games": 18,
+              "firsts": 1,
+              "avg_placement": 2.48
+            },
+            {
+              "token": "LEADER_TRAJAN",
+              "name": "Trajan",
+              "games": 9,
+              "firsts": 0,
+              "avg_placement": 2.65
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 20,
+              "firsts": 6,
+              "avg_placement": 3.24
+            },
+            {
+              "token": "LEADER_PERICLES",
+              "name": "Pericles",
+              "games": 18,
+              "firsts": 2,
+              "avg_placement": 3.26
+            }
+          ]
+        },
+        {
+          "map": "Seven Seas",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_BA_TRIEU",
+              "name": "Bà Triệu",
+              "games": 7,
+              "firsts": 1,
+              "avg_placement": 1.79
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 19,
+              "firsts": 2,
+              "avg_placement": 2.1
+            },
+            {
+              "token": "LEADER_PERICLES",
+              "name": "Pericles",
+              "games": 17,
+              "firsts": 4,
+              "avg_placement": 2.13
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 8,
+              "firsts": 2,
+              "avg_placement": 2.54
+            },
+            {
+              "token": "LEADER_GILGAMESH",
+              "name": "Gilgamesh",
+              "games": 7,
+              "firsts": 0,
+              "avg_placement": 3.55
+            }
+          ]
+        },
+        {
+          "map": "Lakes",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_JOHN_CURTIN",
+              "name": "John Curtin",
+              "games": 17,
+              "firsts": 7,
+              "avg_placement": 1.93
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 18,
+              "firsts": 8,
+              "avg_placement": 2.1
+            },
+            {
+              "token": "LEADER_TAMAR",
+              "name": "Tamar",
+              "games": 13,
+              "firsts": 6,
+              "avg_placement": 3.08
+            },
+            {
+              "token": "LEADER_GILGAMESH",
+              "name": "Gilgamesh",
+              "games": 18,
+              "firsts": 0,
+              "avg_placement": 3.16
+            },
+            {
+              "token": "LEADER_SALADIN",
+              "name": "Saladin (Vizier)",
+              "games": 8,
+              "firsts": 0,
+              "avg_placement": 3.41
+            }
+          ]
+        },
+        {
+          "map": "Highlands",
+          "kind": "leader",
+          "rows": [
+            {
+              "token": "LEADER_SALADIN",
+              "name": "Saladin (Vizier)",
+              "games": 5,
+              "firsts": 1,
+              "avg_placement": 1.62
+            },
+            {
+              "token": "LEADER_BA_TRIEU",
+              "name": "Bà Triệu",
+              "games": 5,
+              "firsts": 0,
+              "avg_placement": 1.67
+            },
+            {
+              "token": "LEADER_HAMMURABI",
+              "name": "Hammurabi",
+              "games": 8,
+              "firsts": 0,
+              "avg_placement": 2.67
+            },
+            {
+              "token": "LEADER_LADY_SIX_SKY",
+              "name": "Lady Six Sky",
+              "games": 7,
+              "firsts": 3,
+              "avg_placement": 3.12
+            },
+            {
+              "token": "LEADER_TAMAR",
+              "name": "Tamar",
+              "games": 8,
+              "firsts": 1,
+              "avg_placement": 3.91
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "teamer",
+      "games": 120,
+      "maps": [
+        {
+          "map": "Archipelago",
+          "games": 30
+        },
+        {
+          "map": "Island Plates",
+          "games": 27
+        },
+        {
+          "map": "Terra",
+          "games": 25
+        },
+        {
+          "map": "Lakes",
+          "games": 23
+        },
+        {
+          "map": "Fractal",
+          "games": 19
+        },
+        {
+          "map": "Primordial",
+          "games": 14
+        },
+        {
+          "map": "Highlands",
+          "games": 11
+        },
+        {
+          "map": "Pangaea",
+          "games": 10
+        },
+        {
+          "map": "Continents",
+          "games": 9
+        },
+        {
+          "map": "Inland Sea",
+          "games": 9
+        },
+        {
+          "map": "Tilted Axis",
+          "games": 6
+        },
+        {
+          "map": "Seven Seas",
+          "games": 1
+        }
+      ],
+      "draft_bans": [
+        {
+          "token": "LEADER_MVEMBA",
+          "name": "Mvemba a Nzinga",
+          "kind": "leader",
+          "bans": 88
+        },
+        {
+          "token": "LEADER_GILGAMESH",
+          "name": "Gilgamesh",
+          "kind": "leader",
+          "bans": 74
+        },
+        {
+          "token": "LEADER_WILHELMINA",
+          "name": "LEADER_WILHELMINA",
+          "kind": "leader",
+          "bans": 71
+        },
+        {
+          "token": "LEADER_LADY_SIX_SKY",
+          "name": "Lady Six Sky",
+          "kind": "leader",
+          "bans": 69
+        },
+        {
+          "token": "LEADER_JOHN_CURTIN",
+          "name": "John Curtin",
+          "kind": "leader",
+          "bans": 64
+        },
+        {
+          "token": "LEADER_BA_TRIEU",
+          "name": "Bà Triệu",
+          "kind": "leader",
+          "bans": 45
+        },
+        {
+          "token": "LEADER_HAMMURABI",
+          "name": "Hammurabi",
+          "kind": "leader",
+          "bans": 37
+        },
+        {
+          "token": "LEADER_PERICLES",
+          "name": "Pericles",
+          "kind": "leader",
+          "bans": 36
+        },
+        {
+          "token": "LEADER_TAMAR",
+          "name": "Tamar",
+          "kind": "leader",
+          "bans": 19
+        },
+        {
+          "token": "LEADER_TRAJAN",
+          "name": "Trajan",
+          "kind": "leader",
+          "bans": 19
+        },
+        {
+          "token": "LEADER_KUPE",
+          "name": "Kupe",
+          "kind": "leader",
+          "bans": 11
+        },
+        {
+          "token": "LEADER_SALADIN",
+          "name": "Saladin (Vizier)",
+          "kind": "leader",
+          "bans": 6
+        }
+      ],
+      "leaders": [
+        {
+          "token": "LEADER_PERICLES",
+          "name": "Pericles",
+          "picks": 38,
+          "wins": 0,
+          "firsts": 12,
+          "win_rate": 0.0
+        },
+        {
+          "token": "LEADER_MVEMBA",
+          "name": "Mvemba a Nzinga",
+          "picks": 35,
+          "wins": 22,
+          "firsts": 2,
+          "win_rate": 0.6286
+        },
+        {
+          "token": "LEADER_SALADIN",
+          "name": "Saladin (Vizier)",
+          "picks": 35,
+          "wins": 35,
+          "firsts": 15,
+          "win_rate": 1.0
+        },
+        {
+          "token": "LEADER_BA_TRIEU",
+          "name": "Bà Triệu",
+          "picks": 34,
+          "wins": 20,
+          "firsts": 15,
+          "win_rate": 0.5882
+        },
+        {
+          "token": "LEADER_LADY_SIX_SKY",
+          "name": "Lady Six Sky",
+          "picks": 33,
+          "wins": 12,
+          "firsts": 6,
+          "win_rate": 0.3636
+        },
+        {
+          "token": "LEADER_WILHELMINA",
+          "name": "LEADER_WILHELMINA",
+          "picks": 30,
+          "wins": 17,
+          "firsts": 2,
+          "win_rate": 0.5667
+        },
+        {
+          "token": "LEADER_GILGAMESH",
+          "name": "Gilgamesh",
+          "picks": 26,
+          "wins": 14,
+          "firsts": 11,
+          "win_rate": 0.5385
+        },
+        {
+          "token": "LEADER_HAMMURABI",
+          "name": "Hammurabi",
+          "picks": 25,
+          "wins": 6,
+          "firsts": 12,
+          "win_rate": 0.24
+        },
+        {
+          "token": "LEADER_JOHN_CURTIN",
+          "name": "John Curtin",
+          "picks": 15,
+          "wins": 12,
+          "firsts": 4,
+          "win_rate": 0.8
+        },
+        {
+          "token": "LEADER_TAMAR",
+          "name": "Tamar",
+          "picks": 15,
+          "wins": 9,
+          "firsts": 0,
+          "win_rate": 0.6
+        },
+        {
+          "token": "LEADER_KUPE",
+          "name": "Kupe",
+          "picks": 14,
+          "wins": 3,
+          "firsts": 1,
+          "win_rate": 0.2143
+        },
+        {
+          "token": "LEADER_TRAJAN",
+          "name": "Trajan",
+          "picks": 14,
+          "wins": 14,
+          "firsts": 4,
+          "win_rate": 1.0
+        }
+      ],
+      "civs": [],
+      "map_picks": []
+    },
+    {
+      "mode": "duel",
+      "games": 0,
+      "maps": [],
+      "draft_bans": [],
+      "leaders": [],
+      "civs": [],
+      "map_picks": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+---
+// One page of a ladder. Phones keep # · Player · Rating · 1st/Wins; Games and Last active hide below md.
+// Names are third-party text: shown as plain text, never as HTML, and long names wrap.
+import type { LadderRow } from '../lib/core-api';
+import { formatCount, formatDayMonth, isoDate } from '../lib/format';
+import { resultColumn } from '../lib/ladders';
+import type { LADDER_MODES } from '../lib/nav';
+import Table from './Table.astro';
+
+interface Props {
+  caption: string;
+  mode: (typeof LADDER_MODES)[number];
+  rows: LadderRow[];
+  /** The build time, for "Last active" years. */
+  now: Date;
+}
+
+const UNREGISTERED = 'Unregistered player';
+const { caption, mode, rows, now } = Astro.props;
+const result = resultColumn(mode);
+---
+
+<Table caption={caption} hideCaption>
+  <thead>
+    <tr>
+      <th scope="col" class="num">#</th>
+      <th scope="col">Player</th>
+      <th scope="col" class="num">Rating</th>
+      <th scope="col" class="num max-md:hidden">Games</th>
+      <th scope="col" class="num">{result.heading}</th>
+      <th scope="col" class="max-md:hidden">Last active</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((row) => {
+        const active = row.last_active_at ? new Date(row.last_active_at) : undefined;
+        return (
+          <tr>
+            <td class="num">{row.rank}</td>
+            <th scope="row" class:list={['player', row.display_name === UNREGISTERED && 'text-muted']}>
+              {row.display_name}
+            </th>
+            <td class="num">{row.rating}</td>
+            <td class="num max-md:hidden">{formatCount(row.games)}</td>
+            <td class="num">{formatCount(result.value(row))}</td>
+            <td class="max-md:hidden">
+              {active ? <time datetime={isoDate(active)}>{formatDayMonth(active, now)}</time> : '—'}
+            </td>
+          </tr>
+        );
+      })
+    }
+  </tbody>
+</Table>

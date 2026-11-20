@@ -1,0 +1,96 @@
+{
+  "updated_at": "2026-11-20T03:17:42.512000Z",
+  "edition": "civ7",
+  "season_label": "Season 1",
+  "season_started_at": "2026-09-15T12:00:00Z",
+  "min_games": 3,
+  "ladders": [
+    {
+      "key": "season-ffa",
+      "total": 6,
+      "rows": [
+        {
+          "rank": 1,
+          "display_name": "Player 001",
+          "rating": 1595,
+          "mu": 1594.6958,
+          "sigma": 43.2914,
+          "games": 13,
+          "wins": 1,
+          "first": 0,
+          "last_active_at": "2026-11-05T19:59:00Z"
+        },
+        {
+          "rank": 2,
+          "display_name": "Player 002",
+          "rating": 1593,
+          "mu": 1592.8204,
+          "sigma": 43.087,
+          "games": 12,
+          "wins": 2,
+          "first": 0,
+          "last_active_at": "2026-11-01T22:04:00Z"
+        },
+        {
+          "rank": 3,
+          "display_name": "Player 003",
+          "rating": 1586,
+          "mu": 1586.0577,
+          "sigma": 116.1769,
+          "games": 7,
+          "wins": 3,
+          "first": 2,
+          "last_active_at": "2026-11-19T21:04:00Z"
+        },
+        {
+          "rank": 4,
+          "display_name": "Player 004",
+          "rating": 1578,
+          "mu": 1578.0801,
+          "sigma": 50.7116,
+          "games": 51,
+          "wins": 13,
+          "first": 6,
+          "last_active_at": "2026-11-13T03:02:00Z"
+        },
+        {
+          "rank": 5,
+          "display_name": "Unregistered player",
+          "rating": 1577,
+          "mu": 1577.2875,
+          "sigma": 122.506,
+          "games": 57,
+          "wins": 40,
+          "first": 9,
+          "last_active_at": "2026-11-03T15:06:00Z"
+        },
+        {
+          "rank": 6,
+          "display_name": "Player 006",
+          "rating": 1576,
+          "mu": 1575.6599,
+          "sigma": 69.4459,
+          "games": 53,
+          "wins": 21,
+          "first": 13,
+          "last_active_at": "2026-11-07T08:01:00Z"
+        }
+      ]
+    },
+    {
+      "key": "season-teamer",
+      "total": 0,
+      "rows": []
+    },
+    {
+      "key": "season-duel",
+      "total": 0,
+      "rows": []
+    },
+    {
+      "key": "cloud",
+      "total": 0,
+      "rows": []
+    }
+  ]
+}

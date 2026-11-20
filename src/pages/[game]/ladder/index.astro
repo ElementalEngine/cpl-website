@@ -1,0 +1,49 @@
+---
+// A game's ladder page before any ladder has players: the season start, or "coming soon".
+// Once a ladder has players, /<game>/ladder/ redirects to its first tab instead.
+import DataBlock from '../../../components/DataBlock.astro';
+import Tabs from '../../../components/Tabs.astro';
+import Page from '../../../layouts/Page.astro';
+import { getLadders } from '../../../lib/core-api-data';
+import { getSite } from '../../../lib/content';
+import { noLaddersMessage, shownLadders } from '../../../lib/ladders';
+import { gameLabel, gameSections, shownGames, type GameId } from '../../../lib/nav';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  const games = shownGames(site).filter((game) => site.games[game].ladder);
+  const perGame = await Promise.all(
+    games.map(async (game) => {
+      const source = await getLadders(game);
+      const data = source.kind === 'fresh' || source.kind === 'stale' ? source.data : undefined;
+      return data && shownLadders(data).length > 0 ? [] : [{ params: { game }, props: { game } }];
+    })
+  );
+  return perGame.flat();
+}
+
+interface Props {
+  game: GameId;
+}
+
+const { game } = Astro.props;
+const site = await getSite();
+const source = await getLadders(game);
+const label = gameLabel(game);
+const message = noLaddersMessage(source);
+---
+
+<Page title={`${label} ladder`} documentTitle={`Ladder · ${label} · CPL`} description={`${label} ladder. ${message}`}>
+  <Tabs slot="tabs" label={`${label} sections`} items={gameSections(site, game)} />
+  <div slot="sections">
+    {
+      source.kind === 'fresh' || source.kind === 'stale' ? (
+        <DataBlock updated={new Date(source.data.updated_at)} stale={source.kind === 'stale'} reportUrl={site.discordInvite}>
+          <p>{message}</p>
+        </DataBlock>
+      ) : (
+        <p>{message}</p>
+      )
+    }
+  </div>
+</Page>

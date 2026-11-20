@@ -1,0 +1,11 @@
+source-repo: ElementalEngine/core-api-backend
+source-tag: v2.2.0
+source-sha: 9ca550d
+source-date: 2026-11-20
+md5: 5a843158228e074b4b7ece1da3e090c8
+
+core-api's OpenAPI spec as released. The website reads three routes from it: overview,
+ladders per edition and season stats per edition. `npm run contracts:check` fails if the
+site's schemas (src/lib/core-api.ts) read a field the spec doesn't have, with a different
+type, or as never-null where core-api can send null. To move to a new core-api release,
+copy its openapi.json here, update the lines above, and run `npm run contracts:check`.

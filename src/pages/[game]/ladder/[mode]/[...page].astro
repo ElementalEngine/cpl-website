@@ -1,0 +1,69 @@
+---
+import DataBlock from '../../../../components/DataBlock.astro';
+import LadderTable from '../../../../components/LadderTable.astro';
+import Pager from '../../../../components/Pager.astro';
+import Tabs from '../../../../components/Tabs.astro';
+import Page from '../../../../layouts/Page.astro';
+import { getLadders } from '../../../../lib/core-api-data';
+import { getSite } from '../../../../lib/content';
+import { formatDate } from '../../../../lib/format';
+import { ladderPages, ladderSubtitle, ladderTabs, shownLadders, type LadderPage } from '../../../../lib/ladders';
+import { gameLabel, gameSections, shownGames, type GameId } from '../../../../lib/nav';
+
+export async function getStaticPaths() {
+  const site = await getSite();
+  const games = shownGames(site).filter((game) => site.games[game].ladder);
+  const perGame = await Promise.all(
+    games.map(async (game) => {
+      const source = await getLadders(game);
+      if (source.kind !== 'fresh' && source.kind !== 'stale') return [];
+      return shownLadders(source.data).flatMap((ladder) =>
+        ladderPages(game, ladder).map((page) => ({
+          // Page 1 has no number: /civ6/ladder/ffa/, then /civ6/ladder/ffa/2/.
+          params: { game, mode: page.mode.id, page: page.number === 1 ? undefined : String(page.number) },
+          props: { game, page },
+        }))
+      );
+    })
+  );
+  return perGame.flat();
+}
+
+interface Props {
+  game: GameId;
+  page: LadderPage;
+}
+
+const { game, page } = Astro.props;
+const site = await getSite();
+const source = await getLadders(game);
+if (source.kind !== 'fresh' && source.kind !== 'stale') throw new Error(`ladders ${game}: no data`);
+const { data } = source;
+const label = gameLabel(game);
+const { mode } = page;
+const updated = new Date(data.updated_at);
+const subtitle = ladderSubtitle(data, mode);
+const pageNote = page.pages > 1 ? `, page ${page.number} of ${page.pages}` : '';
+---
+
+<Page
+  title={`${label} ladder`}
+  documentTitle={`${mode.label} ladder${page.number > 1 ? ` · page ${page.number}` : ''} · ${label} · CPL`}
+  description={`${label} ${mode.label} ladder: ${subtitle}. Updated ${formatDate(updated)}.`}
+  wide
+>
+  <Fragment slot="tabs">
+    <Tabs label={`${label} sections`} items={gameSections(site, game)} />
+    <Tabs label="Ladder modes" items={ladderTabs(game, shownLadders(data))} />
+  </Fragment>
+
+  <div slot="sections" class="space-y-2">
+    <h2 class="text-xl font-semibold">{mode.label} ladder</h2>
+    <p class="text-text-2">{subtitle}</p>
+    <DataBlock updated={updated} stale={source.kind === 'stale'} reportUrl={site.discordInvite}>
+      <LadderTable caption={`${label} ${mode.label} ladder, ${subtitle}${pageNote}`} mode={mode} rows={page.rows} now={updated} />
+      <p class="text-sm text-muted">Players need {data.min_games}+ games to appear.</p>
+      <Pager page={page.number} pages={page.pages} prev={page.prev} next={page.next} />
+    </DataBlock>
+  </div>
+</Page>

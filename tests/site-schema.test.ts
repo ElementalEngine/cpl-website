@@ -35,8 +35,14 @@ test('social links must be https and follow or support', () => {
   assert.ok(!withChange((s) => (s.socials[0].kind = 'donate')).success);
 });
 
-test('ladder and stats stay off until their pages exist', () => {
-  assert.ok(!withChange((s) => (s.games.civ6.ladder = true)).success);
+test('ladder can be switched on; stats stays off until its pages exist', () => {
+  assert.ok(withChange((s) => (s.games.civ6.ladder = true)).success);
+  assert.ok(
+    withChange((s) => {
+      s.games.civ7.show = true;
+      s.games.civ7.ladder = true;
+    }).success
+  );
   assert.ok(!withChange((s) => (s.games.civ7.stats = true)).success);
 });
 
